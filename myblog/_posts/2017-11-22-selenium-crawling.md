@@ -2,6 +2,7 @@
 layout: post
 title:  "Selenium Crawling"
 date:   2017-11-22 10:15:24 +0000
+excerpt_separator: <!--more-->
 ---
 
 **Selenium 을 사용한 웹 크롤러(python)**
@@ -11,7 +12,7 @@ date:   2017-11-22 10:15:24 +0000
 
 어떻게 하면 우리가 웹페이지를 직접 들어가서 보는 그대로의 내용을 크롤링할 수 있을까?<br><br>
 
-<!–-break-–>
+<!–-more-–>
 
 
 **Selenium 이란**
