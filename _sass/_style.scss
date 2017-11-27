@@ -2407,7 +2407,7 @@ body {
     border-color: transparent;
     transition: all .3s ease-in-out 0s;
     .nav li a {
-      color: #fff;
+      color: #676a6c;
       font-family: 'Open Sans', helvetica, arial, sans-serif;
       font-weight: 700;
       letter-spacing: 1px;
@@ -2423,11 +2423,11 @@ body {
     .navbar-nav > {
       .active > a {
         background: 0 0;
-        color: #fff;
+        color: #676a6c;
         border-top: 6px solid #3385FF;
         &:hover {
           background: 0 0;
-          color: #fff;
+          color: #3385FF;
           border-top: 6px solid #3385FF;
         }
       }
@@ -2455,9 +2455,9 @@ body {
       height: auto;
       display: block;
       font-size: 14px;
-      background: #3385FF;
+      background: black;
       padding: 15px 20px;
-      border-radius: 0 0 5px 5px;
+      border-radius: 0 0 10px 10px;
       font-weight: 700;
       transition: all .3s ease-in-out 0s;
     }
