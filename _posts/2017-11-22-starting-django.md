@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "django 시작하기"
-date:   2017-11-22 10:03:05 +0000
-excerpt_separator: <!--more-->
+category: Python
+tags: [python,django]
 ---
 
 **What is Django??**
@@ -10,7 +10,7 @@ excerpt_separator: <!--more-->
 `Django` 는 파이썬으로 만들어진 무료 오픈소스 웹 애플리케이션 프레임워크입니다. 개발자에게 회원가입, 로그인 폼, 인증 및 DB관리를 쉽게 제공하여 편리하게 웹사이트를 개발할 수 있도록 도와주는 프레임워크입니다.
 <br><br>
 
-<!--more-->
+<!-- more -->
 
 **Then What is Web Framwork??**
 <br><br>

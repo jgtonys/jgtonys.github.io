@@ -1,32 +1,35 @@
 <head>
-  <meta charset="utf-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% if page.desc %}
-    <meta content="{{ page.desc }}" name="description">
-  {% endif %}
-  {% if page.keywords %}
-    <meta name="keywords" content="{{ page.keywords }}">
-  {% endif %}
-  <meta name="author" content="{{ site.author.name }}">
-  <meta name="baseurl" content="{{ site.baseurl }}">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   <title>
-    {% if page.title != "index" %}
-        {{ site.title }}|{{ page.title }}
+    {% if page.title == "Home" %}
+      {{ site.title }} &middot; {{ site.tagline }}
     {% else %}
-        {{ site.title }}
+      {{ page.title }} &middot; {{ site.title }}
     {% endif %}
   </title>
-  <!-- favicon -->
-  <link rel="shortcut icon" href="{{ "/static/assets/img/favicon.ico" | prepend: site.baseurl }}">
 
-  <!-- Main CSS -->
-  <link href="{{ "/static/assets/app-20170906.min.css" | prepend: site.baseurl }}" rel="stylesheet">
-  <link href="{{ "/static/css/custom.css" | prepend: site.baseurl }}" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
 
-  <!-- Main Scripts -->
-  <script src="{{"/static/assets/app-20170906.min.js"| prepend: site.baseurl }}"></script>
-  <script src="{{"/static/assets/blog-20170906.min.js"| prepend: site.baseurl }}"></script>
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.baseurl }}/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="{{ site.baseurl }}/public/favicon.ico">
 
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  {% if site.mathjax %}
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  {% endif %}
 </head>

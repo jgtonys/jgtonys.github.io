@@ -1,70 +1,61 @@
-# Welcome to Jekyll!
+# Site Info
+title: Jungyu Kim
+tagline: 'My developer blog'
+description: 'A Jekyll theme adapted from <a href="http://lanyon.getpoole.com/" target="_blank">Lanyon</a>. Made by <a href="http://codinfox.github.io" target="_blank">@codinfox</a>.'
+baseurl: ""
+url: "jgtonys.github.io"
+logo: '/public/logo.png'
 
-# Website settings
-title: jgtony
-description: Jungyu Kim's blog,use Jekyll and github pages.
-keywords: jungyu,jgtony,jgtonys,Jekyll,github,gh-pages
-baseurl:  "" # if you have suburl as homepage like '/homepage', please change it to '/homepage' and your repo's name should be 'homepage'
-url: https://jgtony.github.io  # url should be 'http://<github_username>.github.io/homepage' as before
-# url: http://127.0.0.1:4000
-img_path: /Jalpc/static/assets/img/blog  # url should be '/homepage/static/assets/img/blog' as before
-
-# author -- index page "about me" section
-author:  # change following line to your infomation.
-  name: Jungyu Kim  # Be used at blog posts' author.
-  first_name: Jungyu  # Be used at index page about me section.
-  last_name: Kim  # Be used at index page about me section.
-  avatar: /static/assets/img/landing/avatar.jpg  # upload your avatar at directory and edit it.
-  github_username: jgtonys  # Leave blank if you don't have now
-  linkedin_id: jgtony # Leave blank if you don't have now
-  facebook_username: jgtony  # Leave blank if you don't have now
-  twitter_username: jgtony  # Leave blank if you don't have now
-  email: jgtony@yonsei.ac.kr  # Leave blank if you don't have now
-  cv: ""  # An online CV can be printed as PDF, leave blank if you don't have now
-  # skill icons are on avatar's left and right side. Reference urls are http://fontawesome.io/ and http://fizzed.com/oss/font-mfizz
-  skill_icon1:
-    - name: icon-apache
-    - name: fa-linux
-  skill_icon2:
-    - name: fa-linux
-    - name: icon-apache
-  desc: Introduce myself will be here.  # Describe yourself.
-
-# comment
-disqus:  # if you wanna comment feature, go to https://disqus.com/ to get your configuration; if not, comment following two lines.
-  name: jgtony
-
-# analytics
-## google analytics
-ga:  # if you wanna this feature, go to https://www.google.com/analytics/ to get your configuration; if not, comment following line.
-  # id:
-
-## google optimize
-go:
-  # id:
-
-## growingIO
-gio:  # if you wanna this feature, go to https://www.growingio.com/ to get your configuration; if not, comment following line.
-  # id:
-
-## donation
-donation: off  # type 'on'/'off' to choice display donation button at post page or not
-
-## carousels
-index_carousel: off  # index page carousel switch
-blog_carousel: off  # blog page carousel switch
-
-# scss
-sass:
-  style: compressed
-
-# Build settings
-encoding: utf-8
-
-# other settings
-highlighter: rouge
+# Site configurations
+plugins:
+  - jekyll-paginate
 markdown: kramdown
 kramdown:
   input: GFM
-  syntax_highlighter: rouge
+excerpt_separator: "<!-- more -->"
+sass:
+  style: compressed
+  sass_dir: _scss    
+paginate: 5
+paginate_path: '/blog/page:num'
+permalink: pretty
 
+version: 1.0.0
+
+# About/contact
+author:
+  name: Jungyu Kim
+  description: Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong>
+  avatar : Jungyu Kim
+  contact:
+    github:    https://github.com/jgtonys
+    facebook:  https://facebook.com/jgtony
+    email:     http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=
+
+# Navigation (2nd level links supported)
+nav:
+  Home:           
+    - '/'
+  Blog:           
+    - '/blog/'
+    - { Categories: '/blog/categories/' }
+    - { Tags: '/blog/tags/' }
+  About:          
+    - '/about/'
+  Github Project: 
+    - 'http://github.com/jgtonys/'
+
+# Where are tags and categories displayed
+tag_page: '/blog/tags/'
+category_page: '/blog/categories/'
+
+hero:
+  image: /public/img/face-2930503_1280.jpg
+  caption: Welcome to <a href="http://github.com/jgtonys">Jungyu Kim</a> blog
+
+# Puglins
+mathjax: true # whether support mathjax
+google_analytics_token: '' # leave blank if you don't want google analytics
+disqus_short_name: 'your_short_name' # leave blank if you don't want disqus
+
+encoding: utf-8

@@ -1,16 +1,15 @@
 ---
 layout: post
 title:  "How to run jekyll using c9??"
-date:   2017-11-24 19:07:05 +0000
-categories: jekyll update
-excerpt_separator: <!--more-->
+category: Tips
+tags: [bash,c9]
 ---
 
 {% highlight bash %}
 $ jekyll serve --host $IP --port $PORT --watch
 {% endhighlight %}
 
-<!--more-->
+<!-- more -->
 
 When your new post is not availalbe in your server, you should check some things.
 - The post is not placed in the `_posts` directory.
