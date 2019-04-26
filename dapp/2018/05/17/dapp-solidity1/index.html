@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="DApp Challenge : Solidity.part1">
+	<meta name="twitter:description" content="이전 포스트에서는 DApp을 시작하기 위한 기초적인 배경지식에 대해 공부했다. 이더리움 네트워크는 어떻게 작동하는 것인가를 파악했으니 이제는 실전이다. Solidity를 사용해서 나만의 컨트랙트를 만드는 것부터 시작해 보겠다.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="DApp Challenge : Solidity.part1">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="이전 포스트에서는 DApp을 시작하기 위한 기초적인 배경지식에 대해 공부했다. 이더리움 네트워크는 어떻게 작동하는 것인가를 파악했으니 이제는 실전이다. Solidity를 사용해서 나만의 컨트랙트를 만드는 것부터 시작해 보겠다.
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/dapp/2018/05/17/dapp-solidity1/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      DApp Challenge : Solidity.part1 &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">17 May 2018</span>
+  <h1 class="post-title">DApp Challenge : Solidity.part1</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#solidity" class="post-tag">solidity</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <p>이전 포스트에서는 DApp을 시작하기 위한 기초적인 배경지식에 대해 공부했다. 이더리움 네트워크는 어떻게 작동하는 것인가를 파악했으니 이제는 실전이다. Solidity를 사용해서 나만의 컨트랙트를 만드는 것부터 시작해 보겠다.</p>
+
+<!-- more -->
+
+<h1 id="cryptozombie-practice-ch1ch2">CryptoZombie Practice CH1~Ch2</h1>
+
+<p><img src="/public/img/cryptozombie-main.jpeg" alt="cryptozombie-main" /></p>
+
+<h2 id="기초적인-문법"><strong>기초적인 문법</strong></h2>
+
+<p>Solidity는 객체 지향형 언어로서 스마트 컨트랙트를 구현하게 해주는 언어이다. 클래스와 비슷하게 변수,함수,구조체 등을 포함하고 상속과 다형성을 지원한다.</p>
+
+<p>솔리디티 파일의 확장자는 <code class="highlighter-rouge">.sol</code> 이고 파일의 맨 처음에 solidity 컴파일러 버전을 지정한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pragma solidity ^0.4.19;
+</code></pre></div></div>
+
+<p>하나의 컨트랙트가 있고 그 안에 상태 변수, 이벤트, 함수 등 넣는 구조이다.</p>
+
+<p>아래는 크립토좀비 튜토리얼 코드이다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#컨트랙트 ZombieFactory
+</span><span class="n">contract</span> <span class="n">ZombieFactory</span> <span class="p">{</span>
+    <span class="c1">#정수 변수 선언
+</span>    <span class="n">uint</span> <span class="n">dnaDigits</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="n">uint</span> <span class="n">dnaModulus</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">dnaDigits</span><span class="p">;</span>
+
+    <span class="c1">#구조체 선언
+</span>    <span class="n">struct</span> <span class="n">Zombie</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+        <span class="n">uint</span> <span class="n">dna</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Zombie</span><span class="p">[]</span> <span class="n">public</span> <span class="n">zombies</span><span class="p">;</span>
+    <span class="c1">#함수 선언
+</span>    <span class="n">function</span> <span class="n">_createZombie</span><span class="p">(</span><span class="n">string</span> <span class="n">_name</span><span class="p">,</span> <span class="n">uint</span> <span class="n">_dna</span><span class="p">)</span> <span class="n">private</span> <span class="p">{</span>
+        <span class="n">zombies</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">Zombie</span><span class="p">(</span><span class="n">_name</span><span class="p">,</span> <span class="n">_dna</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>솔리디티 함수는 view 와 pure라는 제어자가 있는데 해당 함수가 데이터를 보기만 하고 변경하지 않는다면 view 함수, 데이터에 아예 접근하지 않는다면 pure 함수로 정의할 수 있게 해 놓았다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">function</span> <span class="n">_generateRandomDna</span><span class="p">(</span><span class="n">string</span> <span class="n">_str</span><span class="p">)</span> <span class="n">private</span> <span class="n">view</span> <span class="n">returns</span> <span class="p">(</span><span class="n">uint</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="간단한-형변환-연습"><strong>간단한 형변환 연습</strong></h2>
+
+<p>이더리움은 SHA3의 버전인 keccak256을 내장 해시 함수로 가지고 있다. 이는 입력된 스트링을 랜덤
+256비트 16진수로 매핑한다. 따라서 입력 스트링이 달라지면 해시값이 달라지게 된다.</p>
+
+<p>크립토 좀비 튜토리얼에서는 이 해시 함수를 <strong>의사난수발생기</strong> 로서 사용한다. 참고로 <strong>의사난수발생기</strong> 란 소프트웨어에서 연관성이 없는 듯한 수열을 만들어내는 난수 생성 방법이다. 이는 진정한 난수가 아니다.</p>
+
+<p>아무튼 형 변환 연습을 해보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uint</span> <span class="n">rand</span> <span class="o">=</span> <span class="n">uint</span><span class="p">(</span><span class="n">keccak256</span><span class="p">(</span><span class="n">_str</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>위의 코드는 <code class="highlighter-rouge">_str</code> 문자열을 이더리움 내장함수인 keccak256으로 변환한 후 uint로 매핑한다.</p>
+
+<h2 id="이벤트"><strong>이벤트</strong></h2>
+
+<p>이벤트는 컨트랙트가 액션이 발생했을때 의사소통하는 방법이다. 이벤트 선언의 방법은 다음과 같다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span> <span class="n">IntegersAdded</span><span class="p">(</span><span class="n">uint</span> <span class="n">x</span><span class="p">,</span> <span class="n">uint</span> <span class="n">y</span><span class="p">,</span> <span class="n">uint</span> <span class="n">result</span><span class="p">);</span>
+</code></pre></div></div>
+
+<hr />
+<p>여기까지는 왠지 그냥 조금 다른 언어의 문법을 배우는 기분이다. 실제로 이게 어떻게 이더리움 네트워크와 통신하는지 등은 아직 잘 모르겠지만 일단 튜토리얼 레슨1 완료하니까 내 크립토 좀비가 나왔다.</p>
+
+<p><img src="/public/img/cryptozombie.PNG" alt="cryptozombie" /></p>
+
+<p>못생겼어..<br />
+링크도 준다ㅎㅎ
+https://share.cryptozombies.io/ko/lesson/1/share/Jungyu_Kim</p>
+
+<hr />
+<p>이제 챕터2로 넘어갔다. 이거 생각보다 재밌다.</p>
+
+<h2 id="매핑과-주소"><strong>매핑과 주소</strong></h2>
+
+<p>이더리움 블록체인은 자신의 지갑 계좌번호인 주소를 가지고 있다. 즉 여기서 주소는 특정 유저나 스마트컨트랙트가 가지고 있는 고유한 값이라는 것을 알 수 있다.</p>
+
+<p>매핑은 구조화된 데이터를 저장하는 방법 중 하나인데, (key-value) 형식으로 저장한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mapping</span> <span class="p">(</span><span class="n">address</span> <span class="o">=&gt;</span> <span class="n">uint</span><span class="p">)</span> <span class="n">public</span> <span class="n">accountBalance</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="msgsender"><strong>msg.sender</strong></h2>
+
+<p>msg.sender는 모든 함수에서 이용 가능한 전역변수이다. 이녀석은 현재 함수를 호출한 주소를 가리키고 있어서 누가 함수에 접근하였는지 저장할 수 있고, 또한 외부에서 임의로 추적할 수 없도록 하는 보안성을 가지고 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mapping</span> <span class="p">(</span><span class="n">uint</span> <span class="o">=&gt;</span> <span class="n">address</span><span class="p">)</span> <span class="n">public</span> <span class="n">zombieToOwner</span><span class="p">;</span>
+<span class="n">mapping</span> <span class="p">(</span><span class="n">address</span> <span class="o">=&gt;</span> <span class="n">uint</span><span class="p">)</span> <span class="n">ownerZombieCount</span><span class="p">;</span>
+
+<span class="n">function</span> <span class="n">_createZombie</span><span class="p">(</span><span class="n">string</span> <span class="n">_name</span><span class="p">,</span> <span class="n">uint</span> <span class="n">_dna</span><span class="p">)</span> <span class="n">private</span> <span class="p">{</span>
+    <span class="n">uint</span> <span class="nb">id</span> <span class="o">=</span> <span class="n">zombies</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">Zombie</span><span class="p">(</span><span class="n">_name</span><span class="p">,</span> <span class="n">_dna</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">zombieToOwner</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">;</span>
+    <span class="n">ownerZombieCount</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">NewZombie</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">_name</span><span class="p">,</span> <span class="n">_dna</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>위의 코드를 보면 <code class="highlighter-rouge">_createZombie</code>함수가 실행되었을 때 매핑된 <code class="highlighter-rouge">zombieToOwner</code>는 <code class="highlighter-rouge">id(uint)</code>에 대한 <code class="highlighter-rouge">msg.sender(address)</code>를 저장하고 또 <code class="highlighter-rouge">ownerZombieCount</code>는 <code class="highlighter-rouge">msg.sender(address)</code>에 대한 <code class="highlighter-rouge">uint</code>형 을 생성하여(초기에는 0) 변형한다.</p>
+
+<p>내가 봐도 좀 외계어처럼 설명하기는 했는데, 간단히 말하자면 좀비를 생성한 사용자를 사용자의 id와 묶고, 사용자가 만든 좀비개수를 업데이트하는 것이다.</p>
+
+<p><em>mapping 이거 겁나게 멋있다.</em></p>
+
+<h2 id="require"><strong>require</strong></h2>
+
+<p>함수에게 제약조건을 거는 녀석이다. 만약 ~라면 함수를 실행해라 라는 if같은 기능을 제공해 준다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">function</span> <span class="n">createRandomZombie</span><span class="p">(</span><span class="n">string</span> <span class="n">_name</span><span class="p">)</span> <span class="n">public</span> <span class="p">{</span>
+    <span class="n">require</span><span class="p">(</span><span class="n">ownerZombieCount</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">uint</span> <span class="n">randDna</span> <span class="o">=</span> <span class="n">_generateRandomDna</span><span class="p">(</span><span class="n">_name</span><span class="p">);</span>
+    <span class="n">_createZombie</span><span class="p">(</span><span class="n">_name</span><span class="p">,</span> <span class="n">randDna</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">require(ownerZombieCount[msg.sender] == 0);</code> 부분은 한 사용자당 이 함수를 한번만 실행하여 좀비를 생성할 수 있도록 제약을 걸어준다.</p>
+
+<h2 id="상속"><strong>상속</strong></h2>
+
+<p>뭐 이건 익숙한 내용이라 자세한 설명은 패스한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="s">"./zombiefactory.sol"</span><span class="p">;</span>
+
+<span class="n">contract</span> <span class="n">ZombieFeeding</span> <span class="ow">is</span> <span class="n">ZombieFactory</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+<p>코드를 분리해서 ZombieFactory를 상속한 ZombieFeeding을 만들었다.</p>
+
+<h2 id="storage-memory"><strong>Storage, Memory</strong></h2>
+
+<p>Storage는 블록체인 상에 영구적으로 저장되는 하드디스크의 느낌이고 Memory는 임시적으로 저장되는 RAM의 느낌으로 이해하면 된다. 실용적으로 설명해 보면 상태변수가 storage고 함수 안에서 선언된 임시 변수들이 memory이다.</p>
+
+<h2 id="internal-external"><strong>Internal, External</strong></h2>
+
+<p>함수 접근 제어자에는 public, private 말고도 internal 과 external이 있다. internal은 컨트랙트를 상속하는 컨트랙트에서 접근이 가능하도록 하고 external은 컨트랙트 바깥에서만 호출될 수 있고 안에서는 호출될 수 없도록 한다.</p>
+
+<h2 id="interface"><strong>Interface</strong></h2>
+
+<p>외부의 컨트랙트에서 필요한 데이터를 가져오는 상호작용을 할 수 있게 해주는 기능이다. 간단한 함수명만 정의를 해주면 된다. 아래는 크립토 키티 컨트랙트에서 크립토키티를 가져오는 인터페이스이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#getKitty의 함수 모습
+</span>
+<span class="n">function</span> <span class="n">getKitty</span><span class="p">(</span><span class="n">uint256</span> <span class="n">_id</span><span class="p">)</span> <span class="n">external</span> <span class="n">view</span> <span class="n">returns</span> <span class="p">(</span>
+    <span class="nb">bool</span> <span class="n">isGestating</span><span class="p">,</span>
+    <span class="nb">bool</span> <span class="n">isReady</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">cooldownIndex</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">nextActionAt</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">siringWithId</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">birthTime</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">matronId</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">sireId</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">generation</span><span class="p">,</span>
+    <span class="n">uint256</span> <span class="n">genes</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="n">Kitty</span> <span class="n">storage</span> <span class="n">kit</span> <span class="o">=</span> <span class="n">kitties</span><span class="p">[</span><span class="n">_id</span><span class="p">];</span>
+    <span class="n">isGestating</span> <span class="o">=</span> <span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">siringWithId</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">isReady</span> <span class="o">=</span> <span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">cooldownEndBlock</span> <span class="o">&lt;=</span> <span class="n">block</span><span class="o">.</span><span class="n">number</span><span class="p">);</span>
+    <span class="n">cooldownIndex</span> <span class="o">=</span> <span class="n">uint256</span><span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">cooldownIndex</span><span class="p">);</span>
+    <span class="n">nextActionAt</span> <span class="o">=</span> <span class="n">uint256</span><span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">cooldownEndBlock</span><span class="p">);</span>
+    <span class="n">siringWithId</span> <span class="o">=</span> <span class="n">uint256</span><span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">siringWithId</span><span class="p">);</span>
+    <span class="n">birthTime</span> <span class="o">=</span> <span class="n">uint256</span><span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">birthTime</span><span class="p">);</span>
+    <span class="n">matronId</span> <span class="o">=</span> <span class="n">uint256</span><span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">matronId</span><span class="p">);</span>
+    <span class="n">sireId</span> <span class="o">=</span> <span class="n">uint256</span><span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">sireId</span><span class="p">);</span>
+    <span class="n">generation</span> <span class="o">=</span> <span class="n">uint256</span><span class="p">(</span><span class="n">kit</span><span class="o">.</span><span class="n">generation</span><span class="p">);</span>
+    <span class="n">genes</span> <span class="o">=</span> <span class="n">kit</span><span class="o">.</span><span class="n">genes</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">#우리의 크립토 좀비에서 interface 정의
+</span><span class="n">contract</span> <span class="n">KittyInterface</span> <span class="p">{</span>
+    <span class="n">function</span> <span class="n">getKitty</span><span class="p">(</span><span class="n">uint256</span> <span class="n">_id</span><span class="p">)</span> <span class="n">external</span> <span class="n">view</span> <span class="n">returns</span> <span class="p">(</span>
+        <span class="nb">bool</span> <span class="n">isGestating</span><span class="p">,</span>
+        <span class="nb">bool</span> <span class="n">isReady</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">cooldownIndex</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">nextActionAt</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">siringWithId</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">birthTime</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">matronId</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">sireId</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">generation</span><span class="p">,</span>
+        <span class="n">uint256</span> <span class="n">genes</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>getKitty 함수 첫줄(반환자까지) 적고 세미콜론 적어주면 정의된다. 이렇게 설정한 Interface는 다음과 같이 활용한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">address</span> <span class="n">ckAddress</span> <span class="o">=</span> <span class="mh">0x06012c8cf97BEaD5deAe237070F9587f8E7A266d</span><span class="p">;</span>
+<span class="n">KittyInterface</span> <span class="n">kittyContract</span> <span class="o">=</span> <span class="n">KittyInterface</span><span class="p">(</span><span class="n">ckAddress</span><span class="p">);</span>
+</code></pre></div></div>
+
+<hr />
+<p>여차여차해서 챕터2까지 완료했다. 드디어 크립토키티를 먹은 크립토좀비를 생성해냈다.</p>
+
+<p><img src="/public/img/atekitty.PNG" alt="atekitty" /></p>
+
+<p>아오 고양이 먹더니 더못생겼네.</p>
+
+<p>챕터2가 끝나고 챕터3로 들어가니 부자연스럽게 번역된 한글 문구가 경고를 했다. 재밌는건 여기까지였고 이제 솔리디티에 대한 기술적인 부분을 깊게 다룰꺼야.</p>
+
+<p>집중력이 조금 떨어진 것 같은데, 마음을 다잡고 다음 포스팅에서 챕터3로 들어가자.</p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/dapp/2018/05/17/dapp-solidity1/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/dapp/2018/05/17/dapp-solidity1'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

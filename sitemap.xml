@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+    <url>
+      <loc>http://0.0.0.0:4000/blog/2019/04/25/docker-jekyll0/</loc>
+      
+        <lastmod>2019-04-25T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/blog/2019/04/25/docker-jekyll/</loc>
+      
+        <lastmod>2019-04-25T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/docker/2019/04/24/docker-install-mac/</loc>
+      
+        <lastmod>2019-04-24T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/hackintosh/2019/04/20/laptop-to-mac/</loc>
+      
+        <lastmod>2019-04-20T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/blog/2019/04/17/blog-latex-implementation/</loc>
+      
+        <lastmod>2019-04-17T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/bigdata/2019/03/18/kafka/</loc>
+      
+        <lastmod>2019-03-18T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/tips/2019/03/16/asciinema/</loc>
+      
+        <lastmod>2019-03-16T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2019/03/12/finite-state-automata-dfa-nfa/</loc>
+      
+        <lastmod>2019-03-12T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2019/03/12/finite-state-automata-basic/</loc>
+      
+        <lastmod>2019-03-12T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2019/03/10/latex-install/</loc>
+      
+        <lastmod>2019-03-10T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2019/03/07/text-mining-introduction/</loc>
+      
+        <lastmod>2019-03-07T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/fintech/2019/02/22/fintech-academy-team-project/</loc>
+      
+        <lastmod>2019-02-22T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/web/2018/12/08/freelancer-matching-service/</loc>
+      
+        <lastmod>2018-12-08T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2018/10/20/database-2/</loc>
+      
+        <lastmod>2018-10-20T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2018/10/20/database-1/</loc>
+      
+        <lastmod>2018-10-20T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2018/10/15/compiler-design-dfa-quiz/</loc>
+      
+        <lastmod>2018-10-15T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2018/10/14/compiler-design-lexical-analysis/</loc>
+      
+        <lastmod>2018-10-14T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/school/2018/10/14/compiler-design-course-intro/</loc>
+      
+        <lastmod>2018-10-14T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/iot/2018/07/13/mqtt-test/</loc>
+      
+        <lastmod>2018-07-13T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/dapp/2018/05/17/dapp-solidity2/</loc>
+      
+        <lastmod>2018-05-17T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/dapp/2018/05/17/dapp-solidity1/</loc>
+      
+        <lastmod>2018-05-17T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/dapp/2018/05/17/dapp-concept/</loc>
+      
+        <lastmod>2018-05-17T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/os/2018/05/04/linux-mint-preview/</loc>
+      
+        <lastmod>2018-05-04T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/web/2018/04/18/vuejs-parcel-spa/</loc>
+      
+        <lastmod>2018-04-18T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/iot/2018/02/15/raspberry-pi-zero-project/</loc>
+      
+        <lastmod>2018-02-15T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/web/2018/02/01/google-map-api/</loc>
+      
+        <lastmod>2018-02-01T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/python/2018/01/30/google-tensorflow/</loc>
+      
+        <lastmod>2018-01-30T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/web/2018/01/29/nodejs/</loc>
+      
+        <lastmod>2018-01-29T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/tips/2017/12/09/eduple-rooting/</loc>
+      
+        <lastmod>2017-12-09T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/python/2017/11/30/python-xlrd/</loc>
+      
+        <lastmod>2017-11-30T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/tips/2017/11/28/git-flow-using/</loc>
+      
+        <lastmod>2017-11-28T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/tips/2017/11/24/how-to-run-server-c9/</loc>
+      
+        <lastmod>2017-11-24T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/tips/2017/11/23/free-image-sites/</loc>
+      
+        <lastmod>2017-11-23T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/python/2017/11/22/starting-django/</loc>
+      
+        <lastmod>2017-11-22T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/python/2017/11/22/selenium-crawling/</loc>
+      
+        <lastmod>2017-11-22T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://0.0.0.0:4000/tips/2017/11/22/markdown-prac/</loc>
+      
+        <lastmod>2017-11-22T00:00:00-06:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+</urlset>

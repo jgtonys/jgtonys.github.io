@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Compiler Design : CourseIntro">
+	<meta name="twitter:description" content="2018년도 2학기 연세대학교 Compiler Design CourseIntro 수업내용이다
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Compiler Design : CourseIntro">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="2018년도 2학기 연세대학교 Compiler Design CourseIntro 수업내용이다
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/school/2018/10/14/compiler-design-course-intro/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Compiler Design : CourseIntro &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">14 Oct 2018</span>
+  <h1 class="post-title">Compiler Design : CourseIntro</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#compiler" class="post-tag">compiler</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <p>2018년도 2학기 연세대학교 Compiler Design CourseIntro 수업내용이다</p>
+
+<!-- more -->
+
+<h2 id="compiler-design--courseintro"><strong>Compiler Design : CourseIntro</strong></h2>
+
+<ul>
+  <li>
+    <p>이전의 컴퓨터들</p>
+
+    <ul>
+      <li>1940년대 처음으로 나온 전기적 컴퓨터는 굉장히 크고, 스위치와 카드 리더기로 만든 binary machine code 로 프로그램 되었다. 따라서 코드의 재사용이 불가능하고, 유지보수가 힘들었다.</li>
+      <li>‘버그’ 라는 말은 기계에 벌레가 들어가서 나타난 오류에서 파생되었다.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Assembly Languages</p>
+
+    <ul>
+      <li>어셈블리 언어는 기계어 명령어를 상징적인 기호로 변환하여 기억하는 ‘니모닉’ 개념으로 표현하기 위해 발명되었다.</li>
+      <li>어셈블리 언어 코드와 기계어는 1대1 매칭이 된다. 따라서 번역하는데 직관적이다.</li>
+      <li>Assembler 는 어셈블리 언어를 기계어로 변환해준다</li>
+      <li><strong>기계어와 비교한 어셈블리 언어의 장점</strong>
+        <ul>
+          <li>니모닉은 인간이 이해하기 쉽다</li>
+          <li>프로그램을 재사용하고(같은 architecture 에서만!) 재배치할 수 있도록 해준다</li>
+          <li>어셈블러를 사용해서 기계어로 변환한다(수동변환보다 더 생산적이다)</li>
+          <li>매크로를 사용할 수 있다</li>
+        </ul>
+      </li>
+      <li><strong>Inline assembly</strong> : 어플리케이션단의 high level language에 동작속도를 빠르게 하기 위해 assembly language를 적용한다</li>
+    </ul>
+  </li>
+  <li>
+    <p>High-Level Languages</p>
+
+    <ul>
+      <li>1950년대 FORTRAN(FORmula TRANslator) 의 발명으로 시작되었다</li>
+      <li>컴파일러는 기계에 종속적이지 않은(machine-independent) 한 프로그램의 개발을 가능하게 했다. 또는 hardware independent 하다고 한다.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Compilation</p>
+
+    <ul>
+      <li>컴파일러는 high-level 프로그램을 목표 프로그램의 기계어로 변환시켜준다.</li>
+      <li>컴파일러는 프로그램이 잘못되었는지 판단할 수 있다.</li>
+      <li>컴파일러는 맞는 효과적인 코드를 만든다.</li>
+      <li>컴파일러는 나중에 사용자가 목표 프로그램을 돌릴 수 있게 해준다.</li>
+      <li>compilation 은 두개의 부분으로 나누어진다
+        <ul>
+          <li>Analysis 단계 : 소스코드에 표현될 명령을 선택한다. 각각의 명령들은 트리구조로 기록된다.</li>
+          <li>Synthesis 단계 : 트리구조를 받아서 명령을 타겟 프로그램으로 변환한다.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <blockquote>
+      <p>platform X : 어떤 OS든 + 어떤 하드웨어이든을 지칭</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>컴파일러 구조</p>
+
+    <p>Source Code -&gt; Lexical Analyzer -&gt; Syntax Analyzer -&gt; Semantic Analyzer -&gt; Intermediate Code Generator // 여기까지가 Compiler Frontend (Analysis 단계)</p>
+
+    <p>-&gt; Code Optimizer -&gt; Code Generator -&gt; Target Assembly Program // Compiler Backend(Synthesis 단계)</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="lexical-analysis-토큰화"><strong>Lexical Analysis (토큰화)</strong></h2>
+
+<ul>
+  <li>
+    <p>Scanner에 의해 이루어진다.</p>
+  </li>
+  <li>
+    <p>CHARACTER들을 토큰으로 바꾼다.</p>
+  </li>
+  <li>
+    <p><strong>lexeme</strong>이란 해당 토큰의 스트링 이름이다.</p>
+
+    <blockquote>
+      <p>ex) &lt;id,1&gt; 의 lexeme은 “position”</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Scanner는 공백과 주석을 없앤다.</p>
+  </li>
+  <li>
+    <p>Scanner는 문법적 오류나 토큰형성에 문제가 되는 부분을 에러낸다.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="syntax-analysis-문법적-오류-체크"><strong>Syntax Analysis (문법적 오류 체크)</strong></h2>
+
+<ul>
+  <li>
+    <p>Parser 에 의해 이루어진다.</p>
+
+    <blockquote>
+      <p>토큰을 AST로 정리한다.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>문법은 Context-free grammer(CFG)로 정의된다.</p>
+
+    <blockquote>
+      <p>CFG는 AST의 구조를 정의한다.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Parser는 AST가 생성되지 않으면 syntax error 를 생성한다.</p>
+
+    <blockquote>
+      <p>이런 오류있는 프로그램은 CFG에 맞지 않는다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="semantic-analysis-의미-체크"><strong>Semantic Analysis (의미 체크)</strong></h2>
+
+<ul>
+  <li>
+    <p>AST를 분석함으로서 프로그램의 의미를 분석한다.(Consistency check)</p>
+
+    <ul>
+      <li>
+        <p>Static semantic checks(compile time)</p>
+
+        <ol>
+          <li>identifier가 사용되기 전에 정의되어있는지</li>
+          <li>identifier가 부적절하게 사용된 경우(함수의 이름, 형변환)</li>
+          <li>함수의 argument 체크</li>
+          <li>type checking (a[2.6],int2float)</li>
+        </ol>
+      </li>
+      <li>
+        <p>Static semantic check 의 예시</p>
+
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">)</span> <span class="o">{}</span>
+<span class="kt">int</span> <span class="n">a</span><span class="o">;</span> <span class="n">a</span><span class="o">(</span><span class="s">"hi"</span><span class="o">);</span>
+<span class="mi">10</span><span class="o">(</span><span class="s">"hi"</span><span class="o">);</span>
+<span class="s">"hi"</span> <span class="o">+</span> <span class="mi">77</span><span class="o">;</span>
+<span class="kt">void</span> <span class="nf">foo</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">);</span> <span class="n">foo</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Dynamic semantic checks(run-time)</p>
+
+        <ol>
+          <li>bound를 벗어난 array</li>
+          <li>division by zero</li>
+        </ol>
+      </li>
+      <li>
+        <p>Dynamic semantic check 의 예시</p>
+
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="n">readline</span><span class="o">();</span>
+<span class="k">if</span><span class="o">(</span><span class="n">b</span><span class="o">==</span><span class="mi">0</span><span class="o">)</span> <span class="n">raise</span> <span class="n">ERROR</span><span class="o">;</span> <span class="c1">//run time check</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="o">;</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Dynamic semantic check(run-time) Problems</p>
+
+        <ol>
+          <li>It requires additional checks -&gt; <strong>overhead(SLOW)</strong></li>
+          <li>Size of program increases(<strong>Bigger</strong>)</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Semantic check 를 실패하면 semantic error 이다</p>
+  </li>
+  <li>
+    <p>프로그램의 의미를 분석해서 Decorated AST 를 배출한다.</p>
+
+    <blockquote>
+      <p>AST의 형이나 식의 의미를 담은 것이 Decorated AST</p>
+
+      <p>ex) X + Y 의 operand type</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><strong>여기까지의 단계가 Compiler Frontend (high level)</strong></p>
+
+<hr />
+
+<h2 id="intermediate-code-generation-ast---ir"><strong>Intermediate Code Generation (AST -&gt; IR)</strong></h2>
+
+<ul>
+  <li>AST를 IR로 변환한다.</li>
+  <li>IR 은 기계 지시어로 바꾸는 변환을 쉽게 한다.</li>
+  <li>IR 디자인의 사소한 결정이 컴파일러의 속도나 효율에 크게 타격을 줄 수 있다.</li>
+  <li>Popular IRs : ASTs(GCC), Directed acyclic graphs(DAGs), Three address code(3AC), Static single assignment form = SSA (GCC)</li>
+</ul>
+
+<hr />
+
+<h2 id="code-optimization-메모리효율-증가"><strong>Code Optimization (메모리,효율 증가)</strong></h2>
+
+<ul>
+  <li>
+    <p>Code optimizer가 하는일</p>
+
+    <ul>
+      <li>
+        <p>IR을 분석하고 향상시킨다.</p>
+      </li>
+      <li>
+        <p>실행속도, 파워 소모량, footprint의 감소</p>
+
+        <blockquote>
+          <p>footprint 란 차지하는 메모리나 효율을 의미한다.</p>
+        </blockquote>
+      </li>
+      <li>
+        <p>기초 semantic은 반드시 유지한다.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>대표적인 optimizations</p>
+
+    <ul>
+      <li>상수를 계산한다. (Constant Propagation)</li>
+      <li>쓸모없거나 도달할 수 없는 코드 삭제 (Dead code elimination)</li>
+      <li>덜 자주 실행되는 곳으로 계산코드를 옮김 (Move to out of a loop body)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test1.PNG" alt="test1" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test2.PNG" alt="test2" /></p>
+
+<hr />
+
+<h2 id="code-generation-기계어-생성"><strong>Code Generation (기계어 생성)</strong></h2>
+
+<ul>
+  <li>타겟 코드를 만들어낸다</li>
+  <li>각 IR instruction 마다 타겟 instruction 을 선택한다</li>
+  <li>프로그램의 각 부분마다 레지스터에 어떤 변수를 저장할지 결정한다
+    <ul>
+      <li>레지스터의 개수는 변수의 개수에 비해 제한되어있기 때문에  어떤 변수를 레지스터에 저장할지는 중요한 요소이다.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="compiler-phases-theory-and-tools"><strong>Compiler Phases, Theory and Tools</strong></h2>
+
+<ul>
+  <li>Lexical analysis : REs(regular expressions), scanner tools</li>
+  <li>Syntax analysis : parser tools</li>
+  <li>Semantic analysis :  type checking, this is not generator (not automatic)</li>
+  <li>Code optimizations : doing sophisticated analysis for optimizations (data-flow engines, LLVM framework) &lt;- this is not compiler, this is tools</li>
+  <li>Code generation : equally complicated (automatic code generators)</li>
+</ul>
+
+<hr />
+
+<h2 id="error-detection-error-reporting-and-recovery"><strong>Error Detection, Error Reporting and Recovery</strong></h2>
+
+<p>If compiler finds error, generates the below error</p>
+
+<ul>
+  <li>
+    <p>Lexical errors</p>
+
+    <blockquote>
+      <p>“abc //unterminated string</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Syntax errors</p>
+
+    <blockquote>
+      <p>a + (2*b //parenthesis</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Semantic errors</p>
+
+    <blockquote>
+      <p>variable not defined(delcared)</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>컴파일러는 에러가 난 위치를 정확하게 보고해야 한다.</p>
+
+<p>에러를 탐지한 후 컴파일러는 복구하고 진행할 수도 있다.(멈추지 않고 계속 에러가 있는지 찾는다)</p>
+
+<h3 id="error-recovery--all-error-find---fix-all---recompile-not-1-to-1"><em>Error recovery : all error find -&gt; fix all -&gt; recompile</em> (not 1 to 1)</h3>
+
+<blockquote>
+  <p>Error recovery is optional with the compiler project of this course</p>
+</blockquote>
+
+<hr />
+
+<h2 id="jvm--java-bytecode-primer"><strong>JVM &amp; Java Bytecode Primer</strong></h2>
+
+<ul>
+  <li>
+    <p>JVM</p>
+
+    <p>Java bytecode를 분석하는 processor 라고 이해 (사실 program)</p>
+
+    <p>이 프로그램의 목적은 OS 위에서 Java bytecode 를 분석하는것</p>
+
+    <p>own instruction set, construction set 을 가짐 (마치 processor처럼)</p>
+
+    <p>higher abstraction level 이라고 함. (CPU는 low abstraction level)</p>
+
+    <p>=&gt; java exception, java garbage collection 등을 가지므로 higher abstraction level 이다.</p>
+  </li>
+  <li>
+    <p>Compiler : Java bytecode를 생성하는 역할</p>
+  </li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test3.PNG" alt="test3" /></p>
+
+<hr />
+
+<h2 id="jvm-stack-and-instruction-set"><strong>JVM Stack and Instruction Set</strong></h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fload_</span><span class="o">&lt;</span><span class="n">n</span><span class="o">&gt;</span> <span class="c1">// load instruction. float value is on to the stack</span>
+<span class="n">fstore_</span><span class="o">&lt;</span><span class="n">n</span><span class="o">&gt;</span> <span class="c1">// store instruction. float value is poped and store it in local variable</span>
+<span class="n">i2f</span> <span class="c1">// take int convert to float (topmost stack-element)</span>
+<span class="n">bipush</span> <span class="c1">// push byte value onto the stack</span>
+<span class="n">fmul</span> <span class="c1">// perform floating point multiplication of the topmost stack elements,push the result onto the stack</span>
+<span class="n">fadd</span> <span class="c1">// compute the sum of the two topmost stack elements, push the result onto the stack.</span>
+</code></pre></div></div>
+
+<p>These instructions run on JVM</p>
+
+<ul>
+  <li><strong>JVM IP (instruction pointer) : initially points to 0, increment</strong></li>
+  <li>JVM no need to use registers, use stack.</li>
+  <li>Argument 는 stack 에 저장된다.</li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test4.PNG" alt="test4" /></p>
+
+<p>Q. 왜 JVM은 stack based 를 사용하는가?</p>
+
+<p>A. real processor는 register가 있고, JVM은 stack을 사용하므로 완벽하게 맞지 않는다. 어플리케이션의 performance penalty 라고 볼 수 있다(CPU와 비교하여).  stack code is smaller than register code (not many operands),</p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/school/2018/10/14/compiler-design-course-intro/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/school/2018/10/14/compiler-design-course-intro'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>
