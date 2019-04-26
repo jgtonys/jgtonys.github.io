@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Compiler Design : Lexical Analysis">
+	<meta name="twitter:description" content="2018년도 2학기 연세대학교 Compiler Design Lexical Analysis 수업내용이다
+
+Compiler에서 Scanner의 Token 생성방법과 알고리즘을 배운다
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Compiler Design : Lexical Analysis">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="2018년도 2학기 연세대학교 Compiler Design Lexical Analysis 수업내용이다
+
+Compiler에서 Scanner의 Token 생성방법과 알고리즘을 배운다
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/school/2018/10/14/compiler-design-lexical-analysis/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Compiler Design : Lexical Analysis &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">14 Oct 2018</span>
+  <h1 class="post-title">Compiler Design : Lexical Analysis</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#compiler" class="post-tag">compiler</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <p>2018년도 2학기 연세대학교 Compiler Design Lexical Analysis 수업내용이다</p>
+
+<p>Compiler에서 Scanner의 Token 생성방법과 알고리즘을 배운다</p>
+
+<!-- more -->
+
+<h2 id="lexical-analysis"><strong>Lexical Analysis</strong></h2>
+
+<h2 id="the-role-of-the-scanner"><strong>The Role of the Scanner</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test5.PNG" alt="test5" /></p>
+
+<ul>
+  <li>소스코드의 캐릭터를 토큰으로 변환한다.</li>
+  <li>&lt;id,x&gt; &lt;=&gt; &lt;id,y&gt; &lt;+&gt; &lt;int literal,21&gt;&lt;;&gt; 등등으로 바꾼다</li>
+  <li>lexeme이란 단어를 구성하는 캐릭터이다. 패턴에 의해 매칭된 문자열</li>
+  <li>토큰은 튜플이다. &lt;Token_type, value&gt;</li>
+</ul>
+
+<h2 id="tokens"><strong>Tokens</strong></h2>
+
+<ul>
+  <li>MiniC 토큰의 types
+    <ol>
+      <li>identifier : i, j, initial, position 등의 변수를 말한다</li>
+      <li>keywords : if, for, int, float, bool 등의 함수 및 기능들</li>
+      <li>operators : +, -, * , &amp;&amp;, &lt;= 등의 연산자</li>
+      <li>seperators : {},(),[],;,등의 구분자</li>
+      <li>literals : integer literals, float, bool, string 등의 값(value)</li>
+    </ol>
+  </li>
+  <li>각각의 토큰은 언어에 따라 달라진다.</li>
+</ul>
+
+<h2 id="tokens-can-be-described-by-patterns"><strong>Tokens can be described by patterns</strong></h2>
+
+<ul>
+  <li>
+    <p>Pattern : 특정 토큰 타입의 lexeme 을 설명하는 규칙</p>
+
+    <blockquote>
+      <p>INTLITERAL,ID,+,if 등</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>패턴은 세트 안에 있는 각 문자열에 맞아야 한다.</p>
+  </li>
+  <li>
+    <p>formal notation 이 필요하다</p>
+
+    <blockquote>
+      <p>프로그래밍 언어의 토큰을 구체화하게 한다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test6.PNG" alt="test6" /></p>
+
+<ul>
+  <li>특정 패턴 X에 의해 설명된 lexeme은 X의 언어라고 한다.(language of X)</li>
+  <li>we write <strong>L(X)</strong> to denote the language of pattern X =&gt; Pattern 이 X 이고 lexemes 들의 집합이 L(X)이다</li>
+</ul>
+
+<h2 id="string-concatenation"><strong>String Concatenation</strong></h2>
+
+<p>ex) x and y are strings, xy is the string formed by appending y to x</p>
+
+<p>ex) key + board = keyboard</p>
+
+<h2 id="set-operations"><strong>Set Operations</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test7.PNG" alt="test7" /></p>
+
+<ul>
+  <li>
+    <p>Examples</p>
+
+    <p><img src="/public/img/school/compilerdesign/test8.PNG" alt="test8" /></p>
+  </li>
+</ul>
+
+<h2 id="regular-expressions-inductive-definition"><strong>Regular Expressions (inductive definition)</strong></h2>
+
+<ul>
+  <li>
+    <p>REs 는 pattern 을 묘사하는데 사용된다</p>
+  </li>
+  <li>
+    <p>Regular expression r 은  lexeme 들의 집합인 L(r) 을 묘사하는 패턴이다</p>
+  </li>
+  <li>
+    <p>lexeme 들은 alphabet(시그마로 표현됨) 의 character로 부터 만들어진다. alphabet 으로 부터의 character 들을 ++밑줄++ 그어서 표현한다(notation)</p>
+
+    <ul>
+      <li>
+        <p>R1 : epsilon 는 epsilon 세트를 의미하는 RE 표현이다</p>
+      </li>
+      <li>
+        <p>R2 : 만약 ++a++ 가 alphabet 에 있다면 ++a++ 의 RE 표현은 {++a++} 를 의미한다</p>
+
+        <blockquote>
+          <p>L(++a++) &lt;=&gt; {++a++}</p>
+        </blockquote>
+      </li>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td>R3 : 만약 x 와 y 가 RE 표현으로 L(x) 와 L(y) 를 의미한다면, x</td>
+              <td>y 는 L(x) cup L(y) 를 뜻한다 (Alternation)</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>
+        <p>R4 : 만약 x 와 y 가 RE 표현으로 L(x) 와 L(y) 를 의미한다면, xy 는 L(x)L(y) 를 뜻한다 (Concatenation)</p>
+      </li>
+      <li>R5 : 만약 x 와 y 가 RE 표현으로 L(x) 와 L(y) 를 의미한다면, x* 는 L(x)* 를 뜻한다 (Repetition,Closure)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Examples1</p>
+  </li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test9.PNG" alt="test9" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test10.PNG" alt="test10" /></p>
+
+<h2 id="precedence-rules"><strong>Precedence Rules</strong></h2>
+
+<ul>
+  <li>
+    <p>Precedence rules 은 RE의 모호함을 없애는 것에 필요하다</p>
+
+    <p>ex) <code class="highlighter-rouge">a + b * c = a + (b * c)</code></p>
+
+    <p>Parenthesis 를 사용해서 해결할 수 있다</p>
+  </li>
+  <li>
+    <p><strong>Precedence of regular expression operators is closure, then concatenation, then alternation</strong></p>
+  </li>
+</ul>
+
+<h2 id="example-token-specifications-using-res"><strong>Example Token Specifications using REs</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test11.PNG" alt="test11" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test12.PNG" alt="test12" /></p>
+
+<h2 id="writing-regular-expressions"><strong>Writing Regular Expressions</strong></h2>
+
+<ul>
+  <li>
+    <p>Ruby binary literals : binary number 앞에는 “0b” 가 존재한다. 그리고 한쌍의 binary digit 사이에 userscore 가 포함될 수 있다. 그러나 underscore 앞 뒤에는 digit 이 꼭 존재해야 한다.</p>
+
+    <p><code class="highlighter-rouge">0b001011, 0b01</code> <code class="highlighter-rouge">0b0_101, 0b11_01</code></p>
+
+    <p><strong>NOT*&amp;</strong> <code class="highlighter-rouge">0b_1, 0b1_</code></p>
+  </li>
+  <li>
+    <p>Ada identifiers : letters, digits, underlines 사용이 가능하지만 <code class="highlighter-rouge">_A</code> 나 <code class="highlighter-rouge">A__B</code> 등은 불가능하다.</p>
+
+    <p>A letter followed by any number of letters, digits, and underlines. An identifier must not end in an underline or have two underlines in a row.</p>
+
+    <p><code class="highlighter-rouge">letter(letter|digit)* (_|epsilon) (letter|digit)*</code></p>
+  </li>
+  <li>
+    <p>A floating point number : decimal point 다음에는 하나 이상의 digit이 와야한다.</p>
+
+    <p><code class="highlighter-rouge">(+|-) digit (digit)* (.) digit (digit)*</code></p>
+  </li>
+  <li>
+    <p>Floating point number in scientific notation : e나 E가 decimal point 한자리 뒤에 와야 한다.</p>
+
+    <p><code class="highlighter-rouge"> (+|-) digit (digit)* (.) digit (((e|E) (+|-|epsilon))(digit)*|epsilon) (digit)*</code></p>
+  </li>
+</ul>
+
+<h2 id="shorthand-notations"><strong>Shorthand Notations</strong></h2>
+
+<ul>
+  <li>하나 이상의 concatenations : r^+^ = rr*</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>없거나 하나의 instance : r? = epsilon</td>
+          <td>r. 표현하면 L(r) cup {epsilon} 과 같다</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>캐릭터 classes : [a-z A-Z]</li>
+</ul>
+
+<h2 id="minic-re-examples"><strong>MiniC RE Examples</strong></h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>token</th>
+      <th>RE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>letter</td>
+      <td>[a-z A-Z_]</td>
+    </tr>
+    <tr>
+      <td>identifier</td>
+      <td>letter(letter|digit)*</td>
+    </tr>
+    <tr>
+      <td>integer</td>
+      <td>digit*</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>miniC에서는 letter가 _ 를 포함한다</li>
+  <li>Java 에서는 유니코드를 캐릭터셋으로 사용가능하다 (한글이 가능하다)</li>
+</ul>
+
+<h2 id="the-big-picture"><strong>The Big Picture</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test13.PNG" alt="test13" /></p>
+
+<ul>
+  <li>스캐너가 source code를 토큰으로 바꾸고 패턴으로 쓰여진 specification을 scanner generator가 scanner 에 전달한다.</li>
+  <li>scanner의 행위를 automate 한다 (시간 절약)</li>
+</ul>
+
+<h2 id="regular-expressions"><strong>Regular Expressions</strong></h2>
+
+<ul>
+  <li>REs 를 사용하여 lexeme 의 mapping 을  token으로 구체화할 수 있다.</li>
+  <li>Automata 이론과 알고리즘 이론을 사용해서 RE 로부터 recognizer 를 자동으로 만들 수 있다.</li>
+</ul>
+
+<h2 id="example"><strong>Example</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test14.PNG" alt="test14" /></p>
+
+<ul>
+  <li>
+    <p>그림에서의 S~0~ 는 initial state(start state) 이고 받은 input을 확인한다. 그리고 S~1~으로 이동한다.</p>
+  </li>
+  <li>
+    <p>S~1~는 input에서 decimal digit 을 찾아서 S~2~로 이동한다</p>
+  </li>
+  <li>
+    <p>S~2~ 는 accepting state이다. self transition을 진행(반복)하기도 한다. 유효한 것인지 확인한다.</p>
+  </li>
+  <li>
+    <p>만약 유효한 accpeting state 가 아니라면 S~e~ 로 이동한다. 한번 error state로 가면 돌아올 수 없다. 그냥 오류. 어떤 state에서도 error state로 이동할 수 있다.</p>
+
+    <p>ex) digit이 먼저오면 이동(r이 아닌경우)</p>
+  </li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test15.PNG" alt="test15" /></p>
+
+<h2 id="finite-automata-fa"><strong>Finite Automata (FA)</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test16.PNG" alt="test16" /></p>
+
+<h2 id="state-transition-function-and-code"><strong>State Transition Function and Code</strong></h2>
+
+<ul>
+  <li>Table encoding RE</li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test17.PNG" alt="test17" /></p>
+
+<ul>
+  <li>Skeleton recognizer</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">&lt;-</span> <span class="n">next</span> <span class="n">character</span>
+<span class="n">state</span> <span class="o">&lt;-</span> <span class="n">s0</span>
+
+<span class="nf">while</span><span class="o">(</span><span class="kt">char</span><span class="o">!=</span><span class="n">EOF</span><span class="o">)</span> <span class="c1">//as long as we have input</span>
+    <span class="n">state</span> <span class="o">&lt;-</span> <span class="n">delta</span><span class="o">(</span><span class="n">state</span><span class="o">,</span><span class="kt">char</span><span class="o">)</span>
+    <span class="kt">char</span> <span class="o">&lt;-</span> <span class="n">next</span> <span class="n">character</span>
+
+<span class="nf">if</span><span class="o">(</span><span class="n">state</span> <span class="n">is</span> <span class="n">a</span> <span class="kd">final</span> <span class="n">state</span><span class="o">)</span> <span class="k">return</span> <span class="n">success</span>
+<span class="k">else</span> <span class="k">return</span> <span class="n">failure</span>
+</code></pre></div></div>
+
+<h2 id="non-deterministic-finite-automata-nfas"><strong>Non-deterministic Finite Automata (NFAs)</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test18.PNG" alt="test18" /></p>
+
+<ul>
+  <li>맨앞에 epsilon 이 있으면 S~0~ 에서 S~1~로 이동.</li>
+  <li>S~1~은 두개의 transition을 가진다. (a에서)</li>
+  <li>이런 것을 Non-deterministric finite automaton (NFA) 라 한다.</li>
+  <li>NFA는 table에서 결정할 수 있는 것이 확실하지 않다.</li>
+  <li>NFA는 두개의 NFA를 합치기 쉽다.( epsilon 을 사용해서) 이것을  epsilon -transition이라고도 한다.</li>
+</ul>
+
+<h2 id="relationship-between-nfas-and-dfas"><strong>Relationship between NFAs and DFAs</strong></h2>
+
+<p>DFA는 NFA의 특별한 케이스이다.</p>
+
+<ul>
+  <li>
+    <p>DFA는  epsilon transition 이 없으며 하나의 state에서 어떤 두개의 transition이 존재하지 않는다.</p>
+  </li>
+  <li>
+    <p>DFA는 NFA로 나타낼 수도 있다.(당연히)</p>
+  </li>
+  <li>
+    <p>NFA는 DFA로 나타낼 수 있다.</p>
+
+    <p>가능한 state들을 시연한다. 단 하나의 character input 당 하나의 state 가 나타나야 한다.</p>
+  </li>
+</ul>
+
+<h2 id="summary--nfas-and-dfas"><strong>Summary : NFAS and DFAs</strong></h2>
+
+<p><strong>A FA is a DFA if</strong></p>
+
+<p>어떠한 state도  epsilon -transition 이 없다. 다시 말해 epsilon 인풋에는 trainsition이 존재하지 않는다. Input symbol ++a++ 에 대해 각 state s 마다 s state를 떠나는 최대 한개의 edge 가 존재한다.</p>
+
+<p><strong>A FA is an NFA</strong></p>
+
+<p>epsilon -transition 을 포함하거나,  Input symbol ++a++ 에 대해 state s 에서 여러개의 가능한 transition 이 존재할 경우이다.</p>
+
+<h2 id="automating-scanner-construction"><strong>Automating Scanner Construction</strong></h2>
+
+<p><strong>Specification 을 코드로 변환하기 위해서는</strong></p>
+
+<ol>
+  <li>Input language 에 따른 RE 를 적는다.</li>
+  <li>큰 NFA를 만든다.</li>
+  <li>NFA를 돌게하는 DFA를 만든다.</li>
+  <li>DFA의 state 개수를 최소화한다.</li>
+  <li>Scanner code 를 생성한다.</li>
+</ol>
+
+<p><strong>Scanner generators</strong></p>
+
+<ul>
+  <li>Lex 와 Flex 가 있다.</li>
+  <li>알고리즘이 필요하며 주요 issue 는 parser 로의 interface 이다.</li>
+</ul>
+
+<p><strong>Outline</strong></p>
+
+<p><img src="/public/img/school/compilerdesign/test19.PNG" alt="test19" /></p>
+
+<h2 id="re---nfa-using-thompsons-construction"><strong>RE -&gt; NFA using Thompson’s Construction</strong></h2>
+
+<p>RE 의 각 symbol 과 operator 를 NFA 로 구성하고 epsilon 을 사용하여 RE의 precedence order 에 따라 합친다. NFA를 합칠 때, state 번호를 재 부여해서 S~0~ 가 start state 가 될 수 있게 하고, 각 state 의 이름은 unique 하게 한다.</p>
+
+<p><img src="/public/img/school/compilerdesign/test20.PNG" alt="test20" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test21.PNG" alt="test21" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test22.PNG" alt="test22" /></p>
+
+<blockquote>
+  <p>위와 같이 사람은 더 간단하게 만들 수는 있지만, production 을 automate 하는 것에 중점을 맞추자</p>
+</blockquote>
+
+<h2 id="thompsons-construction"><strong>Thompson’s Construction</strong></h2>
+
+<ul>
+  <li>Syntax-driven 이다. REs의 구조를 가진다</li>
+  <li>Inductive Base
+    <ul>
+      <li>REs 의 정의에 의해 NFA 가 구성된다.</li>
+      <li>Inductive step 에서 작은 NFA로 bigger NFA를 만든다.(입실론을 사용해서)</li>
+    </ul>
+  </li>
+  <li>Important : 만약 RE r 에서 symbol ++a++ 가 여러번 나타나면 각각의 ++a++ 에 대해 별도의 NFA를 구성해야 한다.</li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test23.PNG" alt="test23" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test24.PNG" alt="test24" /></p>
+
+<h2 id="subset-construction-nfa---dfa"><strong>Subset Construction (NFA -&gt; DFA)</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test25.PNG" alt="test25" /></p>
+
+<ul>
+  <li>S~1~ 에서 a 가 재귀하는지 S~2~로 가는지 확신할 수 없다. 그러므로 두개의 transition을 병행하여 따라간다.</li>
+  <li>virtual state 라는 것을 만들어서 symbol ++a++ 가 input 일 때 가능한 S~1~ 의 trainsition 인 S~1~과 S~2~를 포함하게 한다.</li>
+  <li>virtual state 는 모든 states의 subset 이다.(non-empty)</li>
+</ul>
+
+<p><img src="/public/img/school/compilerdesign/test26.PNG" alt="test26" /></p>
+
+<ul>
+  <li>{S~0~,S~1~} 는 start state. 이녀석이 가질 수 있는 가능성은 a로 갈 경우 {S~1~,S~2~} 가 될 수 있고, b로 갈 경우에는 S~1~밖에 존재하지 않는다.</li>
+</ul>
+
+<h2 id="alogorithm--nfa---dfa-with-subset-construction"><strong>Alogorithm : NFA -&gt; DFA with Subset Construction</strong></h2>
+
+<p>On-the-fly simulation 은 RE 가 한번만 사용될 경우 유용하지만 컴파일러가 language 의 token을 계속해서 만들어 내야할 경우에는 적절하지 않다. 그래서 Subset Construction 을 사용한다.</p>
+
+<p>Subset Construction 은 NFA state 들에 적절히 이용될 수 있다. 각 NFA state 들은 DFA state 가 된다.</p>
+
+<p><img src="/public/img/school/compilerdesign/test27.PNG" alt="test27" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test28.PNG" alt="test28" /></p>
+
+<ol>
+  <li>
+    <p>Start state에서의 변환은 epsilon-closure 를 가지고 있다. 그러므로 맨 처음에 start state 에 대한  epsilon-closure 값 (set of states reachable from S~0~) {S~0~,S~1~} 을 Dstates 에 넣는다.</p>
+
+    <blockquote>
+      <p>여기서 Dstates 란 DFA -&gt; NFA 를 통해 만들어지는 새로운 states 이다.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>While 문을 보면 Dstates 가 끝날때까지 반복하며, for 문 안에서는 alphabet 에 포함된 모든 character 당 결과 값들을 계산하도록 되어있다. 처음 반복문에 들어오면 T는 {S~0~,S~1~} 이고, 알파는 a 와 b 가 되는데, 알파 a 에 대한 U의 값은 {S~1~,S~2~} 가 되며 이는 기존의 Dstates 에 포함되지 않았기 때문에 추가한다. 또 알파 b에 대한 U의 값은 {S~1~} 이 나타나고 또한 Dstates 에 추가한다. 마지막으로 각 결과 값을 델타에 저장하고 반복문을 위와 같이 반복한다.</p>
+  </li>
+</ol>
+
+<p><img src="/public/img/school/compilerdesign/test29.PNG" alt="test29" /></p>
+
+<p>위와 같은 Subset Construction 을 통한 NFA -&gt; DFA 의 결과로 table을 만들 수 있고, 각각의 Dstates 를 토대로 새로운 DFA 를 만들어 낼 수 있다. 여기서 기존의 NFA state 에서 accepting state 였던 state 를 포함하는 Dstate 는 모두 새로운 DFA 의 accepting state 가 된다.</p>
+
+<h2 id="example--nfa---dfa-with-subset-construction"><strong>Example : NFA -&gt; DFA with Subset Construction</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test30.PNG" alt="test30" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test31.PNG" alt="test31" /></p>
+
+<p>Subset Construction 에 의해 새롭게 만들어진 DFA 에는 accepting state 가 3개이다.(기존 NFA의 accpeting state 를 포함하는 Dstate 가 3개 이므로). 또한 모든 transition 은 deterministic 으로 변했다.</p>
+
+<p>적은수의 state는 테이블의 관점에서 보았을 때 유리하다(좋다). 이제 DFA를 더 축약하는 알고리즘을 배운다.</p>
+
+<h2 id="dfa-minimization-overview"><strong>DFA Minimization Overview</strong></h2>
+
+<ol>
+  <li>다른 state와 구별가능한 state를 찾는다</li>
+  <li>구별되지 않는 state는 하나의 state로 표현한다.</li>
+</ol>
+
+<ul>
+  <li>
+    <p>두개의 state중 하나는 input 값에 의해 accepting state가 되고 다른 하나는 accepting state가 아닌 곳으로 이동하였을 때, 그 두개는 그 input 값에 대해 구별가능한 state라고 한다.</p>
+
+    <p><img src="/public/img/school/compilerdesign/test32.PNG" alt="test32" /></p>
+  </li>
+  <li>
+    <p>Partition 의 개념</p>
+  </li>
+</ul>
+
+<p>{S0,S1,S2,S3} =&gt; {S0,S1},{S2},{S3}</p>
+
+<blockquote>
+  <p>// these sets are divided by partition, S0 and S1 is not distinguished</p>
+</blockquote>
+
+<p>각각의 state s 는 정확히 하나의 partition p 에 포함된다. 따라서 같은 세트에 있는 state 들은 아직 구별되지 않았다고 하고, 다른 세트에 있는 state 들은 구별되었다고 한다.</p>
+
+<blockquote>
+  <p>ex) 위의 그림에서 s0 와 s1은 구별되지 않았고, 나머지는 구별되었다.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>초기 partition P 는 두개의 세트를 포함한다.</p>
+
+    <p>하나는 Accepting state F 와 non-accepting state S-F 이다. 이 둘은 Empty string epsilon 에 의해 구별될 수 있다.(재귀)</p>
+  </li>
+  <li>
+    <p>Input character 값 (symbol alphabet) 에 따라서 각각의 state 들이 다른 partition 으로 분리되는지 확인한다.</p>
+
+    <p><img src="/public/img/school/compilerdesign/test33.PNG" alt="test33" /></p>
+  </li>
+</ol>
+
+<h2 id="dfa-minimization"><strong>DFA Minimization</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test34.PNG" alt="test34" /></p>
+
+<p>Initial partition P 는 두개의 state를 포함한다.</p>
+
+<p>Partition 이 변형 가능한한 split 를 지속하고 변형된 내용을 partition 에 적용한다.</p>
+
+<p>DFA minimization 의 두가지 불변의 법칙에 의해 알고리즘이 유지된다. 같은 세트에 남아있는 state 들은 어떤 string 에 대해서도 아직 구별되지 않은 state 들이다. 다른 세트로 나누어지는 state들은 어떤 string 에 의해 구별 가능한 state 들이다.</p>
+
+<p><img src="/public/img/school/compilerdesign/test35.PNG" alt="test35" /></p>
+
+<p>위와 같이 같은 세트에 있는 state 들이 어떠한 symbol input 에 의해서도 나누어지지(split) 않으므로 하나로 합칠 수 있다. 이 결과 Minimal DFA 를 만들어 낼 수 있다.</p>
+
+<p>모든 RE language 는 minimal-state DFA (모든 state 이름들이 unique 한) 로 인식될 수 있다.</p>
+
+<p><img src="/public/img/school/compilerdesign/test36.PNG" alt="test36" /></p>
+
+<h2 id="table-driven-vs-direct-coded-scanners"><strong>Table-driven vs. Direct-coded Scanners</strong></h2>
+
+<p>트랜지션 테이블을 기준으로 만든 것이 table-driven scanner 이고, 코드로 직접 짜는 것이 direct-coded scanner 이다.</p>
+
+<p><strong>Effieciency 의 측면에서 바라본 table driven vs direct-coded scanner</strong></p>
+
+<blockquote>
+  <p>Table driven 은 캐시의 문제(cache miss)가 있을 수 있다(만약 table 이 커질 경우)</p>
+</blockquote>
+
+<h2 id="scanner-generators"><strong>Scanner Generators</strong></h2>
+
+<p><strong>C로 만들어진 scanners</strong></p>
+
+<blockquote>
+  <p>lex(UNIX), flex(GNU’s fast lex, UNIX), mks lex(MS-DOS,Windows,OS/2)</p>
+</blockquote>
+
+<p><strong>Java 로 만들어진 scanners</strong></p>
+
+<blockquote>
+  <p>JLex (Princenton University), JavaCC(Oracle)</p>
+</blockquote>
+
+<h2 id="how-a-scanner-generator-works"><strong>How a Scanner Generator Works</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test37.PNG" alt="test37" /></p>
+
+<p>DFA 는 두가지로 표현될 수 있다.</p>
+
+<blockquote>
+  <p>Table-driven code (JLex) 로 표현될 수도 있고, Hard-wired code (직접 짠 코드) 로 표현될 수도 있다.</p>
+</blockquote>
+
+<h2 id="jlex-example-spec"><strong>JLex Example Spec</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test38.PNG" alt="test38" /></p>
+
+<p><img src="/public/img/school/compilerdesign/test39.PNG" alt="test39" /></p>
+
+<h2 id="running-jlex-on-a-sample-scanner-spec"><strong>Running JLex on a Sample Scanner Spec</strong></h2>
+
+<p><img src="/public/img/school/compilerdesign/test40.PNG" alt="test40" /></p>
+
+<h2 id="limitations-of-regular-languages"><strong>Limitations of Regular Languages</strong></h2>
+
+<p>**RE 의 장점 **</p>
+
+<ol>
+  <li>pattern 들을 구체화하는데에 간단하고 강력한 notation</li>
+  <li>빠른 scanner (recognizer) 의 자동 구성</li>
+  <li>많은 pattern 들이 REs 에 의해 구체화 될 수 있음</li>
+</ol>
+
+<p><strong>만약 이렇게 장점이 많다면 왜 모든 것에 RE 를 사용하지 않을까?</strong></p>
+
+<ol>
+  <li>표현할 수 있는 expression 에 한계가 있다.</li>
+  <li>정해진 N개의 문자열이 오는 경우나, 수학적 표현이나, parentheses match 를 표현할 수 없다.</li>
+</ol>
+
+<p><strong>결론</strong></p>
+
+<p>REs 는 keywords, identifiers, literals, operators 그리고 punctuation character 만 표현할 수 있다. 다른 많은 것들 (expressions, statements, nested statements, …) 은 더 강력한 방법이 필요하다.</p>
+
+<h2 id="regular-expressions-and-context-free-grammers"><strong>Regular Expressions and Context-Free Grammers</strong></h2>
+
+<p>REs 와 Context-free grammers 로 정의될 수 있는 언어는 다음과 같은 결론을 갖는다.</p>
+
+<ul>
+  <li>
+    <p>RE 는 CFGs 보다 약한 formalism 을 가진다. RE 에 의해 표현될 수 있는 언어는 모두 CFG에 의해 표현이 가능하지만 반대는 가능하지 않을 수 있다.</p>
+  </li>
+  <li>
+    <p>RE 에 의해 표현가능한 언어는 regular languages 라고 한다.</p>
+  </li>
+  <li>
+    <p>일반적으로 “self embedding” 을 하는 언어는 RE 에 의해 표현될 수 없다.</p>
+  </li>
+  <li>
+    <p>프로그래밍 언어는 “self embedding” 을 한다.</p>
+
+    <p><img src="/public/img/school/compilerdesign/test41.PNG" alt="test41" /></p>
+  </li>
+</ul>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/school/2018/10/14/compiler-design-lexical-analysis/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/school/2018/10/14/compiler-design-lexical-analysis'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

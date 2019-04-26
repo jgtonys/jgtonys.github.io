@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Finite State Automata Basic">
+	<meta name="twitter:description" content="Alphabet, Strings and Languages
+
+An alphabet is a finite, nonempty set of symbols denoted by Σ.
+
+A string (or sometimes word) is a finite sequence of symbols chosen from some alphabet.
+
+The empty string is the string with zero occurrences of symbols. This string, denoted by λ(in text epsilon)
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Finite State Automata Basic">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Alphabet, Strings and Languages
+
+An alphabet is a finite, nonempty set of symbols denoted by Σ.
+
+A string (or sometimes word) is a finite sequence of symbols chosen from some alphabet.
+
+The empty string is the string with zero occurrences of symbols. This string, denoted by λ(in text epsilon)
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/school/2019/03/12/finite-state-automata-basic/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Finite State Automata Basic &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">12 Mar 2019</span>
+  <h1 class="post-title">Finite State Automata Basic</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#automata" class="post-tag">automata</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <h2 id="alphabet-strings-and-languages"><strong>Alphabet, Strings and Languages</strong></h2>
+
+<p>An <strong>alphabet</strong> is a finite, nonempty set of symbols denoted by Σ.</p>
+
+<p>A <strong>string</strong> (or sometimes word) is a finite sequence of symbols chosen from some alphabet.</p>
+
+<p>The <strong>empty string</strong> is the string with zero occurrences of symbols. This string, denoted by λ(in text epsilon)</p>
+
+<!-- more -->
+
+<p>The <strong>length</strong> of a string is the number of symbol occurrences.</p>
+
+<p>The <strong>occurrence</strong> w σ of σ is the number of σ occurrences.</p>
+
+<p>The <strong>power</strong> Σ^k of an alphabet is the set of strings of length k, each of whose symbols is chosen from Σ</p>
+
+<blockquote>
+  <p>power 가 0 이더라도 empty string 은 존재하기 때문에 length 는 0 이 아니다.</p>
+</blockquote>
+
+<p>Kleene star is all subset of the element.</p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="non-empty-string"><strong>Non-Empty string</strong></h2>
+
+<blockquote>
+  <p>’+’ 는 1개 이상의 element 를 가지는 모든 subset 을 의미한다.</p>
+</blockquote>
+
+<blockquote>
+  <p>‘*’ (Kleene star) 는 + 에 empty string 을 합집합한 것이다. (all possible strings)</p>
+</blockquote>
+
+<p><br /></p>
+
+<h2 id="concatenation"><strong>Concatenation</strong></h2>
+
+<p>x와 y의 concatenation</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xy
+</code></pre></div></div>
+
+<p>catenation operation symbol 은 생략이 가능하다.</p>
+
+<p>단순히 두개의 string 을 뒤에 붙여주는 역할을 한다.</p>
+
+<p>만약 lamda 를 붙이게 되면 기존의 string 과 identical 한 string 이 형성된다.</p>
+
+<p><br /></p>
+
+<h2 id="language"><strong>Language</strong></h2>
+
+<p>language 는 시그마* 로부터 선택된 set of strings 이다.</p>
+
+<p>따라서 language L 은 시그마에 포함된 언어이다. 따라서 infinite 할 수도 있다.</p>
+
+<p><img src="/public/img/school/automata/6.png" alt="complete" /></p>
+
+<p><br /></p>
+
+<h3 id="중요"><em>중요</em></h3>
+
+<p><strong>empty language</strong> == <strong>empty set</strong></p>
+
+<blockquote>
+  <p>empty set 이면 empty language 이다. (필요충분관계)</p>
+</blockquote>
+
+<p><em>단 empty string(lamda) 1개를 가지고 있는 집합은 empty language 가 아니다.</em></p>
+
+<p>empty string(lamda) 1개를 가지고 있는 집합은 length 가 1 이다.</p>
+
+<p>그러나 empty language(empty set) 은 length 가 0 이다.</p>
+
+<p><em>lamda 는 sigma 에 포함되지 않는다. (알파벳에 포함될 수 없다)</em></p>
+
+<p><br /></p>
+
+<h2 id="set"><strong>SET</strong></h2>
+
+<p><img src="/public/img/school/automata/7.png" alt="complete" /></p>
+
+<p><em>Operations</em></p>
+
+<p>set operation 에서 each element 는 duplicate 할 수 없다. (중복이 있으면 안된다)</p>
+
+<p><img src="/public/img/school/automata/8.png" alt="complete" /></p>
+
+<p><img src="/public/img/school/automata/9.png" alt="complete" /></p>
+
+<p><em>bijections</em></p>
+
+<p><img src="/public/img/school/automata/10.png" alt="complete" /></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="inductive-proofs"><strong>Inductive Proofs</strong></h2>
+
+<ol>
+  <li>
+    <p>Basis : 어떤 작은 문제에 대해 (직접)증명한다.</p>
+  </li>
+  <li>
+    <p>Inductive step : 푼 문제보다 작은 문제를 이미 푼 문제를 사용하여 가정하고 증명한다.</p>
+  </li>
+</ol>
+
+<p><em>Example</em></p>
+
+<p>n 개의 leaves 를 가지는 이진트리는 2n-1 개의 노드가 있다 를 증명하시오</p>
+
+<ol>
+  <li>
+    <p>S(1) 일 때 2*1-1 = 1 이다.</p>
+  </li>
+  <li>
+    <p>S(T) 일 때 더 작은 subtree U 와 V 를 두고 계산한다.</p>
+  </li>
+</ol>
+
+<h2 id="if-and-only-if-proofs"><strong>If-And-Only-If Proofs</strong></h2>
+
+<p>만약 X 이면 Y 이다 &lt;=&gt; 만약 Y 가 아니라면 X 가 아니다.</p>
+
+<p>대우법(contrapositive)을 사용하는 방법이다.</p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/school/2019/03/12/finite-state-automata-basic/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/school/2019/03/12/finite-state-automata basic'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

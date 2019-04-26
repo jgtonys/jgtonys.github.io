@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Text Mining Introduction">
+	<meta name="twitter:description" content="텍스트 정보처리(Text mining)
+
+구조화되지 않은 unstrutured data 로 부터 새로운 지식을 발견하는것이다.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Text Mining Introduction">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="텍스트 정보처리(Text mining)
+
+구조화되지 않은 unstrutured data 로 부터 새로운 지식을 발견하는것이다.
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/school/2019/03/07/text-mining-introduction/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Text Mining Introduction &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">07 Mar 2019</span>
+  <h1 class="post-title">Text Mining Introduction</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#python" class="post-tag">python</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <h2 id="텍스트-정보처리text-mining"><strong>텍스트 정보처리(Text mining)</strong></h2>
+
+<p>구조화되지 않은 unstrutured data 로 부터 새로운 지식을 발견하는것이다.</p>
+
+<!-- more -->
+
+<h2 id="텍스트-전처리"><strong>텍스트 전처리</strong></h2>
+
+<p>unstructured data → structured data</p>
+
+<h2 id="텍스트-마이닝"><strong>텍스트 마이닝</strong></h2>
+
+<p>unstructured data 에 존재하는 pattern, trends, association 을 찾아내는 것</p>
+
+<hr />
+
+<h2 id="구조화-vs-비구조화"><strong>구조화 VS 비구조화</strong></h2>
+
+<p>비구조화 데이터는 internal structure 가 있을수도 있지만, 미리 정의된 구조나 스키마는 존재하지 않는다. 그래서 non-relational db 인 nosql 에 저장을 하기도 한다.</p>
+
+<h2 id="semi-structured-data"><strong>Semi-structured data</strong></h2>
+
+<p>Markup Language XML 이나 JSON 형태등이 있다.</p>
+
+<p>정보를 구조화하고 계층화한다</p>
+
+<blockquote>
+  <p>XML JSON 은 간단하게 넘어감</p>
+</blockquote>
+
+<h2 id="정보처리과정"><strong>정보처리과정</strong></h2>
+
+<ol>
+  <li>수행하고자 하는 목표 설정</li>
+  <li>데이터 수집</li>
+  <li>전처리
+    <ul>
+      <li>데이터클리닝</li>
+      <li>자연어 처리</li>
+    </ul>
+  </li>
+  <li>데이터 탐색</li>
+  <li>데이터 분석
+    <ul>
+      <li>통계분석 : 회귀분석, 오차</li>
+      <li>기계분석</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="text-mining-process"><strong>Text mining process</strong></h2>
+
+<p>기존의 데이터 마이닝에서 다른 리소스를 가지고 전처리를 하는 부분이 추가되었다.</p>
+
+<p>전처리의 과정이 굉장히 부각된다.</p>
+
+<p><img src="/public/img/school/textmining/1.png" alt="img1" /></p>
+
+<p>TM vs DM</p>
+
+<h2 id="tm-vs-dm-in-ml"><strong>TM vs DM in ML</strong></h2>
+
+<p>수만개의 텍스트 중에서 뽑아내어 feature 를 만든다.</p>
+
+<p>data mining 에서는 select feature 라고 부르며, text mining 에서는 extract feature 라고 부른다. Extract feature 는 select feature 에서 뽑아 낸다.</p>
+
+<h2 id="structure-of-text"><strong>Structure of Text</strong></h2>
+
+<p><img src="/public/img/school/textmining/2.png" alt="img1" /></p>
+
+<h2 id="문장-구조"><strong>문장 구조</strong></h2>
+
+<p>어절은 Token 단위이다.</p>
+
+<p>자연어 처리의 가장 중요한 이슈중 하나는 형태소의 분석이다.</p>
+
+<p><em>POS : 품사를 분석하여 명사만 추출해 내는 것</em></p>
+
+<p><img src="/public/img/school/textmining/3.png" alt="img1" /></p>
+
+<p>structure of sentence</p>
+
+<h2 id="dependency-parse"><strong>Dependency Parse</strong></h2>
+
+<p>의존 구문분석이라고 하며 동사구, 형용사구 등을 분석하는 과정이다.</p>
+
+<h2 id="analyzing-text"><strong>Analyzing Text</strong></h2>
+
+<p>NLP : Corpus → Document → Paragraph → Sentence → Token</p>
+
+<ul>
+  <li>Token level
+    <ul>
+      <li>Ontologies : 단어들 간의 계층구조, 관계가 반영된 것</li>
+      <li>Inexact match : 자연어 처리단계에서 오타 및 문법적 변형을 찾는 것 (Edit distance)</li>
+      <li>Regular Expression : 정규 표현식</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="issues"><strong>Issues</strong></h2>
+
+<p><img src="/public/img/school/textmining/4.png" alt="img1" /></p>
+
+<h2 id="수업-목표"><strong>수업 목표</strong></h2>
+
+<p>텍스트 정보의 주요 특성을 이해하고 웹에서 텍스트 정보를 수집, 추출하여 파싱한다.</p>
+
+<p>간단한 NLP 처리기법을 익히고 활용하며, Python 으로 텍스트 처리를 실습한다.</p>
+
+<p><em>lemmatization : 원형 복원법</em></p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/school/2019/03/07/text-mining-introduction/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/school/2019/03/07/text-mining-introduction'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

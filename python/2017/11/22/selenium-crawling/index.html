@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Selenium Crawling">
+	<meta name="twitter:description" content="Selenium 을 사용한 웹 크롤러(python)
+
+동적으로 생성되지 않는 웹 페이지는 python 기본 라이브러리를 사용하서 쉽게 소스코드를 긁어올 수 있다.
+그런데 문제는 Javascript로 동적 생성되는 페이지 안의 일부 내용 또는 iframe으로 불러오는 새로운 페이지들은 이러한 방법으로 긁어올 수가 없다!
+
+어떻게 하면 우리가 웹페이지를 직접 들어가서 보는 그대로의 내용을 크롤링할 수 있을까?
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Selenium Crawling">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Selenium 을 사용한 웹 크롤러(python)
+
+동적으로 생성되지 않는 웹 페이지는 python 기본 라이브러리를 사용하서 쉽게 소스코드를 긁어올 수 있다.
+그런데 문제는 Javascript로 동적 생성되는 페이지 안의 일부 내용 또는 iframe으로 불러오는 새로운 페이지들은 이러한 방법으로 긁어올 수가 없다!
+
+어떻게 하면 우리가 웹페이지를 직접 들어가서 보는 그대로의 내용을 크롤링할 수 있을까?
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/python/2017/11/22/selenium-crawling/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Selenium Crawling &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">22 Nov 2017</span>
+  <h1 class="post-title">Selenium Crawling</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#selenium" class="post-tag">selenium</a>
+    
+    <a href="/blog/tags/#phantomjs" class="post-tag">phantomjs</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <p><strong>Selenium 을 사용한 웹 크롤러(python)</strong></p>
+
+<p>동적으로 생성되지 않는 웹 페이지는 python 기본 라이브러리를 사용하서 쉽게 소스코드를 긁어올 수 있다.<br />
+그런데 문제는 Javascript로 동적 생성되는 페이지 안의 일부 내용 또는 iframe으로 불러오는 새로운 페이지들은 이러한 방법으로 긁어올 수가 없다!<br /><br /></p>
+
+<p>어떻게 하면 우리가 웹페이지를 직접 들어가서 보는 그대로의 내용을 크롤링할 수 있을까?<br /><br /></p>
+
+<!-- more -->
+
+<p><strong>Selenium 이란</strong></p>
+
+<p><code class="highlighter-rouge">Selenium</code> 은 웹 테스트 프레임워크로서 브라우저를 직접 동작시켜서 동적으로 생성된 결과물에 접근이 가능하다.<br /></p>
+
+<blockquote>
+  <p>Selonium is a portable software-testing framework for web applications. Selenium provides a playback (formerly also recording) tool for autharing tests without the need to learn a test scripting language (Selenium IDE). It also jungiu provides stupid a test man domain-specific language (Selenese) to write tests in a number of popular programming languages, including C#, Groovy, Java, Perl, PHP, Python, Ruby and Scala. The tests can then run against most modern web browsers. Selenium deploys on Windows, Linux, and OS X platforms. It is open-source software, released under the Apache 2.0 license: web developers can download and use it without charge.
+https://en.wikipedia.org/wiki/Selenium_(software)</p>
+</blockquote>
+
+<p>여기서는 <code class="highlighter-rouge">Selenium</code>을 사용해서 가상 웹 페이지를 띄우고, 그 페이지에서 보는 그대로의 내용을 크롤링하는 python 프로그램을 만들어 볼 것이다.<br /><br /><br /></p>
+
+<p><strong>Selanium 설치</strong></p>
+<ul>
+  <li>본 포스팅은 파이썬 3.5 기준입니다.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip <span class="nb">install </span>selenium
+<span class="nv">$ </span>pip uninstall selenium
+</code></pre></div>    </div>
+    <p><br />
+Selenium을 사용하면 <code class="highlighter-rouge">Webdriver</code> 를 통해 브라우저를 제어하게 된다.<br />
+본 포스팅에서는 <code class="highlighter-rouge">PhantomJS Webdriver</code> 와 <code class="highlighter-rouge">Chrome Webdriver</code>를 사용해 보려고한다<br /><br /></p>
+  </li>
+</ul>
+
+<p><strong>What is PhantomJS??</strong>
+<br />
+그래픽 유저 인터페이스(GUI)가 없는 Headless brower로서 커맨드 라인 인터페이스(CLI)를 통해 실행하고 제어할 수 있다.<br />
+웹페이지 개발자 테스트 또는 화면 캡쳐용으로 많이 쓰이고 있다.<br />
+본래 JAVA API로서 많이 사용되었고, python에서도 사용할 수 있다.<br /><br /></p>
+
+<p>Chrome 은 너무 유명하니 생략하겠다.<br /><br /></p>
+
+<p><strong>Install Webdriver</strong>
+<br />
+PhantomJS는 <a href="http://phantomjs.org/download.html">http://phantomjs.org/download.html</a>에서 다운받을 수 있고, Chrome 드라이버는 <a href="https://sites.google.com/a/chromium.org/chromedriver/downloads">https://sites.google.com/a/chromium.org/chromedriver/downloads</a>에서 다운로드 받을 수 있다.<br />
+다운로드 받은 파일을 압축을 풀면 드라이버 파일이 나타나는데, 그 저장된 경로를 기억해 두자.<br /><br /></p>
+
+<p><strong>Selenium-PhantomJS-Crawler 만들기</strong>
+<br />
+먼저 PhantomJS driver를 사용하여 만들어 보겠다.<br /><br />
+기본적인 순서는 이렇게 진행한다.<br /></p>
+<ol>
+  <li>Webdriver import</li>
+  <li>브라우저를 제어하는 PhantomJS driver 만들기</li>
+  <li>URL에 해당하는 페이지 소스 가져오기<br /><br /></li>
+</ol>
+
+<hr />
+<ul>
+  <li>Webdriver import &amp; Driver setting</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="c1"># phantomjs가 설치되어있지 않은 경우(드라이버 파일 다운로드인 경우)
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">PhantomJS</span><span class="p">(</span><span class="s">'다운로드받은위치/phantomjs'</span><span class="p">)</span>
+<span class="c1"># phantomjs가 설치되어있는 경우
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">PhantomJS</span><span class="p">()</span>
+</code></pre></div></div>
+<p>Q. 만약 PhantomJS가 정상적으로 설치되었음에도 불구하고 SSL ERROR가 나타난다면?</p>
+
+<p>A. <code class="highlighter-rouge">driver = webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true', '--ssl-protocol=any'])</code>
+를 사용하자. SSL ERROR를 무시하는 옵션이다.<br /></p>
+
+<p><br />
+이제 driver setting이 완료되었다.
+<br /></p>
+
+<hr />
+<ul>
+  <li>Crawling start</li>
+</ul>
+
+<p>아래의 코드를 추가해준다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'동적으로 생성되는 페이지 URL'</span><span class="p">)</span>
+</code></pre></div></div>
+<p>또한 긁어온 html을 paring 해 주기 위해 beautiful soup를 사용하겠다.<br />
+beautifulsoup4 를 설치하고 import 해준다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>pip <span class="nb">install </span>beautifulsoup4
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'동적으로 생성되는 페이지 URL'</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">source_page</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span><span class="s">'lxml'</span><span class="p">)</span> <span class="c1">#parser는 html.parser를 사용해도 된다.
+</span></code></pre></div></div>
+<p>이제 <code class="highlighter-rouge">soup</code>에는 긁어온 <code class="highlighter-rouge">전체 html</code>이 paring되어 존재한다.<br />
+하지만 우리는 전체 html을 원하기 보다, 주로 <code class="highlighter-rouge">일부 정보를 빠르게 얻기 위해</code> crawling을 사용한다.<br />
+물론 다른 프로그램을 하나 더 만들어서 한줄씩 읽어가며 정보를 추려낼 수도 있겠지만, 여기서는 애초에 <code class="highlighter-rouge">driver에게 긁어올 대상들을 지정</code>하는 방법을 소개하겠다.</p>
+
+<p>페이지의 단일 element에 접근하는 api</p>
+<blockquote>
+  <p>find_element_by_name(‘HTML_name’)<br />
+find_element_by_id(‘HTML_id’)<br />
+find_element_by_xpath(‘/html/body/some/xpath’)<br /></p>
+</blockquote>
+
+<p>페이지의 여러 elements에 접근하는 api</p>
+<blockquote>
+  <p>find_element_by_css_selector(‘#css &gt; div.selector’)<br />
+find_element_by_class_name(‘some_class_name’)<br />
+find_element_by_tag_name(‘h1’)<br /></p>
+</blockquote>
+
+<p>이렇게 driver 자체가 접근하여 element를 가져오면 아래와 같은 기능들을 수행할 수 있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#검색창에 키워드 입력
+</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">'검색창 id'</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">'키워드'</span><span class="p">)</span>
+<span class="c1">#검색 버튼에 접근
+</span><span class="n">search_button_element</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s">"검색 버튼의 css"</span><span class="p">)</span>
+<span class="c1">#검색 버튼 클릭
+</span><span class="n">search_button_element</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#a 태그의 href 속성 가져오기
+#다른 태그의 다른 속성도 이와 마찬가지로 가져올 수 있다
+</span><span class="n">some_element</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s">'a'</span><span class="p">)</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><br /></p>
+<hr />
+<ul>
+  <li>iframe 접근</li>
+</ul>
+
+<p>동적으로 생성되는 페이지들은 iframe으로 구성되어 있는 경우가 많다.<br />
+이때 우리의 selenium-phantomjs-crawler는 iframe으로 들어가서 임무를 수행할 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#iframe의 id를 가지고 driver가 찾아낸 iframe element를 저장한다.
+</span><span class="n">iframe_element</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s">"iframe#id"</span><span class="p">)</span>
+<span class="c1">#iframe element로 driver가 진입한다.
+</span><span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="n">iframe_element</span><span class="p">)</span>
+
+<span class="n">some</span> <span class="n">crawling</span> <span class="n">things</span><span class="o">...</span>
+
+<span class="c1">#default content로 돌아온다.
+</span><span class="n">driver</span><span class="o">.</span><span class="n">switch_to_default_content</span><span class="p">()</span>
+</code></pre></div></div>
+<hr />
+
+<p><strong>중고나라 크롤링 프로그램 완성</strong>
+<a href="https://github.com/jgtonys/selenium_crawling_phantomjs">link</a></p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/python/2017/11/22/selenium-crawling/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/python/2017/11/22/selenium-crawling'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

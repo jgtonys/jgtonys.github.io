@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Freelancer Web Matching Service">
+	<meta name="twitter:description" content="Freelancer - Client Web Matching Service
+
+Using nodejs (backend) + reactjs (frontend)
+
+Full responsive application
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Freelancer Web Matching Service">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Freelancer - Client Web Matching Service
+
+Using nodejs (backend) + reactjs (frontend)
+
+Full responsive application
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/web/2018/12/08/freelancer-matching-service/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Freelancer Web Matching Service &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">08 Dec 2018</span>
+  <h1 class="post-title">Freelancer Web Matching Service</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#server" class="post-tag">server</a>
+    
+    <a href="/blog/tags/#nodejs" class="post-tag">nodejs</a>
+    
+    <a href="/blog/tags/#reactjs" class="post-tag">reactjs</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <h2 id="freelancer---client-web-matching-service"><strong>Freelancer - Client Web Matching Service</strong></h2>
+
+<p>Using nodejs (backend) + reactjs (frontend)</p>
+
+<p>Full responsive application</p>
+
+<!-- more -->
+
+<h2 id="demo"><strong>Demo</strong></h2>
+
+<p>https://github.com/jgtonys/freelancer-web-matching.git</p>
+
+<iframe width="853" height="480" src="https://www.youtube.com/embed/lg0wD5D7Ucg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<hr />
+
+<h2 id="how-to-run"><strong>How to run</strong></h2>
+
+<ul>
+  <li>git clone</li>
+  <li>root directory - <code class="highlighter-rouge">npm install</code></li>
+  <li>client directory - <code class="highlighter-rouge">npm install</code></li>
+  <li>root directory - <code class="highlighter-rouge">npm start</code></li>
+</ul>
+
+<blockquote>
+  <p>To build client files <code class="highlighter-rouge">npm run build</code></p>
+</blockquote>
+
+<h2 id="functions"><strong>Functions</strong></h2>
+
+<p>Token authentication (JWT) + Session-Storage</p>
+
+<p>File upload with Multer</p>
+
+<p>Encryption with Bcrypt</p>
+
+<h2 id="development-environment"><strong>Development Environment</strong></h2>
+
+<p>es6(babel), axios, node-sass, SPA, webpack</p>
+
+<p><strong>Backend</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    "dependencies": {
+        "async": "^2.6.0",
+        "bcrypt": "^3.0.2",
+        "body-parser": "^1.18.2",
+        "express": "^4.16.3",
+        "jsonwebtoken": "^8.2.0",
+        "lodash": "^4.17.5",
+        "multer": "^1.4.1",
+        "mysql2": "^1.6.1"
+    }
+</code></pre></div></div>
+
+<h2 id="frontend"><strong>Frontend</strong></h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    "dependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.1.0",
+        "@babel/polyfill": "^7.0.0",
+        "@material-ui/core": "^3.4.0",
+        "@material-ui/icons": "^3.0.1",
+        "axios": "^0.18.0",
+        "babel-runtime": "^6.26.0",
+        "bootstrap": "^4.1.3",
+        "cross-env": "^5.2.0",
+        "css-loader": "^1.0.1",
+        "node-sass": "^4.9.4",
+        "react": "^16.6.0",
+        "react-dom": "^16.6.0",
+        "react-pdf": "^4.0.0",
+        "react-redux": "^5.1.0",
+        "react-router": "^4.3.1",
+        "react-router-dom": "^4.3.1",
+        "react-swipeable-views": "^0.13.0",
+        "react-text-mask": "^5.4.3",
+        "reactstrap": "^6.5.0",
+        "redux": "^4.0.1",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.1",
+        "webpack": "^4.23.1",
+        "webpack-cli": "^3.1.2",
+        "webpack-dev-server": "^3.1.10"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.1.2",
+        "@babel/preset-env": "^7.1.0",
+        "@babel/preset-react": "^7.0.0",
+        "babel-loader": "^8.0.4",
+        "html-webpack-plugin": "^3.2.0"
+    }
+</code></pre></div></div>
+
+<h2 id="structure"><strong>Structure</strong></h2>
+
+<ul>
+  <li>app (backend)
+    <ul>
+      <li>controller (server app controller)</li>
+      <li>models (database models)</li>
+      <li>routes (routing)</li>
+    </ul>
+  </li>
+  <li>client (frontend)</li>
+  <li>config
+    <ul>
+      <li>config.js (port, session setting)</li>
+      <li>db.js (database setting)</li>
+      <li>express.js</li>
+      <li>jwt.js (optional, token authentication)</li>
+    </ul>
+  </li>
+  <li>server.js</li>
+  <li>package.json (npm install modules, description)</li>
+</ul>
+
+<h2 id="database-model"><strong>Database Model</strong></h2>
+
+<p><img src="/public/img/school/database/db.png" alt="test1" /></p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/web/2018/12/08/freelancer-matching-service/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/web/2018/12/08/freelancer-matching-service'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

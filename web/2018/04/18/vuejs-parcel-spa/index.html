@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Vuejs SPA boilerplate">
+	<meta name="twitter:description" content="Vuejs 웹 프레임워크를 사용한 SPA(Single Page Application) boilerplate를 소개한다. 서버는 nodejs 로 간단하게 구현하였고 웹 어플리케이션 번들러는 parceljs 를 사용하였다.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Vuejs SPA boilerplate">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Vuejs 웹 프레임워크를 사용한 SPA(Single Page Application) boilerplate를 소개한다. 서버는 nodejs 로 간단하게 구현하였고 웹 어플리케이션 번들러는 parceljs 를 사용하였다.
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/web/2018/04/18/vuejs-parcel-spa/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Vuejs SPA boilerplate &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">18 Apr 2018</span>
+  <h1 class="post-title">Vuejs SPA boilerplate</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#nodejs" class="post-tag">nodejs</a>
+    
+    <a href="/blog/tags/#vuejs" class="post-tag">vuejs</a>
+    
+    <a href="/blog/tags/#server" class="post-tag">server</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <p><strong>Vuejs</strong> 웹 프레임워크를 사용한 <strong>SPA</strong>(Single Page Application) boilerplate를 소개한다. 서버는 <strong>nodejs</strong> 로 간단하게 구현하였고 웹 어플리케이션 번들러는 <strong>parceljs</strong> 를 사용하였다.</p>
+
+<!-- more -->
+
+<h2 id="demo"><strong>DEMO</strong></h2>
+
+<p>https://github.com/jgtonys/vuejs-parcel-express-boilerplate</p>
+
+<h2 id="간단한-재료-소개"><strong>간단한 재료 소개</strong></h2>
+
+<p>이 SPA boilerplate를 제작하는데 사용된 재료(조미료)들을 소개하겠다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Material</th>
+      <th style="text-align: center">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><a href="https://vuejs.org/">Vuejs</a></td>
+      <td style="text-align: center">Frontend Javascript Framework</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="https://vuex.vuejs.org/en/intro.html">Vuex</a></td>
+      <td style="text-align: center">Vuejs state management library</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="https://vuetifyjs.com/ko/">Vuetify</a></td>
+      <td style="text-align: center">Material Design Component Framework</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="https://router.vuejs.org/en/essentials/getting-started.html">Vue Router</a></td>
+      <td style="text-align: center">SPA Frontend Router</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="http://docs.sequelizejs.com/">Sequelize</a></td>
+      <td style="text-align: center">Nodejs ORM DB management</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="https://www.sqlite.org/index.html">Sqlite3</a></td>
+      <td style="text-align: center">Simple SQL Database Engine</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="https://jwt.io/">JWT</a></td>
+      <td style="text-align: center">JSON Web Token</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="https://ko.parceljs.org/">Parcel</a></td>
+      <td style="text-align: center">Web Application Bundler</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+재료들을 보면 조금 생소한 녀석들이 있을 수 있다. 어떤 오픈소스인지 알아보고 싶다면 위의 링크를 참조하면 좋을 것 같다.</p>
+
+<h2 id="구조-잡기"><strong>구조 잡기</strong></h2>
+
+<p><img src="/public/img/boilerplate-backbone.PNG" alt="backbone" /></p>
+
+<p>위 사진은 위 Demo의 boilerplate 뼈대이다. 일단 이렇게 구조를 잡은 이유는 서버와 클라이언트를 완벽하게 분리하고, 렌더링되는 모든 것을 클라이언트에서 처리하는 SPA를 만들기 위해서이다.</p>
+
+<p>서버는 Nodejs Express, 클라이언트는 Vuejs로 완벽하게 분리시켜 놓은 모습이다. 클라이언트는 모두 위 사진의 client 폴더에서 독립적으로 돌아갈 수 있다. 폴더의 구조는 사실 내가 스스로 개발하기에 편한 방식으로 만든 것이고, 여러 다른 모습으로 구조를 짤 수도 있다.</p>
+
+<h2 id="구현-기능"><strong>구현 기능</strong></h2>
+
+<h3 id="parcel-bundler"><strong>parcel bundler</strong></h3>
+
+<p><img src="/public/img/parcel.png" alt="parcel" /></p>
+
+<p><strong>번들러</strong> 란 무엇인가? 부터 간략하게 설명하겠다.<br /> 우리는 개발을 할 때 파일들을 분리하여 작업한다. 이는 개발 편의성과 가독성을 위해 필수적인 사항이다. 또한 MVC, MVVM 패턴으로 아름다운 프로그램을 만들기 위해서도 코드의 분리는 필수적이다.<br />
+코드를 분리하여 웹 어플리케이션을 구성할 경우 모든 분리된 파일들은 각자의 요청과 응답을 받게 되고 이는 속도 감퇴라는 큰 단점 뿐만 아니라 예상치 못한 버그 등으로 인해 개발에 어려움이 생기게 된다.<br />
+이를 해결하기 위해 웹 어플리케이션으로 띄우기 전에 생성된 프론트 자원들을 하나로 묶어(번들링)주는 것이 번들러이다.</p>
+
+<p>대표적인 번들러는 <strong>webpack</strong> 이 있다. 그러나 조금 무겁다는 단점이 있어서(프로젝트가 커지면 컴파일 시간이 매우 오래걸림) 이 boilerplate를 가볍게 만들기에는 조금 과한 감이 있어서 <strong>parcel</strong> 을 사용하게 되었다.</p>
+
+<p><img src="/public/img/client-list.PNG" alt="client-list" /></p>
+
+<p>위 사진에는 클라이언트 폴더의 자원들을 보여주고 있다. assets, components, js, scss 를 모두 번들링하여 하나의 js와 css로 컴파일하고 옵션에 따라 minify하여 출력한다. 이렇게 나타난 로컬 html,js,css를 이제 서버는 그대로 띄워주고 요청된 정보를 백그라운드에서 제공하는 역할을 해 준다.</p>
+
+<h3 id="database"><strong>Database</strong></h3>
+
+<p><img src="/public/img/sequelize.png" alt="sequelize" /></p>
+
+<p>내가 만든 boilerplate에서는 간단한 user signin 및 signup 기능이 구현되어 있다. 데이터베이스의 설정이 필요한데, 사용한 데이터베이스는 sqlite3 이고, 이를 sql문들을 다닥다닥붙여서 만드는 것이 아니라 ORM 을 사용하여 코드로 데이터베이스를 자동화 하기로 했다.</p>
+
+<p>선택한 ORM은 <strong>sequelize</strong> 인데 설정코드를 넣어놓으면 자동으로 DB table을 생성하고 객체로서 테이블을 가져올 수 있다.</p>
+
+<p>아래는 config/db.js 파일의 모습이다.</p>
+
+<p><em>example)</em></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'lodash'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./config'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">Sequelize</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'sequelize'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">sequelize</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sequelize</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">db</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">db</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">db</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span> <span class="p">{</span>
+	<span class="na">dialect</span><span class="p">:</span> <span class="s1">'sqlite'</span><span class="p">,</span>
+  <span class="na">storage</span><span class="p">:</span> <span class="s1">'./test.sqlite'</span><span class="p">,</span>
+	<span class="c1">// timezone: 'Asia/Seoul',</span>
+	<span class="na">logging</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">==</span> <span class="s1">'production'</span> <span class="p">?</span> <span class="kc">false</span> <span class="p">:</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span>
+<span class="p">});</span>
+<span class="kd">const</span> <span class="nx">modelPath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'../app/models/'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">models</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">modelPath</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">file</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="kd">let</span> <span class="nx">modelName</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+	<span class="nx">models</span><span class="p">[</span><span class="nx">modelName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">sequelize</span><span class="p">.</span><span class="k">import</span><span class="p">(</span><span class="nx">modelPath</span> <span class="o">+</span> <span class="nx">file</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">models</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">modelName</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">models</span><span class="p">[</span><span class="nx">modelName</span><span class="p">].</span><span class="nx">associate</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">models</span><span class="p">[</span><span class="nx">modelName</span><span class="p">].</span><span class="nx">associate</span><span class="p">(</span><span class="nx">models</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">models</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Sequelize</span><span class="p">,</span> <span class="nx">sequelize</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>ORM을 사용한 장점은 서버에서 javascript코드로 db를 조작하는 것이 매우 편리하다는 데에 있다. demo boilerplate를 돌려보면 사용자가 직접 관여 할 필요 없이 db가 말씀하게 작동하는 것을 볼 수 있다.</p>
+
+<h3 id="jwt-sessionstorage"><strong>JWT SessionStorage</strong></h3>
+
+<p><img src="/public/img/jwt.png" alt="jwt" /></p>
+
+<p>JWT란 JSON Web Token의 줄임말이다. 기존의 많은 로그인 기능들이 세션(서버)에 물려 있던 것과 다르게, 세션이 없이 로컬PC의 토큰을 기반으로 인증되는 방법이다. facebook,twitter,github,google 등등 최근의 모던 웹서비스에서 매우 많이 사용되고 있고 또 사용법도 간단하다.</p>
+
+<p>서버 기반 인증의 문제점과 토큰 기반 시스템에 대한 장단점들은 다른 블로그 및 사이트에서 정말 잘 설명을 해 놓아서 따로 설명하지 않겠다.</p>
+
+<p>JWT에 대한 config 파일은 다음과 같다.</p>
+
+<p><em>example)</em></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">jwt</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'jsonwebtoken'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./config'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">generate</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">secretKey</span><span class="p">,</span> <span class="p">{</span> <span class="na">expiresIn</span><span class="p">:</span> <span class="s1">'6h'</span> <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">verify</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="k">try</span> <span class="p">{</span>
+		<span class="kd">let</span> <span class="nx">decoded</span> <span class="o">=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">secretKey</span><span class="p">);</span>
+		<span class="k">return</span> <span class="nx">decoded</span><span class="p">;</span>
+	<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>라우터가 페이지를 라우팅할 때, 헤더의 토큰을 verify하여 인증된 사용자인지 확인하고 로그인된 사용자만이 접근할 수 있는 기능을 구현 할 수 있다.</p>
+
+<p>또한 SessionStorage를 구현하여 로그인된 사용자가 다시 웹페이지에 접속했을 때 인증된 토큰을 사용할 수 있도록 하였다. 마찬가지로 SessionStorage도 잘 설명된 글이 많으므로 설명은 패스한다.</p>
+
+<p>아 참 그리고 password는 bcrypt 모듈을 사용해서 암호화 되도록 만들었다. DB에 들어가 있는 값을 보면 알 수 있다.</p>
+
+<h2 id="기타-사용된-기능"><strong>기타 사용된 기능</strong></h2>
+
+<p><strong>vuex</strong></p>
+
+<p><img src="/public/img/vuex.png" alt="vuex" /></p>
+
+<p>vuejs 개발에 있어서 구현할 수 있는 통합 이벤트 버스 및 상태,변형 관리 시스템. 모든 공유된 데이터와 이벤트를 관리하는 컨트롤러의 역할을 할 수 있다.</p>
+
+<p><strong>vuetify</strong></p>
+
+<p><img src="/public/img/vuetify.jpg" alt="vuetify" /></p>
+
+<p>css로 직접 버튼 만들고 레이아웃 짜는 것은 사실 이제 조금 비효율적이다. 전부터 사람들은 부트스트랩으로 만들어진 디자인을 가져다 쓰는 방식을 택하기 시작했다.</p>
+
+<p>vuejs에 특화된 css framework인 vuetify는 이쁘고 실용적인 디자인들을 선보인다. 전체적인 테마와 기능들을 이 boilerplate에 넣어서 만들었다.</p>
+
+<h2 id="마치며"><strong>마치며</strong></h2>
+
+<p>프론트와 백앤드를 분리하고 싶어서 시작했던 프로젝트가 나름 많은 큼직큼직한 오픈소스들의 합작이 되었다. 처음에는 이벤트 버스며 JWT며 어려운 것 투성이였는데, 만들고 나니 뿌듯하다. 이로서 웹 서비스 시대의 흐름을 조금 탔나 하고 보면 아직도 할게 많고 내일 보면 또 새로운 기술이 나와 있겠지..</p>
+
+<p>남들이 올려놓은 boilerplate만 가져다가 썼는데 내가 만드는 날도 오는구나.</p>
+
+<p><img src="/public/img/compile.PNG" alt="compile" /></p>
+
+<p>오픈소스를 얼마나 넣었으면 이정도 기능에 js가 1.5MB나 나오는건지..그래도 parcel 컴파일 정말 빠르다.</p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll0/">
+          Metadata TEST
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/docker/2019/04/24/docker-install-mac/">
+          Mac에 Docker 설치
+          <small>24 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/web/2018/04/18/vuejs-parcel-spa/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/web/2018/04/18/vuejs-parcel-spa'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>
