@@ -1,0 +1,26 @@
+<!-- Twitter Cards -->
+	<meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+	{% if page.excerpt %}<meta name="twitter:description" content="{{ page.excerpt | strip_html }}">{% endif %}
+	{% if site.owner.twitter %}<meta name="twitter:site" content="@{{ site.owner.twitter }}">{% endif %}
+	{% if author.twitter %}<meta name="twitter:creator" content="@{{ author.twitter }}">{% endif %}
+	{% if page.image.feature %}
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="{{ site.url }}/images/{{ page.image.feature }}">
+	{% else %}
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	{% endif %}
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="{{ site.locale }}">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+	{% if page.image.feature %}
+	<meta name="og:image" content="{{ site.url }}/images/{{ page.image.feature }}">
+	{% else %}
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	{% endif %}
+
+	{% if page.excerpt %}<meta property="og:description" content="{{ page.excerpt | strip_html }}">{% endif %}
+	<meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.url }}">
+	<meta property="og:site_name" content="{{ site.title }}">

@@ -1,0 +1,63 @@
+# Site Info
+title: Jungyu Kim
+tagline: 'Developer blog'
+description: 'Github Jekyll Blog made by Jungyu Kim'
+baseurl: ""
+url: "jgtonys.github.io"
+logo: '/public/logo.jpg'
+
+# Site configurations
+plugins:
+  - jekyll-paginate
+markdown: kramdown
+kramdown:
+  input: GFM
+excerpt_separator: "<!-- more -->"
+sass:
+  style: compressed
+  sass_dir: _scss
+paginate: 5
+paginate_path: '/blog/page:num'
+permalink: pretty
+
+version: 1.0.0
+
+# About/contact
+author:
+  name: Jungyu Kim
+  description: Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong>
+  avatar : Jungyu Kim
+  contact:
+    github:    https://github.com/jgtonys
+    facebook:  https://facebook.com/jgtony
+    email:     http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=
+    linkedin:  http://www.linkedin.com/in/준규-김-devj
+
+# Navigation (2nd level links supported)
+nav:
+  Home:
+    - '/'
+  Blog:
+    - '/blog/'
+    - { Categories: '/blog/categories/' }
+    - { Tags: '/blog/tags/' }
+  About:
+    - '/about/'
+  Github Project:
+    - 'http://github.com/jgtonys/'
+
+# Where are tags and categories displayed
+tag_page: '/blog/tags/'
+category_page: '/blog/categories/'
+
+hero:
+  image: /public/img/testbackground.jpg
+  caption: Welcome to <a href="http://github.com/jgtonys">Jungyu Kim</a> blog
+
+# Puglins
+mathjax: true # whether support mathjax
+google_analytics_token: UA-110053740-1 # leave blank if you don't want google analytics
+disqus_short_name: 'jgtonys' # leave blank if you don't want disqus
+
+encoding: utf-8
+future: ture
