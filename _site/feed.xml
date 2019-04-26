@@ -5,32 +5,9 @@
     <description>Github Jekyll Blog made by Jungyu Kim</description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 26 Apr 2019 09:19:29 -0500</pubDate>
-    <lastBuildDate>Fri, 26 Apr 2019 09:19:29 -0500</lastBuildDate>
+    <pubDate>Fri, 26 Apr 2019 10:23:33 -0500</pubDate>
+    <lastBuildDate>Fri, 26 Apr 2019 10:23:33 -0500</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
-    
-      <item>
-        <title>Metadata TEST</title>
-        <description>&lt;h2 id=&quot;test&quot;&gt;&lt;strong&gt;TEST&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;!-- more --&gt;
-
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.apple.com/kr/mac-pro/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Mac Pro&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Mac Pro는 전문가 수준에 어울리는 그래픽 성능과 저장 장치를 비롯하여 확장성과 프로세싱 파워, 그리고 메모리를 갖추고 있습니다. 이제 크리에이티브의 새로운 역사가 시작됩니다.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.apple.com/kr/mac-pro/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.apple.com/mac-pro/images/og.png?201810120148);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
-
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://blog.jungbin.kim/notes/2018-03-08-ruby-libs-get-html-meta/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Get HTML meta data by Ruby library&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;HTML meta 데이터 가져오는 Ruby 스크립트 만들기URL으로 HTML meta 데이터를 가져와 보여주는 Jekyll Plugin을 만들고 싶어서, 해당 기능을 가지고 있는 Ruby 라이브러리들을 찾아봄.URL을 입력값으로 meta 데이터를 객체로 매핑해서 반환해주는 것이 요구사항임.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://blog.jungbin.kim/notes/2018-03-08-ruby-libs-get-html-meta/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56810708-ef7c3a80-6871-11e9-8285-f196baa95c99.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
-
-&lt;hr /&gt;
-</description>
-        <pubDate>Thu, 25 Apr 2019 00:00:00 -0500</pubDate>
-        <link>http://0.0.0.0:4000/blog/2019/04/25/docker-jekyll0/</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/blog/2019/04/25/docker-jekyll0/</guid>
-        
-        <category>docker</category>
-        
-        
-        <category>Blog</category>
-        
-      </item>
     
       <item>
         <title>깃헙 블로그 Docker에서 작업하기</title>
@@ -5736,6 +5713,101 @@ Python module xlrd를 사용하여 Excel을 다루는 방법을 소개한다.&lt
         
         
         <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>Using Git Flow</title>
+        <description>&lt;p&gt;&lt;strong&gt;git flow 사용기&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;음 매우 좋다.&lt;br /&gt;
+일단 알아서 develop branch 가 생성되고, 특징적인 기술을 추가로 개발할때는 feature branch가 생성된다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;또 release 할때는 알아서 release branch 가 버전 태그를 달며 생성되며 끝나면 master에 병합되고 다시 develop branch 로 이동한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;설치법&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone &lt;span class=&quot;nt&quot;&gt;--recursive&lt;/span&gt; git://github.com/nvie/gitflow.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;그러면 이제 git flow 를 사용할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;주의할 점&lt;/strong&gt;
+–recursive 옵션을 달아주지 않으면&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Error:  No such file or directory @ rb_sysopen - /home/ubuntu/workspace/gitflow/gitflow-shFlags&lt;/code&gt;&lt;br /&gt;
+이런 에러가 뜬다. 주의하자.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;시작하기&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;git flow를 사용하려면 다음과 같이 시작한다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;그러면 사용할 브랜치를 고르라고 나타나는데, 기본적으로 master 와 branch 는 주어진다.&lt;br /&gt;
+git flow를 이용하여 만들 수 있는 branch는 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;master : 최종 릴리즈한 안정화 버전&lt;/li&gt;
+  &lt;li&gt;develop : 다음 릴리즈를 위해 개발중인 최신 버전&lt;/li&gt;
+  &lt;li&gt;feature : 특정 기능 개발을 위한 branch&lt;/li&gt;
+  &lt;li&gt;release : 릴리즈 점검을 위한 branch&lt;/li&gt;
+  &lt;li&gt;hotfix : 긴급 버그 픽스를 위한 branch&lt;/li&gt;
+  &lt;li&gt;support : 버전 호환성 문제 처리를 위한 branch&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+기본적으로 develop branch에서 개발하고, master로 realease하는 방식이다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;특정한 기능을 추가하여 개발하고 싶다면 feature를 이용한다.&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow feature start &amp;lt;branch name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;feature branch가 만들어지고 수정된 사항을 stage하여 commit 한다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git stage
+git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;기능 개발이 완료 된 후에는 git flow에 개발이 끝났다고 알려주고, 다시 develop branch로 돌아가야 한다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow feature finish  &amp;lt;branch name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;다음과 같은 과정이 이루어진다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;git flow는 develop branch로 checkout 한 후,&lt;/li&gt;
+  &lt;li&gt;feature branch의 변경 내용을 자동으로 develop branch에 merge하고,&lt;/li&gt;
+  &lt;li&gt;작업이 끝난 feature branch를 삭제한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;
+develop에서 개발이 완료되고 master로 병합하는 release를 하는 방법은 다음과 같다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow release start &amp;lt;branch name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;release 작업을 위한 branch가 생겼다.  release branch는 보통 릴리즈 점검을 위해 간단한 버그를 수정하는 등의 작업을 목적으로 사용한다.
+절대 release branch에서는 기능을 개발하거나, 기존과 다른 개발을 진행하지 않는다.(단순 확인만 하는 branch)
+release를 위한 점검이 끝났으면 간단하게 realease를 finish 해주면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow release finish &amp;lt;branch name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;다음과 같은 작업이 이루어진다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;release 브랜치의 코드를 master branch에 merge&lt;/li&gt;
+  &lt;li&gt;release의 이름으로 태그 등록&lt;/li&gt;
+  &lt;li&gt;릴리즈를 develop branch로 재병합(back-merge)&lt;/li&gt;
+  &lt;li&gt;release branch를 삭제&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;마치며&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;git flow를 사용하면 복잡한 git의 흐름을 잘 이해할 수 있었다.
+작은 프로젝트를 할 때에는 사실 이와 같은 branch 관리가 필요할까 라는 생각도 들지만, 미리미리 연습해 두는 것도 큰 프로젝트의 commit 관리에 도움이 될 것이라고 생각하여 시도해 보았다.&lt;br /&gt;
+실제로 사용해 보니 그렇게 어렵지는 않았고, 추후에 협업하여 프로젝트를 할 때에도 많은 도움이 될 것 같다.&lt;br /&gt;
+굳.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 28 Nov 2017 00:00:00 -0600</pubDate>
+        <link>http://0.0.0.0:4000/tips/2017/11/28/git-flow-using/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/tips/2017/11/28/git-flow-using/</guid>
+        
+        <category>git</category>
+        
+        
+        <category>Tips</category>
         
       </item>
     

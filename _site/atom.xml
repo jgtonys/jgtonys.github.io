@@ -4,30 +4,13 @@
  <title>Jungyu Kim</title>
  <link href="http://0.0.0.0:4000/atom.xml" rel="self"/>
  <link href="http://0.0.0.0:4000/"/>
- <updated>2019-04-26T09:19:29-05:00</updated>
+ <updated>2019-04-26T10:23:33-05:00</updated>
  <id>http://0.0.0.0:4000</id>
  <author>
    <name>Jungyu Kim</name>
    <email></email>
  </author>
 
- 
- <entry>
-   <title>Metadata TEST</title>
-   <link href="http://0.0.0.0:4000/blog/2019/04/25/docker-jekyll0/"/>
-   <updated>2019-04-25T00:00:00-05:00</updated>
-   <id>http://0.0.0.0:4000/blog/2019/04/25/docker-jekyll0</id>
-   <content type="html">&lt;h2 id=&quot;test&quot;&gt;&lt;strong&gt;TEST&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;!-- more --&gt;
-
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.apple.com/kr/mac-pro/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Mac Pro&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Mac Pro는 전문가 수준에 어울리는 그래픽 성능과 저장 장치를 비롯하여 확장성과 프로세싱 파워, 그리고 메모리를 갖추고 있습니다. 이제 크리에이티브의 새로운 역사가 시작됩니다.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.apple.com/kr/mac-pro/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.apple.com/mac-pro/images/og.png?201810120148);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
-
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://blog.jungbin.kim/notes/2018-03-08-ruby-libs-get-html-meta/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Get HTML meta data by Ruby library&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;HTML meta 데이터 가져오는 Ruby 스크립트 만들기URL으로 HTML meta 데이터를 가져와 보여주는 Jekyll Plugin을 만들고 싶어서, 해당 기능을 가지고 있는 Ruby 라이브러리들을 찾아봄.URL을 입력값으로 meta 데이터를 객체로 매핑해서 반환해주는 것이 요구사항임.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://blog.jungbin.kim/notes/2018-03-08-ruby-libs-get-html-meta/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56810708-ef7c3a80-6871-11e9-8285-f196baa95c99.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
-
-&lt;hr /&gt;
-</content>
- </entry>
  
  <entry>
    <title>깃헙 블로그 Docker에서 작업하기</title>
