@@ -5,9 +5,28 @@
     <description>Github Jekyll Blog made by Jungyu Kim</description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 May 2019 23:24:51 -0500</pubDate>
-    <lastBuildDate>Thu, 09 May 2019 23:24:51 -0500</lastBuildDate>
+    <pubDate>Thu, 09 May 2019 23:51:04 -0500</pubDate>
+    <lastBuildDate>Thu, 09 May 2019 23:51:04 -0500</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>텍스트마이닝</title>
+        <description>&lt;h2 id=&quot;test&quot;&gt;&lt;strong&gt;TEST&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;test&lt;/p&gt;
+
+&lt;!-- more --&gt;
+</description>
+        <pubDate>Fri, 10 May 2019 00:00:00 -0500</pubDate>
+        <link>http://0.0.0.0:4000/bigdata/2019/05/10/textmining1/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/bigdata/2019/05/10/textmining1/</guid>
+        
+        <category>python</category>
+        
+        
+        <category>BigData</category>
+        
+      </item>
     
       <item>
         <title>깃헙 블로그 Docker에서 작업하기</title>
@@ -19,7 +38,7 @@
 
 &lt;p&gt;필자는 Mac에서 Docker for mac을 설치하여 사용하였고 만약 Mac에서 설치할 방법을 찾는다면 아래에서 간단하게 볼 수 있다.&lt;/p&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://jgtonys.github.io/docker/2019/04/24/docker-install-mac/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Mac에 Docker 설치&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Docker 란? Docker란 컨테이너 기반의 오픈소스 가상화 플랫폼이다. 거창하게 말하면 그렇지만 간단하게 말해서 많은 서버와 프로그램의 환경을 컨테이너로 추상화하여 사용자의 PC에 직접 설치하는 일 없이 가상환경으로 돌려주는 플랫폼을 의미한다. 최근의 많은 개발 작업들은 의존성 패키지들이 버전도 다양하여 환경 셋팅만 하루종일 걸리고 정작 실제 개발은 시작도 하지 못하고 지쳐버리는 현상이 나타나는데, 이 환경 셋팅을 아주 간편하게 가상화하여 사용할 수 있는 녀석이다. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://jgtonys.github.io/docker/2019/04/24/docker-install-mac/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://jgtonys.github.io/docker/2019/04/24/docker-install-mac/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Site not found · GitHub Pages&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; If you're trying to publish one, read the full documentation to learn how to set up GitHub Pages for your repository, organization, or user account. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://jgtonys.github.io/docker/2019/04/24/docker-install-mac/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFMTZCRDY3REIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFMTZCRDY3RUIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkUxNkJENjdCQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkUxNkJENjdDQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+SM9MCAAAA+5JREFUeNrEV11Ik1EY3s4+ddOp29Q5b0opCgKFsoKoi5Kg6CIhuwi6zLJLoYLopq4qsKKgi4i6CYIoU/q5iDAKs6syoS76IRWtyJ+p7cdt7sf1PGOD+e0c3dygAx/67ZzzPM95/877GYdHRg3ZjMXFxepQKNS6sLCwJxqNNuFpiMfjVs4ZjUa/pmmjeD6VlJS8NpvNT4QQ7mxwjSsJiEQim/1+/9lgMHgIr5ohuxG1WCw9Vqv1clFR0dCqBODElV6v90ogEDjGdYbVjXhpaendioqK07CIR7ZAqE49PT09BPL2PMgTByQGsYiZlQD4uMXtdr+JxWINhgINYhGT2MsKgMrm2dnZXgRXhaHAg5jEJodUAHxux4LudHJE9RdEdA+i3Juz7bGHe4mhE9FNrgwBCLirMFV9Okh5eflFh8PR5nK5nDabrR2BNJlKO0T35+Li4n4+/J+/JQCxhmu5h3uJoXNHPbmWZAHMshWB8l5/ipqammaAf0zPDDx1ONV3vurdidqwAQL+pEc8sLcAe1CCvQ3YHxIW8Pl85xSWNC1hADDIv0rIE/o4J0k3kww4xSlwIhcq3EFFOm7KN/hUGOQkt0CFa5WpNJlMvxBEz/IVQAxg/ZRZl9wiHA63yDYieM7DnLP5CiAGsC7I5sgtYKJGWe2A8seFqgFJrJjEPY1Cn3pJ8/9W1e5VWsFDTEmFrBcoDhZJEQkXuhICMyKpjhahqN21hRYATKfUOlDmkygrR4o4C0VOLGJKrOITKB4jijzdXygBKixyC5TDQdnk/Pz8qRw6oOWGlsTKGOQW6OH6FBWsyePxdOXLTgxiyebILZCjz+GLgMIKnXNzc49YMlcRdHXcSwxFVgTInQhC9G33UhNoJLuqq6t345p9y3eUy8OTk5PjAHuI9uo4b07FBaOhsu0A4Unc+T1TU1Nj3KsSSE5yJ65jqF2DDd8QqWYmAZrIM2VlZTdnZmb6AbpdV9V6ec9znf5Q7HjYumdRE0JOp3MjitO4SFa+cZz8Umqe3TCbSLvdfkR/kWDdNQl5InuTcysOcpFT35ZrbBxx4p3JAHlZVVW1D/634VRt+FvLBgK/v5LV9WS+10xMTEwtRw7XvqOL+e2Q8V3AYIOIAXQ26/heWVnZCVfcyKHg2CBgTpmPmjYM8l24GyaUHyaIh7XwfR9ErE8qHoDfn2LTNAVC0HX6MFcBIP8Bi+6F6cdW/DICkANRfx99fEYFQ7Nph5i/uQiA214gno7K+guhaiKg9gC62+M8eR7XsBsYJ4ilam60Fb7r7uAj8wFyuwM1oIOWgfmDy6RXEEQzJMPe23DXrVS7rtyD3Df8z/FPgAEAzWU5Ku59ZAUAAAAASUVORK5CYII=);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
 &lt;p&gt;이제 구성한 순서에 따라서 단계별로 설명하겠다.&lt;/p&gt;
 
@@ -5713,101 +5732,6 @@ Python module xlrd를 사용하여 Excel을 다루는 방법을 소개한다.&lt
         
         
         <category>Python</category>
-        
-      </item>
-    
-      <item>
-        <title>Using Git Flow</title>
-        <description>&lt;p&gt;&lt;strong&gt;git flow 사용기&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;음 매우 좋다.&lt;br /&gt;
-일단 알아서 develop branch 가 생성되고, 특징적인 기술을 추가로 개발할때는 feature branch가 생성된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;또 release 할때는 알아서 release branch 가 버전 태그를 달며 생성되며 끝나면 master에 병합되고 다시 develop branch 로 이동한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;설치법&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone &lt;span class=&quot;nt&quot;&gt;--recursive&lt;/span&gt; git://github.com/nvie/gitflow.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;그러면 이제 git flow 를 사용할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;주의할 점&lt;/strong&gt;
-–recursive 옵션을 달아주지 않으면&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Error:  No such file or directory @ rb_sysopen - /home/ubuntu/workspace/gitflow/gitflow-shFlags&lt;/code&gt;&lt;br /&gt;
-이런 에러가 뜬다. 주의하자.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;시작하기&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;git flow를 사용하려면 다음과 같이 시작한다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow init
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;그러면 사용할 브랜치를 고르라고 나타나는데, 기본적으로 master 와 branch 는 주어진다.&lt;br /&gt;
-git flow를 이용하여 만들 수 있는 branch는 다음과 같다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;master : 최종 릴리즈한 안정화 버전&lt;/li&gt;
-  &lt;li&gt;develop : 다음 릴리즈를 위해 개발중인 최신 버전&lt;/li&gt;
-  &lt;li&gt;feature : 특정 기능 개발을 위한 branch&lt;/li&gt;
-  &lt;li&gt;release : 릴리즈 점검을 위한 branch&lt;/li&gt;
-  &lt;li&gt;hotfix : 긴급 버그 픽스를 위한 branch&lt;/li&gt;
-  &lt;li&gt;support : 버전 호환성 문제 처리를 위한 branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-기본적으로 develop branch에서 개발하고, master로 realease하는 방식이다.&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;특정한 기능을 추가하여 개발하고 싶다면 feature를 이용한다.&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow feature start &amp;lt;branch name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;feature branch가 만들어지고 수정된 사항을 stage하여 commit 한다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git stage
-git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;기능 개발이 완료 된 후에는 git flow에 개발이 끝났다고 알려주고, 다시 develop branch로 돌아가야 한다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow feature finish  &amp;lt;branch name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;다음과 같은 과정이 이루어진다.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;git flow는 develop branch로 checkout 한 후,&lt;/li&gt;
-  &lt;li&gt;feature branch의 변경 내용을 자동으로 develop branch에 merge하고,&lt;/li&gt;
-  &lt;li&gt;작업이 끝난 feature branch를 삭제한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;
-develop에서 개발이 완료되고 master로 병합하는 release를 하는 방법은 다음과 같다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow release start &amp;lt;branch name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;release 작업을 위한 branch가 생겼다.  release branch는 보통 릴리즈 점검을 위해 간단한 버그를 수정하는 등의 작업을 목적으로 사용한다.
-절대 release branch에서는 기능을 개발하거나, 기존과 다른 개발을 진행하지 않는다.(단순 확인만 하는 branch)
-release를 위한 점검이 끝났으면 간단하게 realease를 finish 해주면 된다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git flow release finish &amp;lt;branch name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;다음과 같은 작업이 이루어진다.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;release 브랜치의 코드를 master branch에 merge&lt;/li&gt;
-  &lt;li&gt;release의 이름으로 태그 등록&lt;/li&gt;
-  &lt;li&gt;릴리즈를 develop branch로 재병합(back-merge)&lt;/li&gt;
-  &lt;li&gt;release branch를 삭제&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;strong&gt;마치며&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;git flow를 사용하면 복잡한 git의 흐름을 잘 이해할 수 있었다.
-작은 프로젝트를 할 때에는 사실 이와 같은 branch 관리가 필요할까 라는 생각도 들지만, 미리미리 연습해 두는 것도 큰 프로젝트의 commit 관리에 도움이 될 것이라고 생각하여 시도해 보았다.&lt;br /&gt;
-실제로 사용해 보니 그렇게 어렵지는 않았고, 추후에 협업하여 프로젝트를 할 때에도 많은 도움이 될 것 같다.&lt;br /&gt;
-굳.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 28 Nov 2017 00:00:00 -0600</pubDate>
-        <link>http://0.0.0.0:4000/tips/2017/11/28/git-flow-using/</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/tips/2017/11/28/git-flow-using/</guid>
-        
-        <category>git</category>
-        
-        
-        <category>Tips</category>
         
       </item>
     
