@@ -4,7 +4,7 @@
  <title>Jungyu Kim</title>
  <link href="http://0.0.0.0:4000/atom.xml" rel="self"/>
  <link href="http://0.0.0.0:4000/"/>
- <updated>2019-05-10T00:17:52-05:00</updated>
+ <updated>2019-05-10T00:38:19-05:00</updated>
  <id>http://0.0.0.0:4000</id>
  <author>
    <name>Jungyu Kim</name>
@@ -26,6 +26,8 @@
 &lt;h2 id=&quot;blabla&quot;&gt;&lt;strong&gt;blabla&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;test&lt;/p&gt;
+
+&lt;p&gt;blam test&lt;/p&gt;
 </content>
  </entry>
  
@@ -258,7 +260,7 @@ Graphic : Intel HD Graphics 4000
 
 &lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.tonymacx86.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Home&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; UniBeast has been updated to version 9.2 for macOS Mojave. This tool creates a bootable USB drive from your Mac App Store purchased copy of macOS. The resulting USB drive allows for a clean install, upgrade or use as a rescue boot drive. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.tonymacx86.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.tonymacx86.com/images/tonymacx86-logo.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.insanelymac.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;InsanelyMac - InsanelyMac Forum&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS Mojave 10.14.4 update adds support for Apple News+, includes bug fixes and improvements, improves the stability and reliability of your Mac, and is recommended for all users. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.insanelymac.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.insanelymac.com/forum/screenshots/monthly_2019_05/Clover_Builder_app_by_cvad.thumb.png.822a565e16ff3aac3b4d5245cb76c455.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.insanelymac.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;InsanelyMac - InsanelyMac Forum&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS Mojave 10.14.4 update adds support for Apple News+, includes bug fixes and improvements, improves the stability and reliability of your Mac, and is recommended for all users. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.insanelymac.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.insanelymac.com/forum/screenshots/monthly_2018_05/967993893_ScreenShot2018-05-11at03_15_43.thumb.png.210929f78e516452c7741b5e9f6d5bb8.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
 &lt;p&gt;&lt;em&gt;여기에서 자신의 노트북 모델명으로 성공한 사례를 찾다가 &lt;code class=&quot;highlighter-rouge&quot;&gt;EFI&lt;/code&gt; 나 설정파일들을 찾아냈다면 꼭 기억하거나 다운로드 받아놓자! 데스크탑의 경우에는 메인보드에 대한 파일, 그래픽 설정의 파일을 미리 받아 놓는 것을 추천한다&lt;/em&gt;&lt;/p&gt;
 
