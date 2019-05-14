@@ -2,6 +2,22 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
     <url>
+      <loc>http://0.0.0.0:4000/bigdata/2019/05/12/spark-local-setting/</loc>
+      
+        <lastmod>2019-05-12T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://0.0.0.0:4000/bigdata/2019/05/10/textmining2/</loc>
       
         <lastmod>2019-05-10T00:00:00-05:00</lastmod>
