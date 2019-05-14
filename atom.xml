@@ -4,7 +4,7 @@
  <title>Jungyu Kim</title>
  <link href="http://0.0.0.0:4000/atom.xml" rel="self"/>
  <link href="http://0.0.0.0:4000/"/>
- <updated>2019-05-10T00:38:19-05:00</updated>
+ <updated>2019-05-14T07:33:21-05:00</updated>
  <id>http://0.0.0.0:4000</id>
  <author>
    <name>Jungyu Kim</name>
@@ -13,21 +13,442 @@
 
  
  <entry>
-   <title>텍스트마이닝</title>
-   <link href="http://0.0.0.0:4000/bigdata/2019/05/10/textmining1/"/>
+   <title>텍스트마이닝: Scraping 기초 지식</title>
+   <link href="http://0.0.0.0:4000/bigdata/2019/05/10/textmining2/"/>
    <updated>2019-05-10T00:00:00-05:00</updated>
-   <id>http://0.0.0.0:4000/bigdata/2019/05/10/textmining1</id>
-   <content type="html">&lt;h2 id=&quot;test&quot;&gt;&lt;strong&gt;TEST&lt;/strong&gt;&lt;/h2&gt;
+   <id>http://0.0.0.0:4000/bigdata/2019/05/10/textmining2</id>
+   <content type="html">&lt;h2 id=&quot;텍스트데이터-수집-방법&quot;&gt;&lt;strong&gt;텍스트(데이터) 수집 방법&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;test&lt;/p&gt;
+&lt;p&gt;python을 사용하여 데이터를 크롤링하는 방법을 배운다. 본격적으로 코드에 대해 언급하기 전에 알아야 할 인코딩이나 환경에 대하여 먼저 서술한다.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
-&lt;h2 id=&quot;blabla&quot;&gt;&lt;strong&gt;blabla&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;(사실 시험대비용)&lt;/p&gt;
 
-&lt;p&gt;test&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;blam test&lt;/p&gt;
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;인코딩-방식&quot;&gt;&lt;strong&gt;인코딩 방식&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;ASCII : 최초의 문자열 인코딩 방식으로 7bit으로 구성되어 128개 문자를 표현한다. 일본어나 중국어 등 다른 언어의 표현이 불가능하여 후에 다른 언어 지원을 위해 만들어진 인코딩이 &lt;em&gt;ANSI&lt;/em&gt; 이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ANSI : ASCII의 확장판으로 8bit로 구성되어 ASCII에서 1bit 를 추가해 여기에 다른 언어 문자를 표현했다. 그러나 새로 추가된 128개 문자로는 모든 언어의 표현이 불가능하여 CodePage 라는 개념이 탄생했다. 영어가 아닌 다른 언어를 사용할 경우에는 Code Page 를 동일하게 맞춰 주어야 한다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;CodePage : 각 언어별로 Code 를 주고 Code 마다 다른 문자열 표를 의미하도록 약속하였다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;EUC-KR : 한글 지원을 위해 유닉스 계열에서 나온 완성형 코드 조합이다. 한국에서 ANSI를 확장한 것이다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;완성형 코드란 완성된 문자 하나하나 마다 코드 번호를 부여하는 것이고 반대 개념으로 조합형 코드가 있다. 조합형 코드는 자음과 모음으로 나누어 초성 중성 종성을 조합하는 것이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;CP949 (Code Page 949) : 한글 지원을 위해 윈도우즈 계열에서 나온 확장 완성형 코드 조합이다. EUC-KR 이 2byte로 표현할 수 있는 문자의 수에 한계가 있어 확장하여 만든 것이다. 949는 페이지 번호를 의미하고 한국을 의미한다. 기본적으로 EUC-KR과 호환되며 마이크로소프트가 만들었다고 MS949라고도 한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;UTF-8 : 유니코드를 위한 가변 길이 문자 인코딩(멀티 바이트) 방식이다. ANSI의 Code Page 를 이용하는 방식(단점)을 보완하기 위해 만들어졌다. 하나의 character set 에 거의 모든 문자를 넣을 수 있다. 첫 128자는 ASCII 코드 값으로 ASNI와 동일하다. 또한 영어를 사용할 경우에는 1byte 만 사용한다. 한국,중국,일본 등 동아시아권 언어는 3byte 이상을 사용하고 이때 UTF-8 은 비효율적일 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;멀티바이트란 표현해야 하는 문자에 따라 글자 크기를 가변으로 변경해서 사용하는 것이다. ANSI는 고정바이트로 최대 256자까지만 표현이 가능하지만, UTF-8은 최대 1112064자까지 표현이 가능하다. (더 많은 문자 표현 가능)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;UTF-16 : 16bit 기반으로 저장하는 UTF-8의 변형으로 한글을 UTF-16으로 저장하면 2byte가 된다. (UTF-8에서는 3byte) 그러나 때때로 2byte 이상을 사용하기 때문에 용량에 이점이 있다고 볼수는 없고, ANSI와 호환이 안되거나 복잡하여 문제가 있다. 옛날 한자나 한글 고어를 표현할 수 있다. 참고로 UTF-32는 모든 문자를 4byte로 인코딩한다(매우 비효율적).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;UNICODE : 전 세계의 문자를 일관되게 표현할 수 있도록 고안된 코드 조합으로 전 세계 모든 문자를 2byte 숫자로 1:1 매핑시켰다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;UTF-8과 유니코드는 엄연히 다르다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Python 문자열 다루기&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;string 을 다루는 것은 나중에 stemming 이나 lemmitization 에 활용된다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;문자열 결합(concatenation) : ‘+’&lt;/li&gt;
+  &lt;li&gt;문자열 반복 : ‘*’&lt;/li&gt;
+  &lt;li&gt;타입 변환 : str(),int()&lt;/li&gt;
+  &lt;li&gt;인코딩 : name(), lookup()&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;unicodedata&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unicodedata&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'LATIN SMALL LETTER A’&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;gt;&amp;gt;&amp;gt; snowman = '&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;u2603&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;gt;&amp;gt;&amp;gt; unicodedata.lookup(unicodedata.name(snowman)) '&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;☃’&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snowman&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;‘&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;’&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;문자열 변형 : split(), replace()&lt;/li&gt;
+  &lt;li&gt;정규표현식 : 복잡한 문자열을 처리할 때 사용. 메타문자 사용&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;의존 구문 분석(Dependency Parse)이란?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;각 단어들이 다른 단어의 요소에 의해 의존적으로 영향 받는 상태를 분석하는 것을 의미한다.&lt;/p&gt;
+
+&lt;p&gt;메타문자[] 란 문자 클래스를 의미한다. 예를 들어, [abc]라면 이 표현식의 의미는 “a,b,c중 한 개의 문자 와 매치”이다. [a-c] 는 문자 사이의 범위를 이용한다. [^0-9] 는 숫자가 아닌 문자를 의미한다(반대).&lt;/p&gt;
+
+&lt;p&gt;자주 사용하는 문자 클래스는 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;\d - 숫자와 매치, [0-9]와 동일한 표현식&lt;/li&gt;
+  &lt;li&gt;\D - 숫자가 아닌 것과 매치, [^0-9]와 동일한 표현식&lt;/li&gt;
+  &lt;li&gt;\s - whitespace 문자와 매치, [ \t\n\r\f\v]와 동일 – 맨앞의 빈칸은 공백문자(space)를 의미&lt;/li&gt;
+  &lt;li&gt;\S - whitespace 문자가 아닌 것과 매치 – [^\t\n\r\f\v]와 동일&lt;/li&gt;
+  &lt;li&gt;\w - 문자+숫자(alphanumeric)와 매치 – [a-zA-Z0-9_]와 동일&lt;/li&gt;
+  &lt;li&gt;\W - 문자+숫자(alphanumeric)가 아닌 문자와 매치 – [^a-zA-Z0-9_]와 동일&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Dot(.)은 줄바꿈 문자 \n 을 제외한 모든 문자를 의미한다. 예를 들어 a.b는 a+모든문자+b 이다. 만약 a[.]b 라면 문자 그대로 a.b 만을 일치시킨다.&lt;/p&gt;
+
+&lt;p&gt;반복 ({m,n}, ?)은 m부터 n까지 반복하는 것을 의미한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;– {3,}처럼 사용하면 반복 횟수가 3이상인 경우
+– {,3}처럼 사용하면 반복횟수가 3이하인 것 – 생략된 m은 0과 동일
+– 생략된 n은 무한대(2억개미만)의 의미
+– {1,}은 +와 동일하며 {0,}은 *와 동일
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;python re 모듈 : 정규표현식을 python 에서 사용할 수 있도록 해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'[a-z]+'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# match() : 문자열의 처음부터 정규식과 매치되는지 조사
+&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3 python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#조건에 부합하지 않으므로 리턴값 NONE
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;match() : 문자열의 처음부터 정규식과 매치되는지 조사&lt;/li&gt;
+  &lt;li&gt;search() : 문자열 전체를 검색하여 정규식과 매치되는지 조사&lt;/li&gt;
+  &lt;li&gt;findall() : 정규식과 매치되는 모든 문자열(substring)을 리스트로 리턴&lt;/li&gt;
+  &lt;li&gt;finditer() : 정규식과 매치되는 모든 문자열(substring)을 iterator 객체로 리턴&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;참고로 python 의 자료형 중 list 는 변경이 가능하고, tuple은 불변이다. dict 는 key와 value 로 구성되어 있다.&lt;/p&gt;
+
+&lt;p&gt;tuple.jpg&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;웹-데이터의-종류&quot;&gt;&lt;strong&gt;웹 데이터의 종류&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;바이너리 데이터 : 2진수로 표현된 데이터&lt;/p&gt;
+
+&lt;p&gt;텍스트 데이터 : 문장이나 글자로 구성된 데이터. 텍스트 데이터도 바이너리 데이터이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;수집의 3단계&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;대상 선정 : 목적 데이터의 위치 파악&lt;/li&gt;
+  &lt;li&gt;데이터 수집 : 대상 데이터 수집(데이터 수집 자동화)&lt;/li&gt;
+  &lt;li&gt;데이터 정리 : 수집된 데이터 정리&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;수집할 때 유의사항으로는 저작권, 리소스의 과다, 업무방해, API 규칙 준수 가 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;스크래핑크롤링&quot;&gt;&lt;strong&gt;스크래핑/크롤링&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;스크래핑이란?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;웹 사이트에 있는 특정 정보를 추출하는 기술이다. 데이터베이스에 저장하기 위해 데이터 가공이 필요하고, 사이트의 구조를 분석해야 한다. 따라서 스크래핑은 데이터 추출 + 데이터 구조 분석 으로 정의된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;크롤링이란?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;웹 사이트의 링크를 타고 돌며 데이터를 긁어 저장하는 기술이다. 크롤러 또는 스파이더라고 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;스크래핑 및 크롤링을 하기 위해서는 웹의 구조를 분석해야 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http&quot;&gt;&lt;strong&gt;HTTP&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Hyper Text Transfer Protocol로 하이퍼텍스트 뿐만 아니라 이미지나 동영상, 음성 등을 전송하는데 사용된다. 웹 브라우저는 HTTP 사용자 에이전트 중 하나이다.&lt;/p&gt;
+
+&lt;p&gt;http.jpg&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP request의 구조&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;request.jpg&lt;/p&gt;
+
+&lt;p&gt;request2.jpg&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Request Header 는 부가적인 정보를 서버에 제공할 때 name 과 data 쌍으로 표현한다. 부가정보의 성격을 가지며 HTTP 1.1버전에서는 host에 대한 정보가 필수적이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;HTTP response의 구조&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;response.jpg&lt;/p&gt;
+
+&lt;p&gt;response2.jpg&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Response Header 도 마찬가지로 name 과 data의 쌍으로 표현되며 주요 header name으로는 다음과 같은 것들이 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;P3P (Platform for Privacy Preference)&lt;/li&gt;
+  &lt;li&gt;Content-Type: - MIME type of content in response body&lt;/li&gt;
+  &lt;li&gt;Content-Length: - Length of content in response body&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Python 웹 클라이언트 라이브러리&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;urllib 은 python 에서 url 을 통해 데이터를 가져오는 기능을 제공한다. httplib 은 get, post 이외의 방식으로 요청을 보내거나 시간을 지연시키는 기능이 필요할때, http 프로토콜 요청의 저수준 세밀 기능이 필요할 때 사용한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib.request&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;urlparse 는 url을 분해하고 조립하고 변경처리를 하게 해준다. 말 그대로 url parsing&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib.parse&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urlparse&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urlparse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;html-parsing&quot;&gt;&lt;strong&gt;HTML Parsing&lt;/strong&gt;&lt;/h2&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>텍스트마이닝: 전반적인 지식</title>
+   <link href="http://0.0.0.0:4000/bigdata/2019/05/10/textmining1/"/>
+   <updated>2019-05-10T00:00:00-05:00</updated>
+   <id>http://0.0.0.0:4000/bigdata/2019/05/10/textmining1</id>
+   <content type="html">&lt;h2 id=&quot;텍스트마이닝이란&quot;&gt;&lt;strong&gt;텍스트마이닝이란?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;텍스트 정보처리라고도 불리우며 구조화되지 않은(unstructured) 대규모 텍스트 집합에서 새로운 지식 또는 의미를 발견하는 과정이다.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57694133-e7036c80-7685-11e9-9f53-42270604bb66.jpg&quot; alt=&quot;textmining_review&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;구조화되지-않은-데이터&quot;&gt;&lt;strong&gt;구조화되지 않은 데이터&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Unstructured Data 는 내부 구조는 있으나, 미리 정의된 데이터 모델이나 스키마에 의해 구조화 되지 못한 데이터이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;그 데이터들은 텍스트일수도 있고 아닐수도 있으며 인간에 의해 만들어졌을 수도 있고, 기계가 자동으로 만들었을 수도 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;또한 이 데이터들은 NoSQL 같은 non-relational db 에 저장될 수도 있다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Unstructured data has internal structure but is not structured via pre-defined data models or schema. It may be textual or non-textual, and human- or machine-generated. It may also be stored within a non-relational database like NoSQL.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;인간이 만든 unstructured data 의 예시&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;텍스트 파일&lt;/li&gt;
+  &lt;li&gt;이메일&lt;/li&gt;
+  &lt;li&gt;Social Media&lt;/li&gt;
+  &lt;li&gt;웹사이트&lt;/li&gt;
+  &lt;li&gt;Mobile data&lt;/li&gt;
+  &lt;li&gt;Communications&lt;/li&gt;
+  &lt;li&gt;Media&lt;/li&gt;
+  &lt;li&gt;Business applications&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;기계가 만든 unstructured data 의 예시&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Satellite imagery: Weather data, land forms, military movements.&lt;/li&gt;
+  &lt;li&gt;Scientific data: Oil and gas exploration, space exploration, seismic imagery, atmospheric data.&lt;/li&gt;
+  &lt;li&gt;Digital surveillance: Surveillance photos and video.&lt;/li&gt;
+  &lt;li&gt;Sensor data: Traffic, weather, oceanographic sensors.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;semi-structured-data&quot;&gt;&lt;strong&gt;Semi-Structured data&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;내부 태그들과 마킹들이 별개의 데이터 요소를 식별할 수 있도록 하는 데이터이다. 주로 정보를 그룹화하고 계층화한다.&lt;/p&gt;
+
+&lt;p&gt;Ex) XML, JSON&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;XML&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;인간과 기계가 읽을 수 있는 형식으로 인코딩 규칙을 적용한 문서이다. 태그에 의해 구조가 정의되며 사용이 매우 유연하다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Set of document encoding rules that defines a human- and machine-readable format. Its tag-driven structure is highly flexible&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;JSON&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;자바스크립트 객체를 나타낼 때 사용한다. name/value 로 이루어지거나 배열의 형태를 띌 수도 있으며 언어간에 구조 변환이 가능하다. 웹과 서버 사이에서 데이터를 주고받는데 사용된다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;JavaScript Object Notation. Name/value pairs (or object, hash table, etc.) and an
+ordered value list (or array, sequence, list). Interchangeable structure among languages. Transmitting data between web applications and servers&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;텍스트-정보처리과정&quot;&gt;&lt;strong&gt;텍스트 정보처리과정&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;수행하고자 하는 목표 설정&lt;/li&gt;
+  &lt;li&gt;(텍스트)데이터 수집&lt;/li&gt;
+  &lt;li&gt;(텍스트)데이터 전처리: 데이터클리닝, 자연어처리&lt;/li&gt;
+  &lt;li&gt;(텍스트)데이터 탐색&lt;/li&gt;
+  &lt;li&gt;(텍스트)데이터 분석: 통계분석(회귀분석), 오차(기계학습)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;텍스트-마이닝의-과정&quot;&gt;&lt;strong&gt;텍스트 마이닝의 과정&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57694129-e66ad600-7685-11e9-8681-47db038c177e.jpg&quot; alt=&quot;2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;tm-vs-dm&quot;&gt;&lt;strong&gt;TM vs DM&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57694130-e66ad600-7685-11e9-905c-8212b2dd0ec6.jpg&quot; alt=&quot;3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Machine Learning 의 관점에서는 다음과 같이 나타난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Data Mining&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;데이터셋 식별 (Identify data sets)&lt;/li&gt;
+  &lt;li&gt;특징 선택 (Select features)&lt;/li&gt;
+  &lt;li&gt;데이터 준비 (Prepare data)&lt;/li&gt;
+  &lt;li&gt;분석 (Analyze distribution)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Text Mining&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;문서들을 식별 (Identify documents)&lt;/li&gt;
+  &lt;li&gt;특징 추출 (Extract features)&lt;/li&gt;
+  &lt;li&gt;알고리즘으로 특징 선택 (Select features by algorithm)&lt;/li&gt;
+  &lt;li&gt;데이터 준비 (Prepare data)&lt;/li&gt;
+  &lt;li&gt;분석 (Analyze distribution)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;텍스트의-구조&quot;&gt;&lt;strong&gt;텍스트의 구조&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;텍스트는 먼저 문헌집합(Collection or Corpus)으로 이루어져 있다. 그리고 각각의 문헌 또는 문서(Document)는 문단(Paragraph)과 문장(Sentence)으로 이루어져 있다.&lt;/p&gt;
+
+&lt;p&gt;문장의 구조는 다음과 같이 어절(Word phrase) -&amp;gt; 형태소(Morpheme) -&amp;gt; 음절(Syllable) -&amp;gt; 음소(Phoneme)로 쪼갤 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57694132-e7036c80-7685-11e9-8e58-a169e597dfb0.jpg&quot; alt=&quot;4&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;의존 구문 분석(Dependency Parse)이란?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;각 단어들이 다른 단어의 요소에 의해 의존적으로 영향 받는 상태를 분석하는 것을 의미한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;텍스트-분석&quot;&gt;&lt;strong&gt;텍스트 분석&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Natural Language Processing(NLP)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;자연어 처리 NLP 는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Corpus &amp;gt; Document &amp;gt; Paragraph &amp;gt; Sentence &amp;gt; Token&lt;/code&gt; 순서로 처리한다.&lt;/p&gt;
+
+&lt;p&gt;토큰 레벨(Token Level)에서의 분석법으로는 Ontologies, Inexact Match, Regular Expression 을 사용하고 문서 레벨(Document Level)에서는 Classification, Clustering 을 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;분석의 문제점(또는 어려운 점)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Access : 모든 소스가 통합되어 있지 않다. 각기 다른 저장소를 가지고 다른 어플리케이션에 존재한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Management : unstructured data 의 관리는 매우 부실하고, 처리가 필요하다. 또한 불필요 더미 데이터가 너무 많고 보안에 취약하다. 또 다양한 언어로 구성되어 있다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 </content>
  </entry>
  
@@ -258,9 +679,9 @@ Graphic : Intel HD Graphics 4000
 
 &lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://x86.co.kr/mymac/2954551')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;삼성 NT370RSE-A44S(i3, 윈10+10.13.4)&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;삼성 NT370RSE-A44S에 윈10+10.13.4를 단일 하드에 듀얼부팅 방식으로 설치 성공하였습니다(Uefi 방식).와이파이(usb 사용, iptime)외에는 모든 기능 이상없이 사...&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://x86.co.kr/mymac/2954551&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://x86.co.kr/files/seopro/site_image.png?20190306195243);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.tonymacx86.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Home&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; UniBeast has been updated to version 9.2 for macOS Mojave. This tool creates a bootable USB drive from your Mac App Store purchased copy of macOS. The resulting USB drive allows for a clean install, upgrade or use as a rescue boot drive. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.tonymacx86.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.tonymacx86.com/images/tonymacx86-logo.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.tonymacx86.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Home&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; Today Apple released macOS 10.14.5, a major software update to macOS Mojave. Update any supported system using the built-in Software Update functionality through the System Preferences pane or by using the standalone installer available from Apple.com. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.tonymacx86.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.tonymacx86.com/images/tonymacx86-logo.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.insanelymac.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;InsanelyMac - InsanelyMac Forum&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS Mojave 10.14.4 update adds support for Apple News+, includes bug fixes and improvements, improves the stability and reliability of your Mac, and is recommended for all users. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.insanelymac.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.insanelymac.com/forum/screenshots/monthly_2018_05/967993893_ScreenShot2018-05-11at03_15_43.thumb.png.210929f78e516452c7741b5e9f6d5bb8.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.insanelymac.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;InsanelyMac - InsanelyMac Forum&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS Mojave 10.14.5 update improves the stability and reliability of your Mac, and is recommended for all users. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.insanelymac.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.insanelymac.com/forum/screenshots/monthly_2019_05/Clover_Builder_app_by_cvad.thumb.png.822a565e16ff3aac3b4d5245cb76c455.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
 &lt;p&gt;&lt;em&gt;여기에서 자신의 노트북 모델명으로 성공한 사례를 찾다가 &lt;code class=&quot;highlighter-rouge&quot;&gt;EFI&lt;/code&gt; 나 설정파일들을 찾아냈다면 꼭 기억하거나 다운로드 받아놓자! 데스크탑의 경우에는 메인보드에 대한 파일, 그래픽 설정의 파일을 미리 받아 놓는 것을 추천한다&lt;/em&gt;&lt;/p&gt;
 
