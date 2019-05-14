@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Spark & Java Application Local 설정">
+	<meta name="twitter:description" content="Spark 로컬 환경 구성
+
+본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Spark & Java Application Local 설정">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Spark 로컬 환경 구성
+
+본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다.
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/bigdata/2019/05/12/spark-local-setting/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Spark & Java Application Local 설정 &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">12 May 2019</span>
+  <h1 class="post-title">Spark & Java Application Local 설정</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#spark" class="post-tag">spark</a>
+    
+    <a href="/blog/tags/#java" class="post-tag">java</a>
+    
+    <a href="/blog/tags/#database" class="post-tag">database</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <h2 id="spark-로컬-환경-구성"><strong>Spark 로컬 환경 구성</strong></h2>
+
+<p>본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다.</p>
+
+<!-- more -->
+
+<p><br /></p>
+
+<hr />
+
+<h1 id="spark-local-setting">SPARK LOCAL SETTING</h1>
+
+<p>local spark settings, java application settings</p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="requirement">REQUIREMENT</h3>
+
+<p>Spark, Eclipse(Maven)</p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="what-is-maven">WHAT IS MAVEN</h3>
+
+<p><em>개발 프로젝트 시 나타나는 많은 의존성 라이브러리들을 관리해 주는 툴</em></p>
+
+<p>또한 MAVEN 은 사용할 라이브러리에 필요한 다른 의존성 라이브러리들을 자동으로 다운로드하여 개발 환경에 셋팅할 수 있도록 해준다.</p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="maven-installation">MAVEN INSTALLATION</h3>
+
+<p>Eclipse 를 설치하게 되면 자동으로 설치된다. (따로 설치할 필요 없음)</p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="maven-lifecycle">MAVEN LIFECYCLE</h3>
+
+<p>메이븐은 프로젝트 생성에 필요한 단계(phases)들을 Build Lifecycle이라 정의하고 <code class="highlighter-rouge">default</code>, <code class="highlighter-rouge">clean,</code> <code class="highlighter-rouge">site</code> 세가지로 표준 정의한다. Lifecycle은 Build Phase 들로 구성되며 일련의 순서를 갖는다. phase 는 실행단위로서 goal과 바인딩된다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702602-6189b780-7699-11e9-9b1a-e4d3c3dbf3fa.png" alt="maven_lifecycle-acf99801-30f0-475c-b462-f9997ee6f0ae" /></p>
+
+<p>build default lifecycle</p>
+
+<ul>
+  <li>clean : 빌드 시 생성되었던 산출물을 삭제
+    <ol>
+      <li>pre-clean : clean 작업 전에 사전작업</li>
+      <li>clean : 이전 빌드에서 생성된 모든 파일 삭제</li>
+      <li>post-clean : 사후작업</li>
+    </ol>
+  </li>
+  <li>default : 프로젝트 배포절차, 패키지 타입별로 다르게 정의됌
+    <ol>
+      <li>validate : 프로젝트 상태 점검, 빌드에 필요한 정보 존재유무 체크</li>
+      <li>initialize : 빌드 상태를 초기화, 속성 설정, 작업 디렉터리 생성</li>
+      <li>generate-sources : 컴파일에 필요한 소스 생성</li>
+      <li>process-sources : 소스코드를 처리</li>
+      <li>generate-resources : 패키지에 포함될 자원 생성</li>
+      <li>compile : 프로젝트의 소스코드를 컴파일</li>
+      <li>process-classes : 컴파일 후 후처리</li>
+      <li>generate-test-source : 테스트를 위한 소스 코드를 생성</li>
+      <li>process-test-source : 테스트 소스코드를 처리</li>
+      <li>generate-test-resources : 테스팅을 위한 자원 생성</li>
+      <li>process-test-resources : 테스트 대상 디렉터리에 자원을 복사하고 가공</li>
+      <li>test-compile : 테스트 코드를 컴파일</li>
+      <li>process-test-classes : 컴파일 후 후처리</li>
+      <li>test : 단위 테스트 프레임워크를 이용해 테스트 수행</li>
+      <li>prepare-package : 패키지 생성 전 사전작업</li>
+      <li>package : 개발자가 선택한 war, jar 등의 패키징 수행</li>
+      <li>pre-integration-test : 통합테스팅 전 사전작업</li>
+      <li>integration-test : 통합테스트</li>
+      <li>post-integration : 통합테스팅 후 사후작업</li>
+      <li>verify : 패키지가 품질 기준에 적합한지 검사</li>
+      <li>install : 패키지를 로컬 저장소에 설치</li>
+      <li>deploy : 패키지를 원격 저장소에 배포</li>
+    </ol>
+  </li>
+  <li>site : 프로젝트 문서화 절차
+    <ol>
+      <li>pre-site : 사전작업</li>
+      <li>site : 사이트문서 생성</li>
+      <li>post-site : 사후작업 및 배포 전 사전작업</li>
+      <li>site-deploy : 생성된 문서를 웹 서버에 배포</li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="dependency-pomxml">DEPENDENCY (POM.XML)</h3>
+
+<p>의존성에 대한 정보는 POM.XML에 저장된다. 이 정의에 의해서 MAVEN 은 자동으로 repository 를 검색하고 필요한 library 를 자동으로 추가해준다.</p>
+
+<p><em>마치 npm 의 package.json 같은 역할</em></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+	<span class="nt">&lt;groupId&gt;</span>groupid<span class="nt">&lt;/groupId&gt;</span>
+	<span class="nt">&lt;artifactId&gt;</span>projectid<span class="nt">&lt;/artifactId&gt;</span>
+	<span class="nt">&lt;version&gt;</span>4.8.2<span class="nt">&lt;/version&gt;</span>
+	<span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">&lt;groupId&gt;</code> : 프로젝트의 패키지 명칭</p>
+
+<p><code class="highlighter-rouge">&lt;artifactId&gt;</code> : artifact 이름, groupId 내에서 유일해야 한다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+<span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">&lt;version&gt;</code> : artifact 의 현재버전 ex. 1.0-SNAPSHOT</p>
+
+<p><code class="highlighter-rouge">&lt;name&gt;</code> : 어플리케이션 명칭</p>
+
+<p><code class="highlighter-rouge">&lt;packaging&gt;</code> : 패키징 유형(jar, war 등)</p>
+
+<p><code class="highlighter-rouge">&lt;distributionManagement&gt;</code> : artifact가 배포될 저장소 정보와 설정</p>
+
+<p><code class="highlighter-rouge">&lt;parent&gt;</code> : 프로젝트의 계층 정보</p>
+
+<p><code class="highlighter-rouge">&lt;dependencyManagement&gt;</code> : 의존성 처리에 대한 기본 설정 영역</p>
+
+<p><code class="highlighter-rouge">&lt;dependencies&gt;</code> : 의존성 정의 영역</p>
+
+<p><code class="highlighter-rouge">&lt;repositories&gt;</code> : 이거 안쓰면 공식 maven 저장소를 활용하지만, 사용하면 거기 저장소를 사용</p>
+
+<p><code class="highlighter-rouge">&lt;build&gt;</code> : 빌드에 사용할 플러그인 목록을 나열</p>
+
+<p><code class="highlighter-rouge">&lt;reporting&gt;</code> : 리포팅에 사용할 플러그인 목록을 나열</p>
+
+<p><code class="highlighter-rouge">&lt;properties&gt;</code> : 보기좋게 관리가능, 보통 버전에 많이 쓴다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- properties 에 이렇게 추가하면 --&gt;
+  &lt;spring-version&gt;4.3.3.RELEASE&lt;/spring-version&gt;
+
+&lt;!-- dependencies 에 이렇게 쓸수 있다. --&gt;
+  &lt;version&gt;${spring-version}&lt;/version&gt;
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><em>TEST STRUCTURE</em></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+<span class="c">&lt;!-- The Basics --&gt;</span>
+<span class="nt">&lt;groupId&gt;</span>...<span class="nt">&lt;/groupId&gt;</span>
+<span class="nt">&lt;artifactId&gt;</span>...<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;version&gt;</span>...<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;packaging&gt;</span>...<span class="nt">&lt;/packaging&gt;</span>
+
+<span class="nt">&lt;dependencies&gt;</span>...<span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;parent&gt;</span>...<span class="nt">&lt;/parent&gt;</span>
+<span class="nt">&lt;dependencyManagement&gt;</span>...<span class="nt">&lt;/dependencyManagement&gt;</span>
+<span class="nt">&lt;modules&gt;</span>...<span class="nt">&lt;/modules&gt;</span>
+
+<span class="nt">&lt;properties&gt;</span>...<span class="nt">&lt;/properties&gt;</span>
+
+<span class="c">&lt;!-- Build Settings --&gt;</span>
+<span class="nt">&lt;build&gt;</span>...<span class="nt">&lt;/build&gt;</span>
+<span class="nt">&lt;reporting&gt;</span>...<span class="nt">&lt;/reporting&gt;</span>
+
+<span class="c">&lt;!-- More Project Information --&gt;</span>
+<span class="nt">&lt;name&gt;</span>...<span class="nt">&lt;/name&gt;</span>
+<span class="nt">&lt;description&gt;</span>...<span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;url&gt;</span>...<span class="nt">&lt;/url&gt;</span>
+<span class="nt">&lt;inceptionYear&gt;</span>...<span class="nt">&lt;/inceptionYear&gt;</span>
+<span class="nt">&lt;licenses&gt;</span>...<span class="nt">&lt;/licenses&gt;</span>
+<span class="nt">&lt;organization&gt;</span>...<span class="nt">&lt;/organization&gt;</span>
+<span class="nt">&lt;developers&gt;</span>...<span class="nt">&lt;/developers&gt;</span>
+<span class="nt">&lt;contributors&gt;</span>...<span class="nt">&lt;/contributors&gt;</span>
+
+<span class="c">&lt;!-- Environment Settings --&gt;</span>
+<span class="nt">&lt;issueManagement&gt;</span>...<span class="nt">&lt;/issueManagement&gt;</span>
+<span class="nt">&lt;ciManagement&gt;</span>...<span class="nt">&lt;/ciManagement&gt;</span>
+<span class="nt">&lt;mailingLists&gt;</span>...<span class="nt">&lt;/mailingLists&gt;</span>
+<span class="nt">&lt;scm&gt;</span>...<span class="nt">&lt;/scm&gt;</span>
+<span class="nt">&lt;prerequisites&gt;</span>...<span class="nt">&lt;/prerequisites&gt;</span>
+<span class="nt">&lt;repositories&gt;</span>...<span class="nt">&lt;/repositories&gt;</span>
+<span class="nt">&lt;pluginRepositories&gt;</span>...<span class="nt">&lt;/pluginRepositories&gt;</span>
+<span class="nt">&lt;distributionManagement&gt;</span>...<span class="nt">&lt;/distributionManagement&gt;</span>
+<span class="nt">&lt;profiles&gt;</span>...<span class="nt">&lt;/profiles&gt;</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702603-6189b780-7699-11e9-9511-8af5e8f600ba.png" alt="pom_xml_example-b5060146-b06e-47eb-b2ac-0a6ed1c21c45" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.test.spark<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>testSparkApplication<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;name&gt;</span>wordCounting<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;dependencies&gt;</span>
+  	<span class="nt">&lt;dependency&gt;</span>
+  		<span class="nt">&lt;groupId&gt;</span>org.apache.spark<span class="nt">&lt;/groupId&gt;</span>
+  		<span class="nt">&lt;artifactId&gt;</span>spark-core_2.11<span class="nt">&lt;/artifactId&gt;</span>
+  		<span class="nt">&lt;version&gt;</span>2.4.0<span class="nt">&lt;/version&gt;</span>
+  		<span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+  	<span class="nt">&lt;/dependency&gt;</span>
+  	<span class="nt">&lt;dependency&gt;</span>
+  		<span class="nt">&lt;groupId&gt;</span>org.apache.spark<span class="nt">&lt;/groupId&gt;</span>
+  		<span class="nt">&lt;artifactId&gt;</span>spark-sql_2.11<span class="nt">&lt;/artifactId&gt;</span>
+  		<span class="nt">&lt;version&gt;</span>2.4.0<span class="nt">&lt;/version&gt;</span>
+  		<span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+  	<span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+  <span class="nt">&lt;build&gt;</span>
+  	<span class="nt">&lt;pluginManagement&gt;</span>
+  		<span class="nt">&lt;plugins&gt;</span>
+  			<span class="nt">&lt;plugin&gt;</span>
+  				<span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+  				<span class="nt">&lt;artifactId&gt;</span>maven.compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+  				<span class="nt">&lt;version&gt;</span>3.1<span class="nt">&lt;/version&gt;</span>
+  				<span class="nt">&lt;configuration&gt;</span>
+  					<span class="nt">&lt;source&gt;</span>1.8<span class="nt">&lt;/source&gt;</span>
+  					<span class="nt">&lt;target&gt;</span>1.8<span class="nt">&lt;/target&gt;</span>
+  				<span class="nt">&lt;/configuration&gt;</span>
+  			<span class="nt">&lt;/plugin&gt;</span>
+  		<span class="nt">&lt;/plugins&gt;</span>
+  	<span class="nt">&lt;/pluginManagement&gt;</span>
+  <span class="nt">&lt;/build&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="build">BUILD</h3>
+
+<p>/src/main/java 에 패키지를 생성하고 예제 java 파일을 생성한다.</p>
+
+<p>그리고 maven 을 빌드해서 tar 파일을 생성해보자</p>
+
+<p>example ‘<a href="http://wordcounting.java">wordcounting.java</a>’</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702889-eb398500-7699-11e9-94b5-8da52fc63e02.png" alt="3-364fd36b-cc31-4064-a0ee-77848e972f84" /></p>
+
+<p><em>maven build</em></p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702890-ebd21b80-7699-11e9-9c80-5792a5deb2d3.png" alt="4-9afccd89-38a2-44d2-afb6-9d9accda295b" /></p>
+
+<p><em>maven build configuration</em></p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702892-ebd21b80-7699-11e9-8126-6a08192740d3.png" alt="5-be3ab936-7b11-467d-b272-1a976616d02a" /></p>
+
+<p><em>build confirmation</em></p>
+
+<p>위와 같이 BUILD SUCCESS 가 나오면 성공이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702894-ebd21b80-7699-11e9-99e7-d707d80f8b65.png" alt="6-3caf4958-3e70-4549-8172-15dc72b21e8a" /></p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="spark-tar-file-testing">SPARK .tar FILE TESTING</h3>
+
+<p>서버의 spark 가 설치되어 있는 폴더로 이동하여</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bin/spark-submit —class 클래스이름 jar파일 분석할md파일
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702895-ebd21b80-7699-11e9-9bbe-8c994daef59d.png" alt="7-975cefcf-30c5-4bb7-864b-40d9103b28b2" /></p>
+
+<p>위와 같이 적으면 동작한다. 결과는 다음과 같다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702896-ec6ab200-7699-11e9-9c27-8664443248d5.png" alt="9-2ab6da5d-903f-41b2-972e-a3d3f29ebd68" /></p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="reference">REFERENCE</h3>
+
+<p><a href="https://www.slideshare.net/KangDognhyun/2apache-spark">https://www.slideshare.net/KangDognhyun/2apache-spark</a></p>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://www.slideshare.net/KangDognhyun/2apache-spark')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">2.apache spark 실습</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">강동현 2016-12-26 1 Apache Spark 실습 </div> <div style="font-size:10pt">https://www.slideshare.net/KangDognhyun/2apache-spark</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://cdn.slidesharecdn.com/ss_thumbnails/2-161226003957-thumbnail-4.jpg?cb=1482712886);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="how-to-submit-application">HOW TO SUBMIT APPLICATION</h3>
+
+<p><em>Standalone Document</em></p>
+
+<p><a href="https://spark.apache.org/docs/latest/spark-standalone.html">Spark Standalone Mode - Spark 2.4.0 Documentation</a></p>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://spark.apache.org/docs/latest/spark-standalone.html')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">Spark Standalone Mode - Spark 2.4.3 Documentation</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">In addition to running on the Mesos or YARN cluster managers, Spark also provides a simple standalone deploy mode. You can launch a standalone cluster either manually, by starting a master and workers by hand, or use our provided launch scripts. It is also possible to run these daemons on a single machine for testing.</div> <div style="font-size:10pt">https://spark.apache.org/docs/latest/spark-standalone.html</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://spark.apache.org/docs/latest/img/spark-logo-hd.png);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<p><br /></p>
+
+<p>Standalone 으로 cluster 를 실행한다</p>
+
+<p><code class="highlighter-rouge">./sbin/start-master.sh</code></p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702898-ec6ab200-7699-11e9-9ad4-e887194a1a25.png" alt="10-40524bf1-6704-46b1-9815-27be15b1287d" /></p>
+
+<p>위와 같이 cluster 실행에 성공하면 기본적으로 <a href="http://localhost:8080">localhost:8080</a> 에서 master 의 web ui 를 확인 할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702899-ec6ab200-7699-11e9-9f1b-60c830ea0e41.png" alt="11-1c46299b-3cbe-4fcc-ad16-d9150cb2542f" /></p>
+
+<p>아직 실행중인 worker 나 application 이 없는 것을 확인 할 수 있다.</p>
+
+<p>위에서 만든 wordcounting application 을 배포하려면 spark가 설치된 폴더에서</p>
+
+<p><code class="highlighter-rouge">bin/spark-submit --master spark://computername:7077 --class javaclass something.jar somewhat.md</code></p>
+
+<p>위와 같이 실행한다. 이 명령은 실행된 cluster 에 application 을 연결하는데, <code class="highlighter-rouge">—master spark://computername:7077</code> 옵션으로 연결시킨다.</p>
+
+<p><br /></p>
+
+<hr />
+
+<p><em>Submitting Application Reference</em></p>
+
+<p><a href="https://spark.apache.org/docs/latest/submitting-applications.html">Submitting Applications - Spark 2.4.0 Documentation</a></p>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://spark.apache.org/docs/latest/submitting-applications.html')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">Submitting Applications - Spark 2.4.3 Documentation</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">The spark-submit script in Spark’s bin directory is used to launch applications on a cluster. It can use all of Spark’s supported cluster managers through a uniform interface so you don’t have to configure your application especially for each one.</div> <div style="font-size:10pt">https://spark.apache.org/docs/latest/submitting-applications.html</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://spark.apache.org/docs/latest/img/spark-logo-hd.png);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<p>Running application이 master 에서 인식된 모습</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702605-6189b780-7699-11e9-8c38-a1c3748c448f.png" alt="spark_master_window1-169d17e3-ab21-4bc0-8ae3-e29754fa5a75" /></p>
+
+<p>Terminal에서 application 을 종료하였을 때 인식된 모습</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702607-62224e00-7699-11e9-8815-ebc882318241.png" alt="spark_master_window2-ebf0c6e4-d3d4-41a4-ac46-c15ace879f0c" /></p>
+
+<p>Terminal 에서 application 을 종료하였을 때 인식된 모습</p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="how-to-set-workers">HOW TO SET WORKERS</h3>
+
+<p>순서는 다음과 같다</p>
+
+<ol>
+  <li>클러스터 할당</li>
+  <li>클러스터에 워커 할당</li>
+  <li>어플리케이션 시작</li>
+</ol>
+
+<p><em>Commands</em></p>
+
+<ol>
+  <li><code class="highlighter-rouge">./sbin/start-master.sh</code></li>
+  <li><code class="highlighter-rouge">./sbin/start-slave.sh &lt;master-url:port&gt;</code></li>
+  <li><code class="highlighter-rouge">bin/spark-submit --master &lt;Spark-Master URL&gt; --class &lt;Package&gt;.&lt;Class&gt; &lt;Example&gt;.jar</code></li>
+</ol>
+
+<p><em>Real Code</em></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./sbin/start-master.sh
+./sbin/start-slave.sh jungyu:7077
+bin/spark-submit --master spark://jungyu:7077 --class testSparkApplication.wordCounting testcase/testSparkApplication-0.0.1-SNAPSHOT.jar testcase/test.md
+</code></pre></div></div>
+
+<p>할당된 worker 에는 default 값으로 core 와 memory 가 할당된다.</p>
+
+<p>만약 이를 변경하고 싶다면 <code class="highlighter-rouge">/conf/spark-env.sh</code> 파일에 다음과 같은 줄을 추가한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export SPARK_WORKER_INSTANCES=2
+export SPARK_WORKER_MEMORY=1024m
+export SPARK_WORKER_CORES=4
+</code></pre></div></div>
+
+<p><em>Worker 2개, 각각 4개의 Core 및 1G Memory 가 나타난다</em></p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702900-ed034880-7699-11e9-96b4-b9bf555edc7b.png" alt="12-4610d968-1879-4070-8bfd-49f769a3f4a4" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/57702903-ed034880-7699-11e9-9b15-9bde5eb0a77e.png" alt="13-863eaf20-0309-4df6-8f7a-828877edfb8b" /></p>
+
+<p><br /></p>
+
+<hr />
+
+<h3 id="log-숨기기"><em>LOG 숨기기</em></h3>
+
+<p>터미널에서 stdout 을 확인해야 하는데, 자꾸 다른 로그들이 겹쳐 나와서 보기가 힘든 경우가 있다. 이 모든 출력되는 로그들은 <code class="highlighter-rouge">/conf/log4j.properties</code> 에  설정이 되어있다. 여기에서 <code class="highlighter-rouge">log4j.rootCategory=INFO, console</code> 부분을 <code class="highlighter-rouge">log4j.rootCategory=ERROR, console</code> 로 바꾸어 주면 ERROR 에 대한 로그만 출력되어 편리하다.</p>
+
+<p>아래는 설정 영상이다.</p>
+
+<script id="asciicast-R3b1kV4sP3v0YhOnfpk9lO2eB" src="https://asciinema.org/a/R3b1kV4sP3v0YhOnfpk9lO2eB.js" async=""></script>
+
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/10/textmining2/">
+          텍스트마이닝: Scraping 기초 지식
+          <small>10 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/10/textmining1/">
+          텍스트마이닝: 전반적인 지식
+          <small>10 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/04/25/docker-jekyll/">
+          깃헙 블로그 Docker에서 작업하기
+          <small>25 Apr 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/bigdata/2019/05/12/spark-local-setting/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/bigdata/2019/05/12/spark-local-setting'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>
