@@ -4,7 +4,7 @@
  <title>Jungyu Kim</title>
  <link href="http://0.0.0.0:4000/atom.xml" rel="self"/>
  <link href="http://0.0.0.0:4000/"/>
- <updated>2019-05-14T07:33:21-05:00</updated>
+ <updated>2019-05-14T07:40:45-05:00</updated>
  <id>http://0.0.0.0:4000</id>
  <author>
    <name>Jungyu Kim</name>
@@ -156,7 +156,7 @@
 
 &lt;p&gt;참고로 python 의 자료형 중 list 는 변경이 가능하고, tuple은 불변이다. dict 는 key와 value 로 구성되어 있다.&lt;/p&gt;
 
-&lt;p&gt;tuple.jpg&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57698513-becd3b00-7690-11e9-8855-bc3e893ffc30.jpg&quot; alt=&quot;tuple&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -206,13 +206,13 @@
 
 &lt;p&gt;Hyper Text Transfer Protocol로 하이퍼텍스트 뿐만 아니라 이미지나 동영상, 음성 등을 전송하는데 사용된다. 웹 브라우저는 HTTP 사용자 에이전트 중 하나이다.&lt;/p&gt;
 
-&lt;p&gt;http.jpg&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57698512-be34a480-7690-11e9-8249-2df46822c80a.jpg&quot; alt=&quot;http&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;HTTP request의 구조&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;request.jpg&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57698511-be34a480-7690-11e9-922f-5834ae711bd6.jpg&quot; alt=&quot;request&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;request2.jpg&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57698509-be34a480-7690-11e9-886c-cf92ce6e0521.jpg&quot; alt=&quot;request2&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -222,9 +222,9 @@
 
 &lt;p&gt;&lt;strong&gt;HTTP response의 구조&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;response.jpg&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57698508-bd9c0e00-7690-11e9-98eb-a9627f0728bb.jpg&quot; alt=&quot;response&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;response2.jpg&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/57698507-bd9c0e00-7690-11e9-8b8f-5ee81b48e852.jpg&quot; alt=&quot;response2&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
