@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Real-Time Structured Streaming Privacy Preserving">
+	<meta name="twitter:description" content="Real-Time Structured Streaming Privacy Preserving
+
+실시간으로 들어오는 빅데이터를 Spark Structured Streaming 을 사용하여 개인정보를 익명화하고 그 결과를 모니터링하는 프로젝트를 완성했다. 이전에 학습하였던 로컬에서의 application 개발을 토대로 작업하였고, privacy preserving(개인정보 익명화) 프로세스는 대그룹화, 소그룹화 익명화 알고리즘을 사용하여 구현하였다. 모니터링은 실시간으로 나오는 결과를 받아 웹으로 시각화 하였다.
+본 프로젝트는 연세대 컴퓨터과학과 졸업 프로젝트로 사용되었다.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Real-Time Structured Streaming Privacy Preserving">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Real-Time Structured Streaming Privacy Preserving
+
+실시간으로 들어오는 빅데이터를 Spark Structured Streaming 을 사용하여 개인정보를 익명화하고 그 결과를 모니터링하는 프로젝트를 완성했다. 이전에 학습하였던 로컬에서의 application 개발을 토대로 작업하였고, privacy preserving(개인정보 익명화) 프로세스는 대그룹화, 소그룹화 익명화 알고리즘을 사용하여 구현하였다. 모니터링은 실시간으로 나오는 결과를 받아 웹으로 시각화 하였다.
+본 프로젝트는 연세대 컴퓨터과학과 졸업 프로젝트로 사용되었다.
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/bigdata/2019/05/24/real-time-streaming-privacy-preserving/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Real-Time Structured Streaming Privacy Preserving &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">24 May 2019</span>
+  <h1 class="post-title">Real-Time Structured Streaming Privacy Preserving</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#spark" class="post-tag">spark</a>
+    
+    <a href="/blog/tags/#java" class="post-tag">java</a>
+    
+    <a href="/blog/tags/#database" class="post-tag">database</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <h2 id="real-time-structured-streaming-privacy-preserving"><strong>Real-Time Structured Streaming Privacy Preserving</strong></h2>
+
+<p>실시간으로 들어오는 빅데이터를 Spark Structured Streaming 을 사용하여 개인정보를 익명화하고 그 결과를 모니터링하는 프로젝트를 완성했다. 이전에 학습하였던 로컬에서의 application 개발을 토대로 작업하였고, privacy preserving(개인정보 익명화) 프로세스는 대그룹화, 소그룹화 익명화 알고리즘을 사용하여 구현하였다. 모니터링은 실시간으로 나오는 결과를 받아 웹으로 시각화 하였다.
+본 프로젝트는 연세대 컴퓨터과학과 졸업 프로젝트로 사용되었다.</p>
+
+<!-- more -->
+
+<p><br /></p>
+
+<hr />
+
+<iframe width="100%" height="460" src="https://www.youtube.com/embed/1aerl_Rgfzw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p><br /></p>
+
+<h2 id="1-goal"><strong>1. Goal</strong></h2>
+
+<p><strong>Real-time privacy preserving data publishing</strong></p>
+
+<p>“<u>privacy preserving data publishing</u> is the process of removing identifying information from data to prevent a person’s identity from being connected with information.”</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985431-9c094b80-966c-11e9-8405-c7544ace5c90.png" alt="image (1)" /></p>
+
+<ul>
+  <li>Typical methods of privacy preserving data publishing are K-Anonymity and Differential privacy model based algorithms.</li>
+  <li>We develop Apache Spark Structured Streaming-based Algorithm performing privacy preserving data publishing to Big Data.</li>
+  <li>We research real time privacy preserving data publishing algorithms which protects against attacks resulting from the leakage of personal information during Big data circulation and analysis. At the same time, algorithms should keep the similarity of each personal information high-level.</li>
+</ul>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="2-need"><strong>2. Need</strong></h2>
+
+<h3 id="why-do-we-need-real-time-privacy-model"><strong>Why do we need real-time privacy model?</strong></h3>
+
+<p><strong><em>Importance of privacy model</em></strong></p>
+
+<p>First of all, privacy model(de-identification) aims to allow data to be used by others without the possibility of individuals or organizations being identified. Personal sensitive information must be managed carefully not to be wrongly used by public especially in these big data world.</p>
+
+<p><strong><em>Existing privacy model has some limitations</em></strong></p>
+
+<p>There are some existing privacy models such as <em>k</em>-anonymity model or differential privacy model and these algorithm model ensures individual data not to be recognized. However, these algorithm only supports <em>batch processing</em> algorithm and this limitation relatively has some miserable results when we process lots of data stream in real-time big data input.</p>
+
+<p><strong><em>Streaming process is recommended</em></strong></p>
+
+<p>Nowadays, not only large amounts of data but real-time feedback of data is required to build some sensitive(reactive) system or applications.
+Accordingly,  <em>streaming process</em> is extremely recommended.</p>
+
+<p><strong><em>Therefore, Real-time privacy model.</em></strong></p>
+
+<p>Recognizing this need which has to satisfy efficient privacy model and real-time process, we will represent privacy model supports real-time streaming process that combines de-identification algorithm and instant feedbacks using spark structured streaming.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985490-f1ddf380-966c-11e9-8e63-8deca6ed94ba.png" alt="test" /></p>
+
+<p>​	<em>real-time big data flooding pictures</em></p>
+
+<p>Streaming process is more and more efficient at processing &amp; analyzing big data in real-time than batch processing. Below are specific advantages of streaming process.</p>
+
+<p><strong><em>Low latency</em></strong></p>
+
+<p>In the point of performance, the latency of batch processing will be in minutes to hours while the latency of stream processing will be in seconds or milliseconds.</p>
+
+<p><strong><em>Fraud detection &amp; Error handling</em></strong></p>
+
+<p>Streaming processing is effective for coping with fraud detection and error handling. Streaming process enables real-time anomaly detecting which signals fraud sign and rolling back some fraudulent transactions before they are completed. It is important in situations when we should use error-free data processing large volumes of information or use real-time analytics which needs fast fraud-clear results.</p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="3-research-contents"><strong>3. Research Contents</strong></h2>
+
+<h4 id="algorithm"><strong>Algorithm</strong></h4>
+
+<p>The algorithm we used to implement Real-time privacy preserving process is as follows.</p>
+
+<ol>
+  <li><strong>Transform</strong></li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985538-38cbe900-966d-11e9-88bd-8c8b8a706873.png" alt="1_ (1)" /></p>
+
+<p>Add new fields by converting the required attributes in the existing data schema.</p>
+
+<p><em>EX) Age -&gt; Age Group, Full Name -&gt; Last Name</em></p>
+
+<ol>
+  <li><strong>Large Grouping</strong></li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985541-41bcba80-966d-11e9-97ed-609386e99acd.png" alt="스크린샷 2019-06-19 오후 6.13.31" /></p>
+
+<p>Based on the selected multiple abstraction key attributes, group of records having same attributes values are grouped together (large group) and a GID column is created.</p>
+
+<ol>
+  <li><strong>Small Grouping</strong></li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985544-45504180-966d-11e9-86bd-69382bf77322.png" alt="스크린샷 2019-06-19 오후 6.13.38" /></p>
+
+<p>Records having similar attribute values in one large group are grouped again into small groups.</p>
+
+<ol>
+  <li><strong>Abstraction</strong></li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985547-4a14f580-966d-11e9-8b95-6253618b0a62.png" alt="스크린샷 2019-06-19 오후 6.13.42" /></p>
+
+<p>Abstraction is performed based on the small grouping result.</p>
+
+<p><br /></p>
+
+<p><strong>Implement</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985576-76c90d00-966d-11e9-8654-5ce056d3b006.png" alt="스크린샷 2019-06-19 오후 6.13.49" /></p>
+
+<p>There are two frameworks to implement, Spark Structured Streaming and Kafka. In the past, the batch process was done all the work in one application, but we divide it into several applications. Because Spark Structured Streaming support aggregation only once per application. So we have to find a way to send and receive data between applications. We use Kafka to connect several applications.</p>
+
+<p>Spark Structured Streaming is a streaming process framework built on the Spark SQL engine. It supports Dataset/DataFreme API in Scala, Python, Java, R to express streaming aggregations, event-time windows, stream-to-batch joins. We use Java to implement each step in application. Structured Streaming provides fast, scalable, fault-tolerant, end-to-end exactly-once stream processing without the user having to reason about streaming.</p>
+
+<p>Apache Kafka is a publish subscribe messaging system that is exchanging data between process, applications and servers. Kafka reduces the risk of data loss by saving message in disk not memory and Kafka is designed specifically for high-volume real-time log processing.</p>
+
+<p><br /></p>
+
+<p><strong>Analysis</strong></p>
+
+<p>We implement Real-time privacy preserving process successfully using these. And we also calculate various indicators between abstracted data using our process and original data.</p>
+
+<p>To use processed data, it has to maintain the meaning of unprocessed data. Dissimilarity indicates how much abstracted data differ from the original data. The lower dissimilarity is, the more abstracted data maintain the meaning of original data.</p>
+
+<p>If the residual rate is too low, the amount of data discarded becomes to large. Therefore, we compare and analyze the results of how to adjust the parameters to increase the residual rate.</p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="4-research-results"><strong>4. Research Results</strong></h2>
+
+<h4 id="residual-rate-by-abstraction-attributes"><strong>Residual rate by abstraction attributes</strong></h4>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985754-4a61c080-966e-11e9-8807-210e22c6f652.jpg" alt="graph" /></p>
+
+<p>It is very important to define <strong>abstraction attributes</strong> in the process of data abstraction. Depending on which attributes are defined as abstraction attributes, the residual rate of the data differs. In the two cases, the Abstraction results are more than twice as different. This difference comes from the abstraction
+attributes. In both cases, GENDER and CITY were used as abstraction attributes commonly and one used AGE as an abstraction attributes and the other used DRINK as an abstraction attributes. Left case is poorly grouped because AGE has a wide range of values, but right case is grouped well because DRINK has only two values(0 or 1). Therefore, when using abstraction attributes with various values, the grouping will not be performed properly, so the residual rate will be low.</p>
+
+<h4 id="residual-rate-by-the-number-of-streaming-inputs"><strong>Residual rate by the number of streaming inputs</strong></h4>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985770-649b9e80-966e-11e9-9a64-6dd477fa5792.png" alt="image (2)" /></p>
+
+<p>We experimented with different numbers of data(rows) per transaction and found that number of data per 1 transaction can determines amount of remnant (privacy-preserved) data. <strong>More streaming input</strong> per 1 transaction makes perfect “Abstraction”. When 2,000 rows were given per 1 transaction, the residual rate was 69.71%, but when 100 rows were given per 1 transaction, the residual rate is very low.</p>
+
+<h4 id="how-well-does-the-result-preserve-the-meaning-of-original-data"><strong>How well does the result preserve the meaning of original data?</strong></h4>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985784-70876080-966e-11e9-8f71-88bd4729e325.png" alt="image (3)" /></p>
+
+<p>To use remnant(abstracted) data, the abstracted data should not lose the meaning of original data. The indicator of this is dissimilarity. The lower dissimilarity, the more conservative the meaning. It is calculated as follows. The results show that the dissimilarity-value is close to zero. Therefore, the abstracted data maintains the meaning of the original data well.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985789-79783200-966e-11e9-9933-381f6844a2a9.png" alt="image (4)" /></p>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="5-project-environment"><strong>5. Project Environment</strong></h2>
+
+<p>This is overall project environment</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59985878-ec81a880-966e-11e9-96e4-2efc65cb465f.jpg" alt="Mid-Report" /></p>
+
+<p><br /></p>
+
+<p>Main spark streaming application environment</p>
+
+<p><img src="https://user-images.githubusercontent.com/33674947/59986201-a9283980-9670-11e9-96af-48ee4092d105.png" alt="그림1" /></p>
+
+<p>We use Spark Structured Streaming and Kafka. In the past, the process was done all the work in one application, but we divide it into several applications. Because Spark Structured Streaming support aggregation only once per application. We use Kafka to connect several applications. (Therefore there is several kafka topics listening to previous applications)</p>
+
+<p>Kafka topic listening view</p>
+
+<iframe width="100%" height="460" src="https://www.youtube.com/embed/_n8S1R90H4I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>Spark Structured Streaming is a streaming process framework built on the Spark SQL engine. We use the Dataset/DataFreme API in Java to express streaming aggregations, event-time windows, stream-to-batch joins and implement each step in Java application. Structured Streaming provides fast, scalable, fault-tolerant, end-to-end exactly-once stream processing without the user having to reason about streaming.</p>
+
+<p>Apache Kafka is a publish subscribe messaging system that is exchanging data between process, applications and servers. Kafka reduces the risk of data loss and Kafka is designed specifically for high-volume real-time log processing.</p>
+
+<p><br /></p>
+
+<hr />
+
+<p><em>Project Code</em></p>
+
+<p>모니터링 웹페이지 코드 공개입니다</p>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://github.com/jgtonys/Spark-Structured-Streaming')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">jgtonys/Spark-Structured-Streaming</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">Contribute to jgtonys/Spark-Structured-Streaming development by creating an account on GitHub.</div> <div style="font-size:10pt">https://github.com/jgtonys/Spark-Structured-Streaming</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://avatars1.githubusercontent.com/u/33674947?s=400&amp;v=4);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<p><em>Short Report For Project</em></p>
+
+<iframe src="https://drive.google.com/file/d/11b_qiVLkTgvpjU3tT59YyYzQemx2VAr0/preview" width="100%" height="640"></iframe>
+
+<p><br /></p>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/16/textmining-word-representation/">
+          텍스트마이닝: Word Representation
+          <small>16 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/13/spark-streaming-application0/">
+          Spark Streaming Application Tutorial
+          <small>13 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/13/spark-dataset-application/">
+          Spark Dataset Application Tutorial
+          <small>13 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/bigdata/2019/05/24/real-time-streaming-privacy-preserving/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/bigdata/2019/05/24/real-time-streaming-privacy-preserving'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

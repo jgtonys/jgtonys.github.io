@@ -243,154 +243,160 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
         <div class="posts">
   
   <div class="post">
-    <span class="post-date">20 Apr 2019</span>
+    <span class="post-date">12 May 2019</span>
     <h1 class="post-title">
-      <a href="/hackintosh/2019/04/20/laptop-to-mac/">
-        저사양 삼성노트북을 맥으로
+      <a href="/bigdata/2019/05/12/spark-local-setting/">
+        Spark & Java Application Local 설정
       </a>
     </h1>
     
     <div class="post-div">
     
-    <a href="/blog/tags/#hackintosh" class="post-tag">hackintosh</a>
+    <a href="/blog/tags/#spark" class="post-tag">spark</a>
+    
+    <a href="/blog/tags/#java" class="post-tag">java</a>
+    
+    <a href="/blog/tags/#database" class="post-tag">database</a>
     
     </div>
     
 
     <article>
-      <h2 id="hackintosh-설치-계기"><strong>Hackintosh 설치 계기</strong></h2>
+      <h2 id="spark-로컬-환경-구성"><strong>Spark 로컬 환경 구성</strong></h2>
 
-<p>맥을 쓰고 싶으나 맥을 쓰지 못하는 사람들이 항상 꿈꾸던 해킨토시에 도전했다. 필자는 윈도우에서 작업하는 것을 그렇게 좋아하지 않고 그래서 노트북에 리눅스 민트를 설치해서 유용하게 사용하고 있었다. 그러나 이 리눅스 OS 는 몇 가지 아주 큰 단점이 존재했는데 먼저 한국에서 대학생으로서 살아가는데 필요한 Office 들의 호환이 아주 좋지 않고, 무엇보다 카카오톡을 wine 으로 돌려야 하는데 이것마저 아주 버그가 심하다. 개발과 업무를 모두 만족시킬수 잇는 방법이 없을까 생각하다가 해킨토시를 설치하게 되었다. 생각보다 굉장히 어려운 작업이었고, 공부할 것도 많아서 고생을 좀 한 것 같다.</p>
+<p>본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다.</p>
 
 
     <article>
     <div class="post-more">
       
-      <a href="/hackintosh/2019/04/20/laptop-to-mac/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+      <a href="/bigdata/2019/05/12/spark-local-setting/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
       
-      <a href="/hackintosh/2019/04/20/laptop-to-mac/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      <a href="/bigdata/2019/05/12/spark-local-setting/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
     </div>
   </div>
   
   <div class="post">
-    <span class="post-date">17 Apr 2019</span>
+    <span class="post-date">10 May 2019</span>
     <h1 class="post-title">
-      <a href="/blog/2019/04/17/blog-latex-implementation/">
-        깃헙 블로그에 Latex 적용하기
+      <a href="/bigdata/2019/05/10/textmining2/">
+        텍스트마이닝: Scraping 기초 지식
       </a>
     </h1>
     
     <div class="post-div">
     
-    <a href="/blog/tags/#latex" class="post-tag">latex</a>
+    <a href="/blog/tags/#textmining" class="post-tag">textmining</a>
+    
+    <a href="/blog/tags/#python" class="post-tag">python</a>
+    
+    <a href="/blog/tags/#html" class="post-tag">html</a>
     
     </div>
     
 
     <article>
-      <h2 id="latex-적용법"><strong>Latex 적용법</strong></h2>
+      <h2 id="텍스트데이터-수집-방법"><strong>텍스트(데이터) 수집 방법</strong></h2>
 
-<p>깃헙의 마크다운은 네이트브로 수식 입력을 지원하지 않으므로, MathJax 를 연결하여 사용할 수 있도록 하자. <em>Jekyll 로 만든 Github Blog</em> 의 경우 따로 커스터마이징 하지 않았다면 대부분 <code class="highlighter-rouge">_layouts</code> 라는 폴더가 존재할 것이다. <code class="highlighter-rouge">_layouts/post.html</code> 이라는 파일은 blog post 를 작성할 때 이 구조를 따르게 되는데, <code class="highlighter-rouge">&lt;article&gt;</code> 태그 안에는 우리가 Markdown 으로 적은 내용(contents)이 들어가게 된다. 여기에 다음과 같은 script 코드를 넣어주자.</p>
+<p>python을 사용하여 데이터를 크롤링하는 방법을 배운다. 본격적으로 코드에 대해 언급하기 전에 알아야 할 인코딩이나 환경에 대하여 먼저 서술한다.</p>
 
 
     <article>
     <div class="post-more">
       
-      <a href="/blog/2019/04/17/blog-latex-implementation/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+      <a href="/bigdata/2019/05/10/textmining2/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
       
-      <a href="/blog/2019/04/17/blog-latex-implementation/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      <a href="/bigdata/2019/05/10/textmining2/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
     </div>
   </div>
   
   <div class="post">
-    <span class="post-date">18 Mar 2019</span>
+    <span class="post-date">10 May 2019</span>
     <h1 class="post-title">
-      <a href="/bigdata/2019/03/18/kafka/">
-        Apache Kafka 사용하기
+      <a href="/bigdata/2019/05/10/textmining1/">
+        텍스트마이닝: 전반적인 지식
       </a>
     </h1>
     
     <div class="post-div">
     
-    <a href="/blog/tags/#kafka" class="post-tag">kafka</a>
+    <a href="/blog/tags/#textmining" class="post-tag">textmining</a>
     
     </div>
     
 
     <article>
-      <h2 id="kafka-란"><strong>Kafka 란?</strong></h2>
+      <h2 id="텍스트마이닝이란"><strong>텍스트마이닝이란?</strong></h2>
 
-<p>Kafka는 publisher-subscriber 모델의 메세지 큐이고, 분산환경에 특화되어 설계되었다. 기존의 많은 다른 메세지 큐와 비교하였을 때 월등하게 성능 처리가 좋고, 필자는 여기서 Spark Structured Streaming 환경을 구성하기 위해 kafka 를 사용하였다. 기존의 publisher-subscriber 에 대한 개념은 이전 <a href="https://jgtonys.github.io/iot/2018/07/13/mqtt-test/">MQTT</a>  에서도 한번 다룬 적이 있다.</p>
+<p>텍스트 정보처리라고도 불리우며 구조화되지 않은(unstructured) 대규모 텍스트 집합에서 새로운 지식 또는 의미를 발견하는 과정이다.</p>
 
 
     <article>
     <div class="post-more">
       
-      <a href="/bigdata/2019/03/18/kafka/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+      <a href="/bigdata/2019/05/10/textmining1/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
       
-      <a href="/bigdata/2019/03/18/kafka/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      <a href="/bigdata/2019/05/10/textmining1/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
     </div>
   </div>
   
   <div class="post">
-    <span class="post-date">16 Mar 2019</span>
+    <span class="post-date">25 Apr 2019</span>
     <h1 class="post-title">
-      <a href="/tips/2019/03/16/asciinema/">
-        터미널 녹화하기 : Asciinema 
+      <a href="/blog/2019/04/25/docker-jekyll/">
+        깃헙 블로그 Docker에서 작업하기
       </a>
     </h1>
     
     <div class="post-div">
     
-    <a href="/blog/tags/#terminal" class="post-tag">terminal</a>
+    <a href="/blog/tags/#docker" class="post-tag">docker</a>
     
     </div>
     
 
     <article>
-      <h2 id="asciinema"><strong>Asciinema</strong></h2>
+      <h2 id="계기"><strong>계기</strong></h2>
 
-<p>손쉽게 터미널을 녹화하여 동영상으로 만들어주는 프로그램이다. 간단한 명령어로 녹화를 시작하고 끝낼 수 있다. 녹화가 완료됨에 따라서 자동으로 웹에 업로드 되며, 로컬에 저장할 수도 있다. 또한 다른 웹에 embedded 하거나 markdown 에 넣기 편리하도록 링크도 제공한다.</p>
+<p>깃헙 블로그를 만들기 위해서는 로컬 PC에 ruby를 설치하고 jekyll 환경구성을 해야한다. 이전에 만들었을 때는 직접 다 로컬에 설치하고 구성하였으나 PC 포맷 후 그 작업을 다시 하려니 생각보다 신경쓸 일이 많아서, 저번에 구성해 놓았던 도커로 jekyll 을 구성하기로 하였다. 5분도 안되서 모든 환경 구성이 끝났고 몇가지 명령어만 익힌다면 쉽고 빠르게 블로그를 빌드할 수 있을 것 같다.</p>
 
 
     <article>
     <div class="post-more">
       
-      <a href="/tips/2019/03/16/asciinema/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+      <a href="/blog/2019/04/25/docker-jekyll/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
       
-      <a href="/tips/2019/03/16/asciinema/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      <a href="/blog/2019/04/25/docker-jekyll/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
     </div>
   </div>
   
   <div class="post">
-    <span class="post-date">12 Mar 2019</span>
+    <span class="post-date">24 Apr 2019</span>
     <h1 class="post-title">
-      <a href="/school/2019/03/12/finite-state-automata-dfa-nfa/">
-        Finite State Automata FAs
+      <a href="/docker/2019/04/24/docker-install-mac/">
+        Mac에 Docker 설치
       </a>
     </h1>
     
     <div class="post-div">
     
-    <a href="/blog/tags/#automata" class="post-tag">automata</a>
+    <a href="/blog/tags/#docker" class="post-tag">docker</a>
     
     </div>
     
 
     <article>
-      <h2 id="fas"><strong>FAs</strong></h2>
+      <h2 id="docker-란"><strong>Docker 란?</strong></h2>
 
-<p>Finite-State Automata 를 의미하며, 많은 application 이 FA로 만들어져 있다.</p>
-
-<p>여기에선 FA의 특성을 알아보기 위해 application 을 간략하게 다루어 볼 것이다.</p>
+<p>Docker란 컨테이너 기반의 오픈소스 가상화 플랫폼이다. 거창하게 말하면 그렇지만 간단하게 말해서 많은 서버와 프로그램의 환경을 컨테이너로 추상화하여 사용자의 PC에 직접 설치하는 일 없이 가상환경으로 돌려주는 플랫폼을 의미한다. 최근의 많은 개발 작업들은 의존성 패키지들이 버전도 다양하여 환경 셋팅만 하루종일 걸리고 정작 실제 개발은 시작도 하지 못하고 지쳐버리는 현상이 나타나는데, 이 환경 셋팅을 아주 간편하게 가상화하여 사용할 수 있는 녀석이다.</p>
 
 
     <article>
     <div class="post-more">
       
-      <a href="/school/2019/03/12/finite-state-automata-dfa-nfa/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+      <a href="/docker/2019/04/24/docker-install-mac/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
       
-      <a href="/school/2019/03/12/finite-state-automata-dfa-nfa/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+      <a href="/docker/2019/04/24/docker-install-mac/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
     </div>
   </div>
   

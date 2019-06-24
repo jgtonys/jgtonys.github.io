@@ -275,7 +275,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h1 id="spark-local-setting">SPARK LOCAL SETTING</h1>
+<h1 id="spark-local-setting"><strong>SPARK LOCAL SETTING</strong></h1>
 
 <p>local spark settings, java application settings</p>
 
@@ -283,7 +283,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="requirement">REQUIREMENT</h3>
+<h2 id="requirement"><strong>REQUIREMENT</strong></h2>
 
 <p>Spark, Eclipse(Maven)</p>
 
@@ -291,7 +291,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="what-is-maven">WHAT IS MAVEN</h3>
+<h2 id="what-is-maven"><strong>WHAT IS MAVEN</strong></h2>
 
 <p><em>개발 프로젝트 시 나타나는 많은 의존성 라이브러리들을 관리해 주는 툴</em></p>
 
@@ -301,7 +301,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="maven-installation">MAVEN INSTALLATION</h3>
+<h2 id="maven-installation"><strong>MAVEN INSTALLATION</strong></h2>
 
 <p>Eclipse 를 설치하게 되면 자동으로 설치된다. (따로 설치할 필요 없음)</p>
 
@@ -309,7 +309,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="maven-lifecycle">MAVEN LIFECYCLE</h3>
+<h2 id="maven-lifecycle"><strong>MAVEN LIFECYCLE</strong></h2>
 
 <p>메이븐은 프로젝트 생성에 필요한 단계(phases)들을 Build Lifecycle이라 정의하고 <code class="highlighter-rouge">default</code>, <code class="highlighter-rouge">clean,</code> <code class="highlighter-rouge">site</code> 세가지로 표준 정의한다. Lifecycle은 Build Phase 들로 구성되며 일련의 순서를 갖는다. phase 는 실행단위로서 goal과 바인딩된다.</p>
 
@@ -365,7 +365,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="dependency-pomxml">DEPENDENCY (POM.XML)</h3>
+<h2 id="dependency-pomxml"><strong>DEPENDENCY (POM.XML)</strong></h2>
 
 <p>의존성에 대한 정보는 POM.XML에 저장된다. 이 정의에 의해서 MAVEN 은 자동으로 repository 를 검색하고 필요한 library 를 자동으로 추가해준다.</p>
 
@@ -505,7 +505,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="build">BUILD</h3>
+<h2 id="build"><strong>BUILD</strong></h2>
 
 <p>/src/main/java 에 패키지를 생성하고 예제 java 파일을 생성한다.</p>
 
@@ -533,7 +533,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="spark-tar-file-testing">SPARK .tar FILE TESTING</h3>
+<h2 id="spark-tar-file-testing"><strong>SPARK .tar FILE TESTING</strong></h2>
 
 <p>서버의 spark 가 설치되어 있는 폴더로 이동하여</p>
 
@@ -550,7 +550,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="reference">REFERENCE</h3>
+<h2 id="reference"><strong>REFERENCE</strong></h2>
 
 <p><a href="https://www.slideshare.net/KangDognhyun/2apache-spark">https://www.slideshare.net/KangDognhyun/2apache-spark</a></p>
 
@@ -560,7 +560,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="how-to-submit-application">HOW TO SUBMIT APPLICATION</h3>
+<h2 id="how-to-submit-application"><strong>HOW TO SUBMIT APPLICATION</strong></h2>
 
 <p><em>Standalone Document</em></p>
 
@@ -570,7 +570,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <p><br /></p>
 
-<p>Standalone 으로 cluster 를 실행한다</p>
+<p>Standalone 으로 cluster 를 실행한다**</p>
 
 <p><code class="highlighter-rouge">./sbin/start-master.sh</code></p>
 
@@ -612,7 +612,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
 <hr />
 
-<h3 id="how-to-set-workers">HOW TO SET WORKERS</h3>
+<h2 id="how-to-set-workers"><strong>HOW TO SET WORKERS</strong></h2>
 
 <p>순서는 다음과 같다</p>
 
@@ -656,7 +656,7 @@ export SPARK_WORKER_CORES=4
 
 <hr />
 
-<h3 id="log-숨기기"><em>LOG 숨기기</em></h3>
+<h2 id="log-숨기기"><strong>LOG 숨기기</strong></h2>
 
 <p>터미널에서 stdout 을 확인해야 하는데, 자꾸 다른 로그들이 겹쳐 나와서 보기가 힘든 경우가 있다. 이 모든 출력되는 로그들은 <code class="highlighter-rouge">/conf/log4j.properties</code> 에  설정이 되어있다. 여기에서 <code class="highlighter-rouge">log4j.rootCategory=INFO, console</code> 부분을 <code class="highlighter-rouge">log4j.rootCategory=ERROR, console</code> 로 바꾸어 주면 ERROR 에 대한 로그만 출력되어 편리하다.</p>
 
@@ -674,27 +674,27 @@ export SPARK_WORKER_CORES=4
     
     <li>
       <h3>
-        <a href="/bigdata/2019/05/10/textmining2/">
-          텍스트마이닝: Scraping 기초 지식
-          <small>10 May 2019</small>
+        <a href="/bigdata/2019/05/24/real-time-streaming-privacy-preserving/">
+          Real-Time Structured Streaming Privacy Preserving
+          <small>24 May 2019</small>
         </a>
       </h3>
     </li>
     
     <li>
       <h3>
-        <a href="/bigdata/2019/05/10/textmining1/">
-          텍스트마이닝: 전반적인 지식
-          <small>10 May 2019</small>
+        <a href="/bigdata/2019/05/16/textmining-word-representation/">
+          텍스트마이닝: Word Representation
+          <small>16 May 2019</small>
         </a>
       </h3>
     </li>
     
     <li>
       <h3>
-        <a href="/blog/2019/04/25/docker-jekyll/">
-          깃헙 블로그 Docker에서 작업하기
-          <small>25 Apr 2019</small>
+        <a href="/bigdata/2019/05/13/spark-streaming-application0/">
+          Spark Streaming Application Tutorial
+          <small>13 May 2019</small>
         </a>
       </h3>
     </li>
