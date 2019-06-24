@@ -16,7 +16,7 @@ tags: [spark, java, database]
 
 ---
 
-# SPARK LOCAL SETTING
+# **SPARK LOCAL SETTING**
 
 local spark settings, java application settings
 
@@ -24,7 +24,7 @@ local spark settings, java application settings
 
 ---
 
-### REQUIREMENT
+## **REQUIREMENT**
 
 Spark, Eclipse(Maven)
 
@@ -32,7 +32,7 @@ Spark, Eclipse(Maven)
 
 ---
 
-### WHAT IS MAVEN
+## **WHAT IS MAVEN**
 
 *개발 프로젝트 시 나타나는 많은 의존성 라이브러리들을 관리해 주는 툴*
 
@@ -42,7 +42,7 @@ Spark, Eclipse(Maven)
 
 ---
 
-### MAVEN INSTALLATION
+## **MAVEN INSTALLATION**
 
 Eclipse 를 설치하게 되면 자동으로 설치된다. (따로 설치할 필요 없음)
 
@@ -50,7 +50,7 @@ Eclipse 를 설치하게 되면 자동으로 설치된다. (따로 설치할 필
 
 ---
 
-### MAVEN LIFECYCLE
+## **MAVEN LIFECYCLE**
 
 메이븐은 프로젝트 생성에 필요한 단계(phases)들을 Build Lifecycle이라 정의하고 `default`, `clean,` `site` 세가지로 표준 정의한다. Lifecycle은 Build Phase 들로 구성되며 일련의 순서를 갖는다. phase 는 실행단위로서 goal과 바인딩된다.
 
@@ -95,7 +95,7 @@ build default lifecycle
 
 ---
 
-### DEPENDENCY (POM.XML)
+## **DEPENDENCY (POM.XML)**
 
 의존성에 대한 정보는 POM.XML에 저장된다. 이 정의에 의해서 MAVEN 은 자동으로 repository 를 검색하고 필요한 library 를 자동으로 추가해준다.
 
@@ -240,7 +240,7 @@ build default lifecycle
 
 ---
 
-### BUILD
+## **BUILD**
 
 /src/main/java 에 패키지를 생성하고 예제 java 파일을 생성한다.
 
@@ -268,7 +268,7 @@ example '[wordcounting.java](http://wordcounting.java)'
 
 ---
 
-### SPARK .tar FILE TESTING
+## **SPARK .tar FILE TESTING**
 
 서버의 spark 가 설치되어 있는 폴더로 이동하여
 
@@ -286,7 +286,7 @@ bin/spark-submit —class 클래스이름 jar파일 분석할md파일
 
 ---
 
-### REFERENCE
+## **REFERENCE**
 
 [https://www.slideshare.net/KangDognhyun/2apache-spark](https://www.slideshare.net/KangDognhyun/2apache-spark)
 
@@ -296,7 +296,7 @@ bin/spark-submit —class 클래스이름 jar파일 분석할md파일
 
 ---
 
-### HOW TO SUBMIT APPLICATION
+## **HOW TO SUBMIT APPLICATION**
 
 *Standalone Document*
 
@@ -309,7 +309,7 @@ bin/spark-submit —class 클래스이름 jar파일 분석할md파일
 
 
 
-Standalone 으로 cluster 를 실행한다
+Standalone 으로 cluster 를 실행한다**
 
 `./sbin/start-master.sh`
 
@@ -351,7 +351,7 @@ Terminal 에서 application 을 종료하였을 때 인식된 모습
 
 ---
 
-### HOW TO SET WORKERS
+## **HOW TO SET WORKERS**
 
 순서는 다음과 같다
 
@@ -393,7 +393,7 @@ export SPARK_WORKER_CORES=4
 
 ---
 
-### *LOG 숨기기*
+## **LOG 숨기기**
 
 터미널에서 stdout 을 확인해야 하는데, 자꾸 다른 로그들이 겹쳐 나와서 보기가 힘든 경우가 있다. 이 모든 출력되는 로그들은 `/conf/log4j.properties` 에  설정이 되어있다. 여기에서 `log4j.rootCategory=INFO, console` 부분을 `log4j.rootCategory=ERROR, console` 로 바꾸어 주면 ERROR 에 대한 로그만 출력되어 편리하다.
 

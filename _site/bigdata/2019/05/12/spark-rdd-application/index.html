@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Spark RDD Application Tutorial">
+	<meta name="twitter:description" content="Spark RDD Application
+
+본 포스트는 Spark 와 Java Application 을 이용하여 RDD Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Spark RDD Application Tutorial">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Spark RDD Application
+
+본 포스트는 Spark 와 Java Application 을 이용하여 RDD Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/bigdata/2019/05/12/spark-rdd-application/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Spark RDD Application Tutorial &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">12 May 2019</span>
+  <h1 class="post-title">Spark RDD Application Tutorial</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#spark" class="post-tag">spark</a>
+    
+    <a href="/blog/tags/#java" class="post-tag">java</a>
+    
+    <a href="/blog/tags/#database" class="post-tag">database</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <h2 id="spark-rdd-application"><strong>Spark RDD Application</strong></h2>
+
+<p>본 포스트는 Spark 와 Java Application 을 이용하여 RDD Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.</p>
+
+<!-- more -->
+
+<p><br /></p>
+
+<hr />
+
+<p><em>이전 로컬환경 설정</em></p>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">Spark &amp; Java Application Local 설정</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">Spark 로컬 환경 구성 본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다. </div> <div style="font-size:10pt">https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<h2 id="reference"><strong>REFERENCE</strong></h2>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://spark.apache.org/docs/latest/rdd-programming-guide.html')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">RDD Programming Guide - Spark 2.4.3 Documentation</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">Spark 2.4.3 programming guide in Java, Scala and Python</div> <div style="font-size:10pt">https://spark.apache.org/docs/latest/rdd-programming-guide.html</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://spark.apache.org/docs/latest/img/spark-webui-accumulators.png);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="environment"><strong>ENVIRONMENT</strong></h2>
+
+<p><em>Spark 2.4.0</em> supports <code class="highlighter-rouge">lambda expressions</code> for concisely writing functions, otherwise you can use the classes in the <code class="highlighter-rouge">org.apache.spark.api.java.function</code> package.</p>
+
+<p>Java 를 Spark application 에 연결하기 위해서는 Spark application 의 maven 에 dependency 를 추가해 주어야만 한다. (이미 되어있는 경우 생략)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>groupId = org.apache.spark
+artifactId = spark-core_2.11
+version = 2.4.0
+</code></pre></div></div>
+
+<p>만약 HDFS 를 연결한다면 마찬가지로 maven 에 dependency 를 추가해 주어야 한다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>groupId = org.apache.hadoop
+artifactId = hadoop-client
+version = <span class="nt">&lt;your-hdfs-version&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Java 를 Link 하기 위해서는 다음과 같이 class 들을 import 한다</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.apache.spark.api.java.JavaSparkContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.api.java.JavaRDD</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.SparkConf</span><span class="o">;</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="initialize"><strong>INITIALIZE</strong></h2>
+
+<p>Spark application 을 만들 때 첫번째로 해야 하는 것은 <code class="highlighter-rouge">JavaSparkContext</code> 객체를 생성하는 것이다. 이 객체는 어떻게 cluster 에 연결할 수 있는지를 명세한다. <code class="highlighter-rouge">SparkContext</code> 를 생성하기 위해서는 먼저 <code class="highlighter-rouge">SparkConf</code> 객체를 생성하여 application 의 정보를 가져온다.</p>
+
+<ol>
+  <li>
+    <p>SparkConf 객체로 정보 획득</p>
+  </li>
+  <li>
+    <p>SparkContext 객체 생성</p>
+
+    <p>SparkConf conf = new SparkConf().setAppName(appName).setMaster(master);
+JavaSparkContext sc = new JavaSparkContext(conf);</p>
+  </li>
+</ol>
+
+<p><code class="highlighter-rouge">appName</code> : Name for your application to show on the cluster UI</p>
+
+<p><code class="highlighter-rouge">master</code>  : Spark, Mesos or YARN cluster URL, or local (또는 spark-submit 을 통해 나타난 master 의 이름)</p>
+
+<p><em>Java Spark Application 은 shell 을 통해 initialize 할 수 없다. 따라서 코드에서만 가능하다.</em></p>
+
+<h2 id="resilient-distributed-datasets-rdds"><strong>Resilient Distributed Datasets (RDDs)</strong></h2>
+
+<p>병렬로 처리가 가능한 장애 감내(결함 감수)  속성들의 집합이다. RDD 를 만드는 방법에는 크게 두가지가 존재하는데, 하나는 존재하는 데이터를 병렬로 처리하는 것이고, 다른 하나는 외부 Storage, input 으로 부터 dataset 을 참조하는 것이다.</p>
+
+<ol>
+  <li>Internal Collection → RDD</li>
+</ol>
+
+<p><code class="highlighter-rouge">JavaSparkContext</code> 의 기능 중 하나인 <em>pararellize</em> 를 사용하면 기존의 집합을 병렬적으로 처리하여 RDD 생성이 가능하다.</p>
+
+<p><em>List data 를 RDD 로 만드는 과정(parallelize)</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">distData</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">parallelize</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>PARTITION : Spark application 이 task 를 수행하는 단위로서 cluster 를 나누어 사용하는 단위이다. 보통 하나의 CPU 당 2~4 개의 partition 이 존재한다. 만약 partition 이 지정되지 않았다면 Spark 가 자동으로 할당하지만 다음과 같이 임의로 partition 을 할당할 수도 있다. <code class="highlighter-rouge">sc.parallelize(data, 10)</code>← 10개의 partition.</li>
+</ul>
+
+<ol>
+  <li>External Dataset → RDD</li>
+</ol>
+
+<p><code class="highlighter-rouge">JavaSparkContext</code> 의 <em>textfile</em> 을 사용하면 외부 dataset 을 RDD 로 생성이 가능하다.</p>
+
+<p><em>Text file 을 RDD 로 만드는 과정</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">distFile</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p><em>Local 에서 실행할 경우 파일은 local filesystem 내에서 접근이 가능해야 한다</em></p>
+
+<p>Partition 의 경우 textfile method 를 사용하면 input file 의 한 block 마다 partition 이 생성된다.(default)</p>
+
+<p>여러가지 다른 Format 의 파일</p>
+
+<ul>
+  <li>wholeTextFiles : 디렉토리 단위로 읽어서 내부 파일들까지 모두 읽는다</li>
+  <li>sequenceFile : Key 와 Value 를 가지고 읽는다.</li>
+  <li>hadoopRDD : Hadoop 의 inputFormat 을 읽는다.</li>
+  <li>JavaRDD.saveAsObjectFile : RDD 를 java Object 로 저장한다.</li>
+</ul>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="rdd-operation"><strong>RDD OPERATION</strong></h2>
+
+<p>Transformation : lazy 하게 동작하여 실제로는 값을 변경하지 않는 예약작업</p>
+
+<p>Action : Task 를 실제로 실행하게 되는 작업</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
+<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">lineLengths</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+<span class="kt">int</span> <span class="n">totalLength</span> <span class="o">=</span> <span class="n">lineLengths</span><span class="o">.</span><span class="na">reduce</span><span class="o">((</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">map</code> 은 transformation 이고, <code class="highlighter-rouge">reduce</code> 는 action 이다.</p>
+
+<p><code class="highlighter-rouge">reduce</code> 가 실행되는 시점에서 spark 는 partition 을 실행하고 <code class="highlighter-rouge">map</code> 을 실행하게 한다.</p>
+
+<p>만약 위의 코드에서 <code class="highlighter-rouge">lineLengths</code> 를 메모리에 저장하여 한번 실행 후 다시 재사용 하고 싶다면 <code class="highlighter-rouge">lineLengths.persist(StorageLevel.MEMORY_ONLY());</code> 코드를 추가한다.</p>
+
+<p><em>Lambda function usage</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GetLength</span> <span class="kd">implements</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Sum</span> <span class="kd">implements</span> <span class="n">Function2</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="n">Integer</span> <span class="n">a</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
+<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">lineLengths</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="k">new</span> <span class="n">GetLength</span><span class="o">());</span>
+<span class="kt">int</span> <span class="n">totalLength</span> <span class="o">=</span> <span class="n">lineLengths</span><span class="o">.</span><span class="na">reduce</span><span class="o">(</span><span class="k">new</span> <span class="n">Sum</span><span class="o">());</span>
+</code></pre></div></div>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/24/real-time-streaming-privacy-preserving/">
+          Real-Time Structured Streaming Privacy Preserving
+          <small>24 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/16/textmining-word-representation/">
+          텍스트마이닝: Word Representation
+          <small>16 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/13/spark-streaming-application0/">
+          Spark Streaming Application Tutorial
+          <small>13 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/bigdata/2019/05/12/spark-rdd-application/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/bigdata/2019/05/12/spark-rdd-application'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>

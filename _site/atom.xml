@@ -4,13 +4,989 @@
  <title>Jungyu Kim</title>
  <link href="http://0.0.0.0:4000/atom.xml" rel="self"/>
  <link href="http://0.0.0.0:4000/"/>
- <updated>2019-05-14T08:52:47-05:00</updated>
+ <updated>2019-06-23T22:07:07-05:00</updated>
  <id>http://0.0.0.0:4000</id>
  <author>
    <name>Jungyu Kim</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Real-Time Structured Streaming Privacy Preserving</title>
+   <link href="http://0.0.0.0:4000/bigdata/2019/05/24/real-time-streaming-privacy-preserving/"/>
+   <updated>2019-05-24T00:00:00-05:00</updated>
+   <id>http://0.0.0.0:4000/bigdata/2019/05/24/real-time-streaming-privacy-preserving</id>
+   <content type="html">&lt;h2 id=&quot;real-time-structured-streaming-privacy-preserving&quot;&gt;&lt;strong&gt;Real-Time Structured Streaming Privacy Preserving&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;실시간으로 들어오는 빅데이터를 Spark Structured Streaming 을 사용하여 개인정보를 익명화하고 그 결과를 모니터링하는 프로젝트를 완성했다. 이전에 학습하였던 로컬에서의 application 개발을 토대로 작업하였고, privacy preserving(개인정보 익명화) 프로세스는 대그룹화, 소그룹화 익명화 알고리즘을 사용하여 구현하였다. 모니터링은 실시간으로 나오는 결과를 받아 웹으로 시각화 하였다.
+본 프로젝트는 연세대 컴퓨터과학과 졸업 프로젝트로 사용되었다.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;iframe width=&quot;100%&quot; height=&quot;460&quot; src=&quot;https://www.youtube.com/embed/1aerl_Rgfzw&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-goal&quot;&gt;&lt;strong&gt;1. Goal&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Real-time privacy preserving data publishing&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;“&lt;u&gt;privacy preserving data publishing&lt;/u&gt; is the process of removing identifying information from data to prevent a person’s identity from being connected with information.”&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985431-9c094b80-966c-11e9-8405-c7544ace5c90.png&quot; alt=&quot;image (1)&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Typical methods of privacy preserving data publishing are K-Anonymity and Differential privacy model based algorithms.&lt;/li&gt;
+  &lt;li&gt;We develop Apache Spark Structured Streaming-based Algorithm performing privacy preserving data publishing to Big Data.&lt;/li&gt;
+  &lt;li&gt;We research real time privacy preserving data publishing algorithms which protects against attacks resulting from the leakage of personal information during Big data circulation and analysis. At the same time, algorithms should keep the similarity of each personal information high-level.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;2-need&quot;&gt;&lt;strong&gt;2. Need&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;why-do-we-need-real-time-privacy-model&quot;&gt;&lt;strong&gt;Why do we need real-time privacy model?&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Importance of privacy model&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;First of all, privacy model(de-identification) aims to allow data to be used by others without the possibility of individuals or organizations being identified. Personal sensitive information must be managed carefully not to be wrongly used by public especially in these big data world.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Existing privacy model has some limitations&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;There are some existing privacy models such as &lt;em&gt;k&lt;/em&gt;-anonymity model or differential privacy model and these algorithm model ensures individual data not to be recognized. However, these algorithm only supports &lt;em&gt;batch processing&lt;/em&gt; algorithm and this limitation relatively has some miserable results when we process lots of data stream in real-time big data input.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Streaming process is recommended&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Nowadays, not only large amounts of data but real-time feedback of data is required to build some sensitive(reactive) system or applications.
+Accordingly,  &lt;em&gt;streaming process&lt;/em&gt; is extremely recommended.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Therefore, Real-time privacy model.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Recognizing this need which has to satisfy efficient privacy model and real-time process, we will represent privacy model supports real-time streaming process that combines de-identification algorithm and instant feedbacks using spark structured streaming.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985490-f1ddf380-966c-11e9-8e63-8deca6ed94ba.png&quot; alt=&quot;test&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;​	&lt;em&gt;real-time big data flooding pictures&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Streaming process is more and more efficient at processing &amp;amp; analyzing big data in real-time than batch processing. Below are specific advantages of streaming process.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Low latency&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In the point of performance, the latency of batch processing will be in minutes to hours while the latency of stream processing will be in seconds or milliseconds.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Fraud detection &amp;amp; Error handling&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Streaming processing is effective for coping with fraud detection and error handling. Streaming process enables real-time anomaly detecting which signals fraud sign and rolling back some fraudulent transactions before they are completed. It is important in situations when we should use error-free data processing large volumes of information or use real-time analytics which needs fast fraud-clear results.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;3-research-contents&quot;&gt;&lt;strong&gt;3. Research Contents&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h4 id=&quot;algorithm&quot;&gt;&lt;strong&gt;Algorithm&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;The algorithm we used to implement Real-time privacy preserving process is as follows.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Transform&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985538-38cbe900-966d-11e9-88bd-8c8b8a706873.png&quot; alt=&quot;1_ (1)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add new fields by converting the required attributes in the existing data schema.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;EX) Age -&amp;gt; Age Group, Full Name -&amp;gt; Last Name&lt;/em&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Large Grouping&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985541-41bcba80-966d-11e9-97ed-609386e99acd.png&quot; alt=&quot;스크린샷 2019-06-19 오후 6.13.31&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Based on the selected multiple abstraction key attributes, group of records having same attributes values are grouped together (large group) and a GID column is created.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Small Grouping&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985544-45504180-966d-11e9-86bd-69382bf77322.png&quot; alt=&quot;스크린샷 2019-06-19 오후 6.13.38&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Records having similar attribute values in one large group are grouped again into small groups.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Abstraction&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985547-4a14f580-966d-11e9-8b95-6253618b0a62.png&quot; alt=&quot;스크린샷 2019-06-19 오후 6.13.42&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Abstraction is performed based on the small grouping result.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Implement&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985576-76c90d00-966d-11e9-8654-5ce056d3b006.png&quot; alt=&quot;스크린샷 2019-06-19 오후 6.13.49&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There are two frameworks to implement, Spark Structured Streaming and Kafka. In the past, the batch process was done all the work in one application, but we divide it into several applications. Because Spark Structured Streaming support aggregation only once per application. So we have to find a way to send and receive data between applications. We use Kafka to connect several applications.&lt;/p&gt;
+
+&lt;p&gt;Spark Structured Streaming is a streaming process framework built on the Spark SQL engine. It supports Dataset/DataFreme API in Scala, Python, Java, R to express streaming aggregations, event-time windows, stream-to-batch joins. We use Java to implement each step in application. Structured Streaming provides fast, scalable, fault-tolerant, end-to-end exactly-once stream processing without the user having to reason about streaming.&lt;/p&gt;
+
+&lt;p&gt;Apache Kafka is a publish subscribe messaging system that is exchanging data between process, applications and servers. Kafka reduces the risk of data loss by saving message in disk not memory and Kafka is designed specifically for high-volume real-time log processing.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Analysis&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We implement Real-time privacy preserving process successfully using these. And we also calculate various indicators between abstracted data using our process and original data.&lt;/p&gt;
+
+&lt;p&gt;To use processed data, it has to maintain the meaning of unprocessed data. Dissimilarity indicates how much abstracted data differ from the original data. The lower dissimilarity is, the more abstracted data maintain the meaning of original data.&lt;/p&gt;
+
+&lt;p&gt;If the residual rate is too low, the amount of data discarded becomes to large. Therefore, we compare and analyze the results of how to adjust the parameters to increase the residual rate.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;4-research-results&quot;&gt;&lt;strong&gt;4. Research Results&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h4 id=&quot;residual-rate-by-abstraction-attributes&quot;&gt;&lt;strong&gt;Residual rate by abstraction attributes&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985754-4a61c080-966e-11e9-8807-210e22c6f652.jpg&quot; alt=&quot;graph&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It is very important to define &lt;strong&gt;abstraction attributes&lt;/strong&gt; in the process of data abstraction. Depending on which attributes are defined as abstraction attributes, the residual rate of the data differs. In the two cases, the Abstraction results are more than twice as different. This difference comes from the abstraction
+attributes. In both cases, GENDER and CITY were used as abstraction attributes commonly and one used AGE as an abstraction attributes and the other used DRINK as an abstraction attributes. Left case is poorly grouped because AGE has a wide range of values, but right case is grouped well because DRINK has only two values(0 or 1). Therefore, when using abstraction attributes with various values, the grouping will not be performed properly, so the residual rate will be low.&lt;/p&gt;
+
+&lt;h4 id=&quot;residual-rate-by-the-number-of-streaming-inputs&quot;&gt;&lt;strong&gt;Residual rate by the number of streaming inputs&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985770-649b9e80-966e-11e9-9a64-6dd477fa5792.png&quot; alt=&quot;image (2)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We experimented with different numbers of data(rows) per transaction and found that number of data per 1 transaction can determines amount of remnant (privacy-preserved) data. &lt;strong&gt;More streaming input&lt;/strong&gt; per 1 transaction makes perfect “Abstraction”. When 2,000 rows were given per 1 transaction, the residual rate was 69.71%, but when 100 rows were given per 1 transaction, the residual rate is very low.&lt;/p&gt;
+
+&lt;h4 id=&quot;how-well-does-the-result-preserve-the-meaning-of-original-data&quot;&gt;&lt;strong&gt;How well does the result preserve the meaning of original data?&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985784-70876080-966e-11e9-8f71-88bd4729e325.png&quot; alt=&quot;image (3)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To use remnant(abstracted) data, the abstracted data should not lose the meaning of original data. The indicator of this is dissimilarity. The lower dissimilarity, the more conservative the meaning. It is calculated as follows. The results show that the dissimilarity-value is close to zero. Therefore, the abstracted data maintains the meaning of the original data well.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985789-79783200-966e-11e9-9933-381f6844a2a9.png&quot; alt=&quot;image (4)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;5-project-environment&quot;&gt;&lt;strong&gt;5. Project Environment&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;This is overall project environment&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59985878-ec81a880-966e-11e9-96e4-2efc65cb465f.jpg&quot; alt=&quot;Mid-Report&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Main spark streaming application environment&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59986201-a9283980-9670-11e9-96af-48ee4092d105.png&quot; alt=&quot;그림1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We use Spark Structured Streaming and Kafka. In the past, the process was done all the work in one application, but we divide it into several applications. Because Spark Structured Streaming support aggregation only once per application. We use Kafka to connect several applications. (Therefore there is several kafka topics listening to previous applications)&lt;/p&gt;
+
+&lt;p&gt;Kafka topic listening view&lt;/p&gt;
+
+&lt;iframe width=&quot;100%&quot; height=&quot;460&quot; src=&quot;https://www.youtube.com/embed/_n8S1R90H4I&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Spark Structured Streaming is a streaming process framework built on the Spark SQL engine. We use the Dataset/DataFreme API in Java to express streaming aggregations, event-time windows, stream-to-batch joins and implement each step in Java application. Structured Streaming provides fast, scalable, fault-tolerant, end-to-end exactly-once stream processing without the user having to reason about streaming.&lt;/p&gt;
+
+&lt;p&gt;Apache Kafka is a publish subscribe messaging system that is exchanging data between process, applications and servers. Kafka reduces the risk of data loss and Kafka is designed specifically for high-volume real-time log processing.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;Project Code&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;모니터링 웹페이지 코드 공개입니다&lt;/p&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://github.com/jgtonys/Spark-Structured-Streaming')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;jgtonys/Spark-Structured-Streaming&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Contribute to jgtonys/Spark-Structured-Streaming development by creating an account on GitHub.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://github.com/jgtonys/Spark-Structured-Streaming&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://avatars1.githubusercontent.com/u/33674947?s=400&amp;amp;v=4);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;p&gt;&lt;em&gt;Short Report For Project&lt;/em&gt;&lt;/p&gt;
+
+&lt;iframe src=&quot;https://drive.google.com/file/d/11b_qiVLkTgvpjU3tT59YyYzQemx2VAr0/preview&quot; width=&quot;100%&quot; height=&quot;640&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>텍스트마이닝: Word Representation</title>
+   <link href="http://0.0.0.0:4000/bigdata/2019/05/16/textmining-word-representation/"/>
+   <updated>2019-05-16T00:00:00-05:00</updated>
+   <id>http://0.0.0.0:4000/bigdata/2019/05/16/textmining-word-representation</id>
+   <content type="html">&lt;h2 id=&quot;텍스트데이터-수집-방법&quot;&gt;&lt;strong&gt;텍스트(데이터) 수집 방법&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;python을 사용하여 데이터를 크롤링하는 방법을 배운다. 본격적으로 코드에 대해 언급하기 전에 알아야 할 인코딩이나 환경에 대하여 먼저 서술한다.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;different-types-of-word-embeddings&quot;&gt;&lt;strong&gt;Different types of Word Embeddings&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;빈도수 기반 Embedding : Count Vector, TF-IDF Vector, Co-Occurrence Vector&lt;/li&gt;
+  &lt;li&gt;예측 기반 Embedding : CBOW(Continuous Bag of words), Skip-Gram model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Distributional Embeddings&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Training Methods&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;tdm의 특징 sparse 하다 (필요없는 정보 예를들어 0이 많음)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;GloVe&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Word Representation 을 위한 Global Vector 이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;FastText&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;페이스북에서 제작한 word2bag 의 변형. 단어단위가 아니라 캐릭터 단위의 레벨을 사용하며 스킵-그램 모델의 확장이다. n-gram 단위로 학습한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# For preprocessing
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# For data handling
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# To time our operations
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;collections&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defaultdict&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# For word frequency
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;spacy&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# For preprocessing
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# python -m spacy download en_core_web_sm
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;logging&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# Setting up the loggings to monitor gensim
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basicConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%(levelname)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s - &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%(asctime)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%(message)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datefmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;H:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;M:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;S'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'data/simpsons_dataset.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cleaning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;doc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Lemmatizes and removes stopwords
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# doc needs to be a spacy Doc object
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lemma_&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;doc&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Word2Vec uses context words to learn the vector representation of a target word,
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# if a sentence is only one or two words long,
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# the benefit for the training is very small
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;' '&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;brief_cleaning&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;[^A-Za-z']+&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;' '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'spoken_words'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nlp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spacy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'en_core_web_sm'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'ner'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'parser'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# disabling Named Entity Recognition for speed
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cleaning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;doc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;doc&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nlp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;brief_cleaning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Time to clean up everything: {} mins'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;df_clean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'clean'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df_clean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df_clean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dropna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop_duplicates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_clean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gensim.models.phrases&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Phrases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Phraser&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df_clean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'clean'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;phrases&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Phrases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min_count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;progress_per&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bigram&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Phraser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phrases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sentences&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bigram&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Most Frequent Words:
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word_freq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defaultdict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sentence&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sentences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;word_freq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word_freq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word_freq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word_freq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Train the Model
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;multiprocessing&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gensim.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Word2Vec&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;cores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multiprocessing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cpu_count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Count the number of cores in a computer
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Word2Vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min_count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;6e-5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.03&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;min_alpha&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0007&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;negative&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;workers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cores&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# min_count = int - Ignores all words with total absolute frequency lower than this - (2, 100)
+# window = int - The maximum distance between the current and predicted word within a sentence. E.g. window words on the left and window words on the left of our target - (2, 10)
+# size = int - Dimensionality of the feature vectors. - (50, 300)
+# sample = float - The threshold for configuring which higher-frequency words are randomly downsampled. Highly influencial. - (0, 1e-5)
+# alpha = float - The initial learning rate - (0.01, 0.05)
+# min_alpha = float - Learning rate will linearly drop to min_alpha as training progresses. To set it: alpha - (min_alpha * epochs) ~ 0.00
+# negative = int - If &amp;gt; 0, negative sampling will be used, the int for negative specifies how many &quot;noise words&quot; should be drown. If set to 0, no negative sampling is used. - (5, 20)
+# workers = int - Use these many worker threads to train the model (=faster training with multicore machines)
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build_vocab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sentences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;progress_per&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Time to build vocab: {} mins'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sentences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;total_examples&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;corpus_count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epochs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;report_delay&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Time to train the model: {} mins'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_sims&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most_similar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;positive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;homer&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most_similar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;positive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;homer_simpson&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most_similar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;positive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;marge&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;similarity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'maggie'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'baby'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;similarity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'bart'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'nelson'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+
+
+&lt;span class=&quot;c1&quot;&gt;### Visualization
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;seaborn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;darkgrid&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.decomposition&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PCA&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.manifold&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TSNE&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;tsnescatterplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot; Plot in seaborn the results from the t-SNE dimensionality reduction algorithm of the vectors of a query word,
+    its list of most similar words, and a list of words.
+    &quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'f'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;word_labels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;color_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'red'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# adds the vector of the query word
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__getitem__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# gets list of most similar words
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;close_words&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most_similar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# adds the vector for each of the closest words to the array
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrd_score&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;close_words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;wrd_vector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__getitem__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wrd_score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;word_labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wrd_score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;color_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'blue'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrd_vector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# adds the vector for each of the words from list_names to the array
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrd&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;wrd_vector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__getitem__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wrd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;word_labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wrd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;color_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'green'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrd_vector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Reduces the dimensionality from 300 to 50 dimensions with PCA
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;reduc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_components&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Finds t-SNE coordinates for 2 dimensions
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_printoptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;suppress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TSNE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_components&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;perplexity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reduc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Sets everything up to plot
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'x'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],&lt;/span&gt;
+                       &lt;span class=&quot;s&quot;&gt;'y'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],&lt;/span&gt;
+                       &lt;span class=&quot;s&quot;&gt;'words'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word_labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                       &lt;span class=&quot;s&quot;&gt;'color'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_size_inches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Basic plot
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;p1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;regplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;y&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;fit_reg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;o&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;scatter_kws&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'s'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                  &lt;span class=&quot;s&quot;&gt;'facecolors'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'color'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+                                  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                     &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Adds annotations one by one with a loop
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;p1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'y'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;'  '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;words&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;horizontalalignment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'left'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;verticalalignment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'bottom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'medium'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'color'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'normal'&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'t-SNE visualization for {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tsnescatterplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'maggie'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w2v_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most_similar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;negative&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;maggie&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])])&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Spark Streaming Application Tutorial</title>
+   <link href="http://0.0.0.0:4000/bigdata/2019/05/13/spark-streaming-application0/"/>
+   <updated>2019-05-13T00:00:00-05:00</updated>
+   <id>http://0.0.0.0:4000/bigdata/2019/05/13/spark-streaming-application0</id>
+   <content type="html">&lt;h2 id=&quot;spark-streaming-application&quot;&gt;&lt;strong&gt;Spark Streaming Application&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;본 포스트는 Spark 와 Java Application 을 이용하여 Streaming Application 을 구성한다. Streaming 을 구현하는 방법에는 Structured Streaming 과 Spark Streaming 이 있다. 먼저 Spark Streaming 을 로컬 환경에서 구성하여 본다.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;이전 로컬환경 설정&lt;/em&gt;&lt;/p&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Spark &amp;amp; Java Application Local 설정&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Spark 로컬 환경 구성 본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;&lt;strong&gt;REFERENCE&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://spark.apache.org/docs/latest/sql-getting-started.html#starting-point-sparksession')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Getting Started - Spark 2.4.3 Documentation&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;The entry point into all functionality in Spark is the SparkSession class. To create a basic SparkSession, just use SparkSession.builder():&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://spark.apache.org/docs/latest/sql-getting-started.html#starting-point-sparksession&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://spark.apache.org/docs/latest/img/spark-logo-hd.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;linking&quot;&gt;&lt;strong&gt;LINKING&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Spark Streaming Application 의 개발을 위해서는 먼저 Maven 의 설정을 다시 바꾸어서 Streaming 을 연결해 주어야 한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.spark&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spark-streaming_2.11&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.4.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;만약 Kafka, Flume, and Kinesis 같은 Spark Streaming core API 에 존재하지 않는 소스로부터 데이터를 받아 온다면, artifactId 에는 다음과 같이 적어야 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59984216-b50cff00-9662-11e9-8d9b-1106318d56ec.jpg&quot; alt=&quot;E3215407-542D-4791-BA06-3E996A83865D&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;initialize&quot;&gt;&lt;strong&gt;INITIALIZE&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;먼저 &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkConf&lt;/code&gt; 객체 로부터 &lt;code class=&quot;highlighter-rouge&quot;&gt;StreamingContext&lt;/code&gt; 를 생성한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.streaming.api.java.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;SparkConf&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SparkConf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setAppName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setMaster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;master&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaStreamingContext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ssc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JavaStreamingContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Duration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;appName&lt;/code&gt; 과 &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; 는 RDD 의 conf 에서와 같은 형식으로 넣어준다. 여기에서 Dura&lt;/p&gt;
+
+&lt;p&gt;만약 application 에서가 아니라 기존에 존재하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaSparkContext&lt;/code&gt; 로 부터 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaStreamingContext&lt;/code&gt; 를 생성하려 한다면 다음과 같이 할 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.streaming.api.java.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;JavaSparkContext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//existing JavaSparkContext&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaStreamingContext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ssc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JavaStreamingContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Durations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;discretized-streams-dstreams&quot;&gt;&lt;strong&gt;Discretized Streams (DStreams)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;DStream 이란 연속적인 데이터의 흐름이다. Source 로부터 받은 data 일 수도 있고, input stream 을 변형하면서 나타나는 처리된 data stream 일 수도 있다.&lt;/p&gt;
+
+&lt;p&gt;Dstream 은 일련의 연속적인 RDD 의 모습으로 나타난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59984125-c4d81380-9661-11e9-83fa-89aa9e780490.png&quot; alt=&quot;streaming-dstream-7dd917cd-e9a2-4a2b-a140-b1163cbde3f1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DStream 에 적용된 operation 은 RDD 를 변환시킨다. Stream line 을 word 로 변환시키는 작업은 다음과 같은 변환을 나타낸다. 여기서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;flatMap&lt;/code&gt; operation 이 해당 RDD 를 변환시키게 된다.(line → word)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/59984126-c4d81380-9661-11e9-84bf-6a80ca2f08fa.png&quot; alt=&quot;streaming-dstream-ops-1273b3f9-b07d-4ecb-8582-0edea24f2183&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이러한 변환은 Spark Engine 에 의해서 이루어진다.&lt;/p&gt;
+
+&lt;p&gt;정해진 hostname 과 port 에서 들어오는 TCP data 를 받는 DStream Receiver 를 생성해보면 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Create a DStream that will connect to hostname:port, like localhost:9999&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaReceiverInputDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jssc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;socketTextStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9999&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;여기서의 lines 는 &lt;a href=&quot;http://localhost:9999&quot;&gt;localhost:9999&lt;/a&gt; 로부터 오는 data stream 을 받는다.&lt;/p&gt;
+
+&lt;p&gt;이를 word 단위로 처리하기 위해서는 다음과 같이 작성해 볼 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Split each line into words&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;flatMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;asList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;여기에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;flatMap&lt;/code&gt; 은 lines Dstream 각각을 단어 단위로 쪼개어 words Dstream 으로 생성하는 역할을 한다.&lt;/p&gt;
+
+&lt;p&gt;또한 여기에서 각각의 word 를 count 하기 위한 코드는 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Count each word in each batch&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaPairDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mapToPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Tuple2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaPairDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordCounts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reduceByKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Print the first ten elements of each RDD generated in this DStream to the console&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wordCounts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mapToPair&lt;/code&gt; 함수는 각각의 단어를 1과 함께 묶어서 짝을 짓게 만들고 pairs 에 저장한다. 다음으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;reduceByKey&lt;/code&gt; 는 이렇게 생성된 pairs 에서 key 값에 따라 같은 값인 경우 숫자를 더해주어 wordCounts 에 저장한다.&lt;/p&gt;
+
+&lt;p&gt;마지막으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;wordCounts.print&lt;/code&gt; 는 매초 생성된 wordCounts 를 출력한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;streaming-process&quot;&gt;&lt;strong&gt;STREAMING PROCESS&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Streaming 연산을 시작하기 위해서 다음과 같이 코드를 작성한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;jssc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;              &lt;span class=&quot;c1&quot;&gt;// Start the computation&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;jssc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;awaitTermination&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// Wait for the computation to terminate&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jssc.start()&lt;/code&gt; 함수는 스트리밍 연산을 시작하는 것이고,&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jssc.awaitTermination()&lt;/code&gt; 함수는 스트리밍 연산의 종료를 기다리는 함수이다.&lt;/p&gt;
+
+&lt;p&gt;연산이 종료되지 않으면 스트리밍은 멈추지 않고 계속 스트리밍을 읽기 위해 대기한다. ctrl + c 로 종료할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;real-code&quot;&gt;&lt;strong&gt;REAL CODE&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;실제 작성된 예제 코드이다&lt;/p&gt;
+
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testSparkStreaming&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.streaming.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.streaming.api.java.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;scala.Tuple2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JavaWordCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	  &lt;span class=&quot;n&quot;&gt;SparkConf&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SparkConf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setAppName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;testSparkStreaming&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setMaster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;local[2]&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	  &lt;span class=&quot;n&quot;&gt;JavaStreamingContext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jssc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JavaStreamingContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Durations&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+	  &lt;span class=&quot;n&quot;&gt;JavaReceiverInputDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jssc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;socketTextStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9999&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	  &lt;span class=&quot;n&quot;&gt;JavaDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;flatMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;asList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+
+	  &lt;span class=&quot;n&quot;&gt;JavaPairDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mapToPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Tuple2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+	  &lt;span class=&quot;n&quot;&gt;JavaPairDStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordCounts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reduceByKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	  &lt;span class=&quot;n&quot;&gt;wordCounts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+	  &lt;span class=&quot;n&quot;&gt;jssc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;              
+	  &lt;span class=&quot;n&quot;&gt;jssc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;awaitTermination&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;   
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이를 python 으로 랜덤 문자열을 자동으로 생성하여 &lt;a href=&quot;http://localhost:9999&quot;&gt;localhost:9999&lt;/a&gt; 로 전송하게 하였다. 아래는 시연 영상이다.&lt;/p&gt;
+
+&lt;iframe width=&quot;853&quot; height=&quot;480&quot; src=&quot;https://www.youtube.com/embed/u_S4IU7m8WI&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Spark Dataset Application Tutorial</title>
+   <link href="http://0.0.0.0:4000/bigdata/2019/05/13/spark-dataset-application/"/>
+   <updated>2019-05-13T00:00:00-05:00</updated>
+   <id>http://0.0.0.0:4000/bigdata/2019/05/13/spark-dataset-application</id>
+   <content type="html">&lt;h2 id=&quot;spark-dataset-application&quot;&gt;&lt;strong&gt;Spark Dataset Application&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;본 포스트는 Spark 와 Java Application 을 이용하여 Dataset Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;이전 로컬환경 설정&lt;/em&gt;&lt;/p&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Spark &amp;amp; Java Application Local 설정&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Spark 로컬 환경 구성 본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;&lt;strong&gt;REFERENCE&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://spark.apache.org/docs/latest/sql-getting-started.html#starting-point-sparksession')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Getting Started - Spark 2.4.3 Documentation&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;The entry point into all functionality in Spark is the SparkSession class. To create a basic SparkSession, just use SparkSession.builder():&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://spark.apache.org/docs/latest/sql-getting-started.html#starting-point-sparksession&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://spark.apache.org/docs/latest/img/spark-logo-hd.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;initialize&quot;&gt;&lt;strong&gt;INITIALIZE&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Dataset application 을 만들 때 첫번째로 해야 하는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; 클래스를 생성하는 것이다. Basic &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; 을 구성하기 위해서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkSession.builder()&lt;/code&gt; 를 사용한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.sql.SparkSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;SparkSession&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SparkSession&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;appName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Java Spark SQL basic example&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spark.some.config.option&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;some-value&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrCreate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;creating-dataframes&quot;&gt;&lt;strong&gt;Creating DataFrames&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; 을 사용하면, 기존에 존재하던 RDD 를 가지고 DataFrame 을 생성할 수 있다. 아래는 하나의 예시로 json 파일의 정보를 불러와서 DataFrame 을 생성하는 것을 보여준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.sql.Dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.sql.Row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;examples/src/main/resources/people.json&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// DataFrame 의 모습을 stdout 으로 보여준다&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// | age|   name|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |null|Michael|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  30|   Andy|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  19| Justin|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 코드에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt; 는 json 으로 생성된 DataFrame 이다.&lt;/p&gt;
+
+&lt;p&gt;DataFrame 으로 할 수 있는 작업은 다음과 같다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;printSchema()&lt;/code&gt; : DataFrame 의 Schema 를 보여준다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printSchema&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// root&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// |-- age: long (nullable = true)&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// |-- name: string (nullable = true)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Select(&quot;Attribute name&quot;).show()&lt;/code&gt; : Select 한 Column 의 정보만을 보여준다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// +-------+&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// |   name|&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// +-------+&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// |Michael|&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// |   Andy|&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// | Justin|&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// +-------+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Select(col(&quot;name&quot;), col(&quot;age&quot;).plus(1)).show();&lt;/code&gt; : 임의로 정보를 수정하여
+Select 할 수 있다.&lt;/p&gt;
+
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;plus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +-------+---------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |   name|(age + 1)|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +-------+---------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |Michael|     null|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |   Andy|       31|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// | Justin|       20|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +-------+---------+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Filter&lt;/code&gt; : 연산에 의해 걸러진 정보만들 표현한다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;gt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;21&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// +---+----+&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// |age|name|&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// +---+----+&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// | 30|Andy|&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// +---+----+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GroupBy&lt;/code&gt; : 그룹화 하여 정보를 표현할 수 있다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;groupBy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// +----+-----+&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// | age|count|&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// +----+-----+&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// |  19|    1|&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// |null|    1|&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// |  30|    1|&lt;/span&gt;
+   &lt;span class=&quot;c1&quot;&gt;// +----+-----+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;running-sql-queries-programmatically&quot;&gt;&lt;strong&gt;RUNNING SQL QUERIES PROGRAMMATICALLY&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;먼저 SQL Query 를 실행하기 위해서는 DataFrame 을 가상의 view 로 바꾸는 과정이 필요하다. 예를 들어서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Select * from Table&lt;/code&gt; 을 하기 위해서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Table&lt;/code&gt; 이라는 view(table) 가 필요하기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 DataFrame 을 Temporary View 로 생성하여 사용할 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.sql.Dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.sql.Row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// DataFrame 을 SQL Temporary View 로 등록한다. df -&amp;gt; people&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createOrReplaceTempView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;people&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Row&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlDF&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SELECT * FROM people&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sqlDF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// | age|   name|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |null|Michael|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  30|   Andy|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  19| Justin|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;단 Temporary View 는 Spark Session-Scope 에서만 존재하기 때문에, Session 이 종료되면 사라지는 임시적인 View 이다.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;만약 Application 단에서 Session 이 종료되더라도 지속적으로 사용할 수 있는 View 를 생성하고 싶다면 &lt;strong&gt;Global Temporary View&lt;/strong&gt; 를 생성해야 한다. 주의할 점은 정의한 다음 사용할 때 항상 앞에 &lt;code class=&quot;highlighter-rouge&quot;&gt;global_temp&lt;/code&gt; 를 붙여 주어야 한다. ex) &lt;code class=&quot;highlighter-rouge&quot;&gt;global_temp.people&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;아래는 Global Temporary View 의 예제이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Global Temporary View 로 등록한다.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createGlobalTempView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;people&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Global temporary view is tied to a system preserved database `global_temp`&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SELECT * FROM global_temp.people&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// | age|   name|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |null|Michael|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  30|   Andy|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  19| Justin|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Global temporary view is cross-session&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;newSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SELECT * FROM global_temp.people&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// | age|   name|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |null|Michael|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  30|   Andy|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// |  19| Justin|&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// +----+-------+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;example-running&quot;&gt;&lt;strong&gt;EXAMPLE RUNNING&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Spark 예제의 &lt;a href=&quot;http://javasparksqlexample.java&quot;&gt;JavaSparkSQLExample.java&lt;/a&gt; 를 실행해 보았다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Real Code&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bin/spark-submit &lt;span class=&quot;nt&quot;&gt;--master&lt;/span&gt; spark://jungyu:7077 &lt;span class=&quot;nt&quot;&gt;--class&lt;/span&gt; testSparkApplication.JavaSparkSQLExample testcase/testSparkApplication-0.0.2.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;시연-영상&quot;&gt;&lt;strong&gt;시연 영상&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;iframe width=&quot;853&quot; height=&quot;480&quot; src=&quot;https://www.youtube.com/embed/ynOzTCfrsW0&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Spark RDD Application Tutorial</title>
+   <link href="http://0.0.0.0:4000/bigdata/2019/05/12/spark-rdd-application/"/>
+   <updated>2019-05-12T00:00:00-05:00</updated>
+   <id>http://0.0.0.0:4000/bigdata/2019/05/12/spark-rdd-application</id>
+   <content type="html">&lt;h2 id=&quot;spark-rdd-application&quot;&gt;&lt;strong&gt;Spark RDD Application&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;본 포스트는 Spark 와 Java Application 을 이용하여 RDD Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;이전 로컬환경 설정&lt;/em&gt;&lt;/p&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Spark &amp;amp; Java Application Local 설정&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Spark 로컬 환경 구성 본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;&lt;strong&gt;REFERENCE&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://spark.apache.org/docs/latest/rdd-programming-guide.html')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;RDD Programming Guide - Spark 2.4.3 Documentation&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Spark 2.4.3 programming guide in Java, Scala and Python&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://spark.apache.org/docs/latest/rdd-programming-guide.html&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://spark.apache.org/docs/latest/img/spark-webui-accumulators.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;environment&quot;&gt;&lt;strong&gt;ENVIRONMENT&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Spark 2.4.0&lt;/em&gt; supports &lt;code class=&quot;highlighter-rouge&quot;&gt;lambda expressions&lt;/code&gt; for concisely writing functions, otherwise you can use the classes in the &lt;code class=&quot;highlighter-rouge&quot;&gt;org.apache.spark.api.java.function&lt;/code&gt; package.&lt;/p&gt;
+
+&lt;p&gt;Java 를 Spark application 에 연결하기 위해서는 Spark application 의 maven 에 dependency 를 추가해 주어야만 한다. (이미 되어있는 경우 생략)&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;groupId = org.apache.spark
+artifactId = spark-core_2.11
+version = 2.4.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;만약 HDFS 를 연결한다면 마찬가지로 maven 에 dependency 를 추가해 주어야 한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;groupId = org.apache.hadoop
+artifactId = hadoop-client
+version = &lt;span class=&quot;nt&quot;&gt;&amp;lt;your-hdfs-version&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Java 를 Link 하기 위해서는 다음과 같이 class 들을 import 한다&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.api.java.JavaSparkContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.api.java.JavaRDD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.apache.spark.SparkConf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;initialize&quot;&gt;&lt;strong&gt;INITIALIZE&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Spark application 을 만들 때 첫번째로 해야 하는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaSparkContext&lt;/code&gt; 객체를 생성하는 것이다. 이 객체는 어떻게 cluster 에 연결할 수 있는지를 명세한다. &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkContext&lt;/code&gt; 를 생성하기 위해서는 먼저 &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkConf&lt;/code&gt; 객체를 생성하여 application 의 정보를 가져온다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;SparkConf 객체로 정보 획득&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SparkContext 객체 생성&lt;/p&gt;
+
+    &lt;p&gt;SparkConf conf = new SparkConf().setAppName(appName).setMaster(master);
+JavaSparkContext sc = new JavaSparkContext(conf);&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;appName&lt;/code&gt; : Name for your application to show on the cluster UI&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt;  : Spark, Mesos or YARN cluster URL, or local (또는 spark-submit 을 통해 나타난 master 의 이름)&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Java Spark Application 은 shell 을 통해 initialize 할 수 없다. 따라서 코드에서만 가능하다.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;resilient-distributed-datasets-rdds&quot;&gt;&lt;strong&gt;Resilient Distributed Datasets (RDDs)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;병렬로 처리가 가능한 장애 감내(결함 감수)  속성들의 집합이다. RDD 를 만드는 방법에는 크게 두가지가 존재하는데, 하나는 존재하는 데이터를 병렬로 처리하는 것이고, 다른 하나는 외부 Storage, input 으로 부터 dataset 을 참조하는 것이다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Internal Collection → RDD&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaSparkContext&lt;/code&gt; 의 기능 중 하나인 &lt;em&gt;pararellize&lt;/em&gt; 를 사용하면 기존의 집합을 병렬적으로 처리하여 RDD 생성이 가능하다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;List data 를 RDD 로 만드는 과정(parallelize)&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;asList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaRDD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;parallelize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;PARTITION : Spark application 이 task 를 수행하는 단위로서 cluster 를 나누어 사용하는 단위이다. 보통 하나의 CPU 당 2~4 개의 partition 이 존재한다. 만약 partition 이 지정되지 않았다면 Spark 가 자동으로 할당하지만 다음과 같이 임의로 partition 을 할당할 수도 있다. &lt;code class=&quot;highlighter-rouge&quot;&gt;sc.parallelize(data, 10)&lt;/code&gt;← 10개의 partition.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;External Dataset → RDD&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaSparkContext&lt;/code&gt; 의 &lt;em&gt;textfile&lt;/em&gt; 을 사용하면 외부 dataset 을 RDD 로 생성이 가능하다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Text file 을 RDD 로 만드는 과정&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;JavaRDD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distFile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;textFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;data.txt&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;Local 에서 실행할 경우 파일은 local filesystem 내에서 접근이 가능해야 한다&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Partition 의 경우 textfile method 를 사용하면 input file 의 한 block 마다 partition 이 생성된다.(default)&lt;/p&gt;
+
+&lt;p&gt;여러가지 다른 Format 의 파일&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;wholeTextFiles : 디렉토리 단위로 읽어서 내부 파일들까지 모두 읽는다&lt;/li&gt;
+  &lt;li&gt;sequenceFile : Key 와 Value 를 가지고 읽는다.&lt;/li&gt;
+  &lt;li&gt;hadoopRDD : Hadoop 의 inputFormat 을 읽는다.&lt;/li&gt;
+  &lt;li&gt;JavaRDD.saveAsObjectFile : RDD 를 java Object 로 저장한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;rdd-operation&quot;&gt;&lt;strong&gt;RDD OPERATION&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Transformation : lazy 하게 동작하여 실제로는 값을 변경하지 않는 예약작업&lt;/p&gt;
+
+&lt;p&gt;Action : Task 를 실제로 실행하게 되는 작업&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;JavaRDD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;textFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;data.txt&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaRDD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lineLengths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalLength&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lineLengths&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;map&lt;/code&gt; 은 transformation 이고, &lt;code class=&quot;highlighter-rouge&quot;&gt;reduce&lt;/code&gt; 는 action 이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;reduce&lt;/code&gt; 가 실행되는 시점에서 spark 는 partition 을 실행하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;map&lt;/code&gt; 을 실행하게 한다.&lt;/p&gt;
+
+&lt;p&gt;만약 위의 코드에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;lineLengths&lt;/code&gt; 를 메모리에 저장하여 한번 실행 후 다시 재사용 하고 싶다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;lineLengths.persist(StorageLevel.MEMORY_ONLY());&lt;/code&gt; 코드를 추가한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Lambda function usage&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GetLength&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Function&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Sum&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Function2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;JavaRDD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;textFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;data.txt&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JavaRDD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lineLengths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GetLength&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalLength&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lineLengths&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Spark & Java Application Local 설정</title>
@@ -27,7 +1003,7 @@
 
 &lt;hr /&gt;
 
-&lt;h1 id=&quot;spark-local-setting&quot;&gt;SPARK LOCAL SETTING&lt;/h1&gt;
+&lt;h1 id=&quot;spark-local-setting&quot;&gt;&lt;strong&gt;SPARK LOCAL SETTING&lt;/strong&gt;&lt;/h1&gt;
 
 &lt;p&gt;local spark settings, java application settings&lt;/p&gt;
 
@@ -35,7 +1011,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;requirement&quot;&gt;REQUIREMENT&lt;/h3&gt;
+&lt;h2 id=&quot;requirement&quot;&gt;&lt;strong&gt;REQUIREMENT&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;Spark, Eclipse(Maven)&lt;/p&gt;
 
@@ -43,7 +1019,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;what-is-maven&quot;&gt;WHAT IS MAVEN&lt;/h3&gt;
+&lt;h2 id=&quot;what-is-maven&quot;&gt;&lt;strong&gt;WHAT IS MAVEN&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;&lt;em&gt;개발 프로젝트 시 나타나는 많은 의존성 라이브러리들을 관리해 주는 툴&lt;/em&gt;&lt;/p&gt;
 
@@ -53,7 +1029,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;maven-installation&quot;&gt;MAVEN INSTALLATION&lt;/h3&gt;
+&lt;h2 id=&quot;maven-installation&quot;&gt;&lt;strong&gt;MAVEN INSTALLATION&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;Eclipse 를 설치하게 되면 자동으로 설치된다. (따로 설치할 필요 없음)&lt;/p&gt;
 
@@ -61,7 +1037,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;maven-lifecycle&quot;&gt;MAVEN LIFECYCLE&lt;/h3&gt;
+&lt;h2 id=&quot;maven-lifecycle&quot;&gt;&lt;strong&gt;MAVEN LIFECYCLE&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;메이븐은 프로젝트 생성에 필요한 단계(phases)들을 Build Lifecycle이라 정의하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;clean,&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;site&lt;/code&gt; 세가지로 표준 정의한다. Lifecycle은 Build Phase 들로 구성되며 일련의 순서를 갖는다. phase 는 실행단위로서 goal과 바인딩된다.&lt;/p&gt;
 
@@ -117,7 +1093,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;dependency-pomxml&quot;&gt;DEPENDENCY (POM.XML)&lt;/h3&gt;
+&lt;h2 id=&quot;dependency-pomxml&quot;&gt;&lt;strong&gt;DEPENDENCY (POM.XML)&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;의존성에 대한 정보는 POM.XML에 저장된다. 이 정의에 의해서 MAVEN 은 자동으로 repository 를 검색하고 필요한 library 를 자동으로 추가해준다.&lt;/p&gt;
 
@@ -257,7 +1233,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;build&quot;&gt;BUILD&lt;/h3&gt;
+&lt;h2 id=&quot;build&quot;&gt;&lt;strong&gt;BUILD&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;/src/main/java 에 패키지를 생성하고 예제 java 파일을 생성한다.&lt;/p&gt;
 
@@ -285,7 +1261,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;spark-tar-file-testing&quot;&gt;SPARK .tar FILE TESTING&lt;/h3&gt;
+&lt;h2 id=&quot;spark-tar-file-testing&quot;&gt;&lt;strong&gt;SPARK .tar FILE TESTING&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;서버의 spark 가 설치되어 있는 폴더로 이동하여&lt;/p&gt;
 
@@ -302,7 +1278,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;reference&quot;&gt;REFERENCE&lt;/h3&gt;
+&lt;h2 id=&quot;reference&quot;&gt;&lt;strong&gt;REFERENCE&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.slideshare.net/KangDognhyun/2apache-spark&quot;&gt;https://www.slideshare.net/KangDognhyun/2apache-spark&lt;/a&gt;&lt;/p&gt;
 
@@ -312,7 +1288,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;how-to-submit-application&quot;&gt;HOW TO SUBMIT APPLICATION&lt;/h3&gt;
+&lt;h2 id=&quot;how-to-submit-application&quot;&gt;&lt;strong&gt;HOW TO SUBMIT APPLICATION&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;&lt;em&gt;Standalone Document&lt;/em&gt;&lt;/p&gt;
 
@@ -322,7 +1298,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;Standalone 으로 cluster 를 실행한다&lt;/p&gt;
+&lt;p&gt;Standalone 으로 cluster 를 실행한다**&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;./sbin/start-master.sh&lt;/code&gt;&lt;/p&gt;
 
@@ -364,7 +1340,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;how-to-set-workers&quot;&gt;HOW TO SET WORKERS&lt;/h3&gt;
+&lt;h2 id=&quot;how-to-set-workers&quot;&gt;&lt;strong&gt;HOW TO SET WORKERS&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;순서는 다음과 같다&lt;/p&gt;
 
@@ -408,7 +1384,7 @@ export SPARK_WORKER_CORES=4
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;log-숨기기&quot;&gt;&lt;em&gt;LOG 숨기기&lt;/em&gt;&lt;/h3&gt;
+&lt;h2 id=&quot;log-숨기기&quot;&gt;&lt;strong&gt;LOG 숨기기&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;터미널에서 stdout 을 확인해야 하는데, 자꾸 다른 로그들이 겹쳐 나와서 보기가 힘든 경우가 있다. 이 모든 출력되는 로그들은 &lt;code class=&quot;highlighter-rouge&quot;&gt;/conf/log4j.properties&lt;/code&gt; 에  설정이 되어있다. 여기에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;log4j.rootCategory=INFO, console&lt;/code&gt; 부분을 &lt;code class=&quot;highlighter-rouge&quot;&gt;log4j.rootCategory=ERROR, console&lt;/code&gt; 로 바꾸어 주면 ERROR 에 대한 로그만 출력되어 편리하다.&lt;/p&gt;
 
@@ -1086,9 +2062,9 @@ Graphic : Intel HD Graphics 4000
 
 &lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://x86.co.kr/mymac/2954551')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;삼성 NT370RSE-A44S(i3, 윈10+10.13.4)&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;삼성 NT370RSE-A44S에 윈10+10.13.4를 단일 하드에 듀얼부팅 방식으로 설치 성공하였습니다(Uefi 방식).와이파이(usb 사용, iptime)외에는 모든 기능 이상없이 사...&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://x86.co.kr/mymac/2954551&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://x86.co.kr/files/seopro/site_image.png?20190306195243);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.tonymacx86.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Home&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; Today Apple released macOS 10.14.5, a major software update to macOS Mojave. Update any supported system using the built-in Software Update functionality through the System Preferences pane or by using the standalone installer available from Apple.com. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.tonymacx86.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.tonymacx86.com/images/tonymacx86-logo.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.tonymacx86.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Home&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; After years of development, this week Apple finally revealed their redesigned Mac Pro desktop computer and brand new 6K Pro Display XDR retina monitor. Touted as the most powerful, expandable, and configurable Mac ever, the system features up to 28-core Intel CPU, up to 1.5TB RAM via 12 DIMM slots, and expands via proprietary 'MPX' expandable modules with 8 PCIe slots. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.tonymacx86.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.tonymacx86.com/images/tonymacx86-logo.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.insanelymac.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;InsanelyMac - InsanelyMac Forum&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS Mojave 10.14.5 update improves the stability and reliability of your Mac, and is recommended for all users. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.insanelymac.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.insanelymac.com/forum/screenshots/monthly_2019_05/Clover_Builder_app_by_cvad.thumb.png.822a565e16ff3aac3b4d5245cb76c455.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.insanelymac.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;InsanelyMac - InsanelyMac Forum&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS Mojave 10.14.5 update improves the stability and reliability of your Mac, and is recommended for all users. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.insanelymac.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.insanelymac.com/forum/uploads/monthly_2019_06/macos_catalina.thumb.png.c6f8b2497e33530f4511ef394227ef9c.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
 &lt;p&gt;&lt;em&gt;여기에서 자신의 노트북 모델명으로 성공한 사례를 찾다가 &lt;code class=&quot;highlighter-rouge&quot;&gt;EFI&lt;/code&gt; 나 설정파일들을 찾아냈다면 꼭 기억하거나 다운로드 받아놓자! 데스크탑의 경우에는 메인보드에 대한 파일, 그래픽 설정의 파일을 미리 받아 놓는 것을 추천한다&lt;/em&gt;&lt;/p&gt;
 

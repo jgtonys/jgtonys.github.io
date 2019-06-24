@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="naver-site-verification" content="046c0adddf4769b5ef392d86e11c8d31a979c621"/>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!-- Twitter Cards -->
+	<meta name="twitter:title" content="Spark Dataset Application Tutorial">
+	<meta name="twitter:description" content="Spark Dataset Application
+
+본 포스트는 Spark 와 Java Application 을 이용하여 Dataset Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<!-- Open Graph -->
+	<meta property="og:locale" content="">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Spark Dataset Application Tutorial">
+	
+	<meta name="og:image" content="https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg">
+	
+
+	<meta property="og:description" content="Spark Dataset Application
+
+본 포스트는 Spark 와 Java Application 을 이용하여 Dataset Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.
+
+">
+	<meta property="og:url" content="http://0.0.0.0:4000/bigdata/2019/05/13/spark-dataset-application/">
+	<meta property="og:site_name" content="Jungyu Kim">
+
+
+  <title>
+    
+      Spark Dataset Application Tutorial &middot; Jungyu Kim
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+
+  
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"> </script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });
+  </script>
+  
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <a href="https://github.com/jgtonys">
+          <p><strong>Jungyu Kim</strong>
+          <i class="fa fa-github" aria-hidden="true"></i></p>
+        </a>
+        </a>
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Wanted to be a <strong>developer</strong><br>And I <strong>am a developer</strong></p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p> Contact: 
+        
+        
+        
+        <a href="https://github.com/jgtonys">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https://facebook.com/jgtony">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.google.com/recaptcha/mailhide/d?k=01I3lZFiZYng9N3QxYEtsDaQ==&c=31wAnZkuKqcG0ATAqJN8Z3ln5kkYLA9TwkGc-IbygpM=">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="http://www.linkedin.com/in/준규-김-devj">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/">
+          Home
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="foldable">
+        <a class="sidebar-nav-item " href="/blog/">
+          Blog
+        </a>
+
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/categories/">
+                Categories
+              </a>
+          
+        
+          
+            
+            
+            
+              <a class="sidebar-nav-item sidebar-nav-item-sub " href="/blog/tags/">
+                Tags
+              </a>
+          
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="/about/">
+          About
+        </a>
+
+        
+      </span>
+
+    
+      
+      
+      
+
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="http://github.com/jgtonys/">
+          Github Project
+        </a>
+
+        
+      </span>
+
+    
+
+    <!--<span class="sidebar-nav-item">Currently v1.0.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    &copy; 2019 Jungyu Kim.
+    </p>
+  </div>
+
+  <div class="sidebar-item">
+    <p>
+    Powered by <a href="http://jekyllrb.com">jekyll</a>
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home" title="Jungyu Kim">
+              <!--<img class="masthead-logo" src="/public/logo.jpg"/>-->
+              <strong>Jgtony</strong>
+            </a>
+            <small>Developer blog</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <span class="post-date">13 May 2019</span>
+  <h1 class="post-title">Spark Dataset Application Tutorial</h1>
+  
+  <div class="post-div">
+    
+    <a href="/blog/tags/#spark" class="post-tag">spark</a>
+    
+    <a href="/blog/tags/#java" class="post-tag">java</a>
+    
+    <a href="/blog/tags/#database" class="post-tag">database</a>
+    
+  </div>
+  
+  <article>
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <h2 id="spark-dataset-application"><strong>Spark Dataset Application</strong></h2>
+
+<p>본 포스트는 Spark 와 Java Application 을 이용하여 Dataset Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.</p>
+
+<!-- more -->
+
+<p><br /></p>
+
+<hr />
+
+<p><em>이전 로컬환경 설정</em></p>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">Spark &amp; Java Application Local 설정</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">Spark 로컬 환경 구성 본 포스트는 Spark 와 Java Application 을 이용한 Structured Streaming 구현을 목표로 한다. 방대한 양의 빅데이터가 실시간으로 들어오는 상황에서 database의 관리를 batch processing 이 아닌, streaming 으로 처리하기 위함이다. 그 첫번째 과정으로 로컬 환경을 구성하여 테스트 해 본다. </div> <div style="font-size:10pt">https://jgtonys.github.io/bigdata/2019/05/12/spark-local-setting/</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://user-images.githubusercontent.com/33674947/56813408-d1b1d400-6877-11e9-9b4f-893fcc6254c6.jpg);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<h2 id="reference"><strong>REFERENCE</strong></h2>
+
+<table style="table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;"> <tr style="vertical-align:top; padding:0; margin:0;border:none;" onclick="window.open('https://spark.apache.org/docs/latest/sql-getting-started.html#starting-point-sparksession')"> <td class="rad" style="margin:0px;" width="70%" height="110px"> <div style="font-size:12pt margin:0;color:black;">Getting Started - Spark 2.4.3 Documentation</div> <div style="color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; ">The entry point into all functionality in Spark is the SparkSession class. To create a basic SparkSession, just use SparkSession.builder():</div> <div style="font-size:10pt">https://spark.apache.org/docs/latest/sql-getting-started.html#starting-point-sparksession</div> </td> <td class="noborderRad" style="border-collapse: separate !important;margin:0px;background-image:url(https://spark.apache.org/docs/latest/img/spark-logo-hd.png);background-repeat:no-repeat;background-size: 100% 100%;" width="30%" height="110px;"></td> </tr> </table>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="initialize"><strong>INITIALIZE</strong></h2>
+
+<p>Dataset application 을 만들 때 첫번째로 해야 하는 것은 <code class="highlighter-rouge">SparkSession</code> 클래스를 생성하는 것이다. Basic <code class="highlighter-rouge">SparkSession</code> 을 구성하기 위해서는 <code class="highlighter-rouge">SparkSession.builder()</code> 를 사용한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span><span class="o">;</span>
+
+<span class="n">SparkSession</span> <span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span>
+  <span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">appName</span><span class="o">(</span><span class="s">"Java Spark SQL basic example"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">config</span><span class="o">(</span><span class="s">"spark.some.config.option"</span><span class="o">,</span> <span class="s">"some-value"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">getOrCreate</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="creating-dataframes"><strong>Creating DataFrames</strong></h2>
+
+<p><code class="highlighter-rouge">SparkSession</code> 을 사용하면, 기존에 존재하던 RDD 를 가지고 DataFrame 을 생성할 수 있다. 아래는 하나의 예시로 json 파일의 정보를 불러와서 DataFrame 을 생성하는 것을 보여준다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.apache.spark.sql.Dataset</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.Row</span><span class="o">;</span>
+
+<span class="n">Dataset</span><span class="o">&lt;</span><span class="n">Row</span><span class="o">&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="na">read</span><span class="o">().</span><span class="na">json</span><span class="o">(</span><span class="s">"examples/src/main/resources/people.json"</span><span class="o">);</span>
+
+<span class="c1">// DataFrame 의 모습을 stdout 으로 보여준다</span>
+<span class="n">df</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// | age|   name|</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// |null|Michael|</span>
+<span class="c1">// |  30|   Andy|</span>
+<span class="c1">// |  19| Justin|</span>
+<span class="c1">// +----+-------+</span>
+</code></pre></div></div>
+
+<p>위의 코드에서 <code class="highlighter-rouge">df</code> 는 json 으로 생성된 DataFrame 이다.</p>
+
+<p>DataFrame 으로 할 수 있는 작업은 다음과 같다.</p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">printSchema()</code> : DataFrame 의 Schema 를 보여준다.</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">df</span><span class="o">.</span><span class="na">printSchema</span><span class="o">();</span>
+ <span class="c1">// root</span>
+ <span class="c1">// |-- age: long (nullable = true)</span>
+ <span class="c1">// |-- name: string (nullable = true)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Select("Attribute name").show()</code> : Select 한 Column 의 정보만을 보여준다.</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">df</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">"name"</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+ <span class="c1">// +-------+</span>
+ <span class="c1">// |   name|</span>
+ <span class="c1">// +-------+</span>
+ <span class="c1">// |Michael|</span>
+ <span class="c1">// |   Andy|</span>
+ <span class="c1">// | Justin|</span>
+ <span class="c1">// +-------+</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Select(col("name"), col("age").plus(1)).show();</code> : 임의로 정보를 수정하여
+Select 할 수 있다.</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="n">col</span><span class="o">(</span><span class="s">"name"</span><span class="o">),</span> <span class="n">col</span><span class="o">(</span><span class="s">"age"</span><span class="o">).</span><span class="na">plus</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">show</span><span class="o">();</span>
+<span class="c1">// +-------+---------+</span>
+<span class="c1">// |   name|(age + 1)|</span>
+<span class="c1">// +-------+---------+</span>
+<span class="c1">// |Michael|     null|</span>
+<span class="c1">// |   Andy|       31|</span>
+<span class="c1">// | Justin|       20|</span>
+<span class="c1">// +-------+---------+</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Filter</code> : 연산에 의해 걸러진 정보만들 표현한다.</p>
+  </li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">df</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">col</span><span class="o">(</span><span class="s">"age"</span><span class="o">).</span><span class="na">gt</span><span class="o">(</span><span class="mi">21</span><span class="o">)).</span><span class="na">show</span><span class="o">();</span>
+   <span class="c1">// +---+----+</span>
+   <span class="c1">// |age|name|</span>
+   <span class="c1">// +---+----+</span>
+   <span class="c1">// | 30|Andy|</span>
+   <span class="c1">// +---+----+</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="highlighter-rouge">GroupBy</code> : 그룹화 하여 정보를 표현할 수 있다.</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">df</span><span class="o">.</span><span class="na">groupBy</span><span class="o">(</span><span class="s">"age"</span><span class="o">).</span><span class="na">count</span><span class="o">().</span><span class="na">show</span><span class="o">();</span>
+   <span class="c1">// +----+-----+</span>
+   <span class="c1">// | age|count|</span>
+   <span class="c1">// +----+-----+</span>
+   <span class="c1">// |  19|    1|</span>
+   <span class="c1">// |null|    1|</span>
+   <span class="c1">// |  30|    1|</span>
+   <span class="c1">// +----+-----+</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="running-sql-queries-programmatically"><strong>RUNNING SQL QUERIES PROGRAMMATICALLY</strong></h2>
+
+<p>먼저 SQL Query 를 실행하기 위해서는 DataFrame 을 가상의 view 로 바꾸는 과정이 필요하다. 예를 들어서 <code class="highlighter-rouge">Select * from Table</code> 을 하기 위해서는 <code class="highlighter-rouge">Table</code> 이라는 view(table) 가 필요하기 때문이다.</p>
+
+<p>다음과 같이 DataFrame 을 Temporary View 로 생성하여 사용할 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.apache.spark.sql.Dataset</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.sql.Row</span><span class="o">;</span>
+
+<span class="c1">// DataFrame 을 SQL Temporary View 로 등록한다. df -&gt; people</span>
+<span class="n">df</span><span class="o">.</span><span class="na">createOrReplaceTempView</span><span class="o">(</span><span class="s">"people"</span><span class="o">);</span>
+
+<span class="n">Dataset</span><span class="o">&lt;</span><span class="n">Row</span><span class="o">&gt;</span> <span class="n">sqlDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="na">sql</span><span class="o">(</span><span class="s">"SELECT * FROM people"</span><span class="o">);</span>
+<span class="n">sqlDF</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// | age|   name|</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// |null|Michael|</span>
+<span class="c1">// |  30|   Andy|</span>
+<span class="c1">// |  19| Justin|</span>
+<span class="c1">// +----+-------+</span>
+</code></pre></div></div>
+
+<p><em>단 Temporary View 는 Spark Session-Scope 에서만 존재하기 때문에, Session 이 종료되면 사라지는 임시적인 View 이다.</em></p>
+
+<p>만약 Application 단에서 Session 이 종료되더라도 지속적으로 사용할 수 있는 View 를 생성하고 싶다면 <strong>Global Temporary View</strong> 를 생성해야 한다. 주의할 점은 정의한 다음 사용할 때 항상 앞에 <code class="highlighter-rouge">global_temp</code> 를 붙여 주어야 한다. ex) <code class="highlighter-rouge">global_temp.people</code></p>
+
+<p>아래는 Global Temporary View 의 예제이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Global Temporary View 로 등록한다.</span>
+<span class="n">df</span><span class="o">.</span><span class="na">createGlobalTempView</span><span class="o">(</span><span class="s">"people"</span><span class="o">);</span>
+
+<span class="c1">// Global temporary view is tied to a system preserved database `global_temp`</span>
+<span class="n">spark</span><span class="o">.</span><span class="na">sql</span><span class="o">(</span><span class="s">"SELECT * FROM global_temp.people"</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// | age|   name|</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// |null|Michael|</span>
+<span class="c1">// |  30|   Andy|</span>
+<span class="c1">// |  19| Justin|</span>
+<span class="c1">// +----+-------+</span>
+
+<span class="c1">// Global temporary view is cross-session</span>
+<span class="n">spark</span><span class="o">.</span><span class="na">newSession</span><span class="o">().</span><span class="na">sql</span><span class="o">(</span><span class="s">"SELECT * FROM global_temp.people"</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// | age|   name|</span>
+<span class="c1">// +----+-------+</span>
+<span class="c1">// |null|Michael|</span>
+<span class="c1">// |  30|   Andy|</span>
+<span class="c1">// |  19| Justin|</span>
+<span class="c1">// +----+-------+</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="example-running"><strong>EXAMPLE RUNNING</strong></h2>
+
+<p>Spark 예제의 <a href="http://javasparksqlexample.java">JavaSparkSQLExample.java</a> 를 실행해 보았다.</p>
+
+<p><em>Real Code</em></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bin/spark-submit <span class="nt">--master</span> spark://jungyu:7077 <span class="nt">--class</span> testSparkApplication.JavaSparkSQLExample testcase/testSparkApplication-0.0.2.jar
+</code></pre></div></div>
+
+<p><br /></p>
+
+<hr />
+
+<h2 id="시연-영상"><strong>시연 영상</strong></h2>
+
+<iframe width="853" height="480" src="https://www.youtube.com/embed/ynOzTCfrsW0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+  </article>
+</div>
+
+<div class="related">
+  <h2>Other Posts</h2>
+  <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/24/real-time-streaming-privacy-preserving/">
+          Real-Time Structured Streaming Privacy Preserving
+          <small>24 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/16/textmining-word-representation/">
+          텍스트마이닝: Word Representation
+          <small>16 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
+        <a href="/bigdata/2019/05/13/spark-streaming-application0/">
+          Spark Streaming Application Tutorial
+          <small>13 May 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="comments">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    /*
+var disqus_config = function () {
+  this.page.url = 'http://0.0.0.0:4000/bigdata/2019/05/13/spark-dataset-application/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '/bigdata/2019/05/13/spark-dataset-application'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};*/
+    (function() {
+      var d = document,
+        s = d.createElement('script');
+      s.src = '//jgtonys.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target === toggle) {
+            checkbox.checked = !checkbox.checked;
+            e.preventDefault();
+          } else if (checkbox.checked && !sidebar.contains(target)) {
+            /* click outside the sidebar when sidebar is open */
+            checkbox.checked = false;
+          }
+        }, false);
+      })(document);
+    </script>
+    
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110053740-1', 'auto');
+ga('send', 'pageview');
+    </script>
+    
+  </body>
+  
+  <script id="dsq-count-scr" src="//jgtonys.disqus.com/count.js" async></script>
+  
+</html>
