@@ -5,9 +5,616 @@
     <description>Github Jekyll Blog made by Jungyu Kim</description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Jun 2019 22:07:07 -0500</pubDate>
-    <lastBuildDate>Sun, 23 Jun 2019 22:07:07 -0500</lastBuildDate>
+    <pubDate>Tue, 25 Jun 2019 00:44:26 -0500</pubDate>
+    <lastBuildDate>Tue, 25 Jun 2019 00:44:26 -0500</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>텍스트 마이닝 프로젝트 : 중고거래 분석 (중고나라)</title>
+        <description>&lt;h2 id=&quot;지역별-시간대별-중고거래-분석중고나라&quot;&gt;&lt;strong&gt;지역별, 시간대별 중고거래 분석(중고나라)&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;중고나라의 거래 자료들을 크롤링하여 데이터를 쌓고 그 데이터를 가지고 분석을 진행하였다. 데이터를 전처리하고 토큰화하여 명사 단위로 인식할 수 있도록 처리하였고 단어 출현 빈도수와 동시출현 네트워크를 형성했다. 결론적으로 LDA를 활용하여 토픽모델링을 하고 시각화하여 중고 거래의 트랜드를 분석하였다.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;프로젝트-진행-순서&quot;&gt;&lt;strong&gt;프로젝트 진행 순서&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60061368-e1428180-972f-11e9-8934-9f2eac494338.png&quot; alt=&quot;C62280DB-9D11-4AA8-965E-5CE5DFBEE904&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;먼저 중고나라 페이지의 거래 데이터들을 크롤링한다&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;모아진 데이터를 전처리하고 토큰화한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;처리된 데이터의 단어 빈도수를 통해 중요 단어에 대한 단서를 파악하고 동시출현 네트워크를 통해 등장하는 단어들의 관계를 파악한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;토픽모델링과 시각화를 통해 지역별,시간대별로 가장 거래가 활발한 단어(주제)를 파악한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;프로젝트의 결과를 분석한다&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;위와 같은 순서로 프로젝트가 진행되었으며, 모든 처리는 python 의 모듈들을 사용하여 처리하였다. 상세 구현 방법은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;crawling&quot;&gt;&lt;strong&gt;Crawling&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;중고나라 데이터를 크롤링하는 과정에서 문제점을 발견했다. 기존에 쉽게 크롤링할 수 있는 request 모듈을 사용하려 했으나 동적으로 생성되는 웹 페이지의 내용은 가져올 수 없었다. &lt;strong&gt;웹이 로드되고 나서 내용이 동적으로 생성되기 때문이다(dynamic DOM)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;중고나라의 경우에는 iframe 을 사용하여 게시판의 내용이 형성되는데 이 정보들을 가져오기 위해 가상 테스팅 툴인 Selenium 을 사용하였다.&lt;/p&gt;
+
+&lt;p&gt;Selenium 의 Chrome Driver 를 사용하면 실제로 사람이 클릭하는 결과를 크롤링 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;크롤러는 크롤러를 제어하는 driver.py 파일과 실제로 크롤링을 수행하는 selenium_crawler.py 로 이루어진다. 이렇게 나누게 된 이유는 여러 메뉴와 페이지를 돌며 크롤링을 수행할 때 그 수집된 데이터를 따로 정해진 위치와 이름으로 저장하기 위해서다.&lt;/p&gt;
+
+&lt;p&gt;selenium 의 사용법은 여기에서 확인할 수 있다.&lt;/p&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.javatpoint.com/selenium-tutorial')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Selenium Tutorial - javatpoint&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Selenium Tutorial with Introduction, features, selenium basic terminology, what is selenium, selenium limitations, selenium vs qtp, tool suite, selenium ide, ide-installation, ide-features, ide-first test case, ide-commands, ide-creating test cases manually, ide-login test etc.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.javatpoint.com/selenium-tutorial&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://static.javatpoint.com/tutorial/selenium/images/selenium-what-is-selenium.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;driver.py&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium_crawler&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;crawler&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+Default selenium webdriver setting
+
+variables:
+headless_flag   -- selenium chrome browser headless or not
+options         -- selenium chrome browser options
+&quot;&quot;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;headless_flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headless_flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChromeOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'headless'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'window-size=1920x1080'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;disable-gpu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'chromedriver'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'chromedriver'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Wait until driver load resources
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;implicitly_wait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+Main crawling task
+
+file:
+selenium_crawler.py
+
+module:
+main(location, link, filename, driver)    -- main crawler
+
+main arguments:
+location    -- korean location name
+link        -- browser menu id
+filename    -- path result stored
+driver      -- selenium driver
+&quot;&quot;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'source/location_data.json'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loca_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ld&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loca_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;crawler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'loca'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'link'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'filename'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 코드에서 주목해야 할 부분은 webdriver 에 ChromeOptions 를 주어 headless(웹 페이지가 보이지 않게 하는 옵션)를 설정하거나 gpu 가속을 줄 수 있다. 또한 implicitly_wait 은 webdriver 가 로드될 때까지 기다리는 역할을 한다(안정성).&lt;/p&gt;
+
+&lt;p&gt;크롤러를 제어하는 부분은 &lt;code class=&quot;highlighter-rouge&quot;&gt;source/location_data.json&lt;/code&gt; 파일에 담겨있는 크롤링 대상 지역,링크,저장될 데이터 파일이름 등을 인식하고 메인크롤러에 인자로 넘겨주어 실행한다. 다음은 &lt;code class=&quot;highlighter-rouge&quot;&gt;location_data.json&lt;/code&gt; 의 모습이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;location_data.json 일부&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;loca&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;서울 중고나라&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;link&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;menuLink1710&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;filename&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;outputs/서울/중구&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;loca&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;서울 중고나라&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;link&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;menuLink1711&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;filename&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;outputs/서울/용산구&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;loca&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;서울 중고나라&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;link&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;menuLink1712&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;filename&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;outputs/서울/성동구&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;loca&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;서울 중고나라&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;link&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;menuLink1713&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;filename&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;outputs/서울/광진구&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;메인크롤러는 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium.webdriver.common.by&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium.webdriver.support.ui&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebDriverWait&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium.webdriver.support&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected_conditions&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EC&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;codecs&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://cafe.naver.com/joonggonara'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebDriverWait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;until&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;visibility_of_element_located&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;By&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CSS_SELECTOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a.gm-tcol-c&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;location_group&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;a[title*='&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;']&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute_script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;arguments[0].scrollIntoView();&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;location_group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;location_group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;elm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute_script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;arguments[0].scrollIntoView();&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;elm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;iframe_element&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;iframe#cafe_main&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;switch_to&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iframe_element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;page_10th&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;99&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;codecs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;(2019).txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;codecs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;(~2019).txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;file_switch_flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;notice_hidden&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;label[for*='notice_hidden']&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute_script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;arguments[0].scrollIntoView();&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;notice_hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;notice_hidden&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ten&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;page_10th&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;page_button&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_class_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;prev-next&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute_script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;arguments[0].scrollIntoView();&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;page_button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;page_buttons&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_elements_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;div.prev-next a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ten&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;page_buttons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;page_buttons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;debug_last_date&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_elements_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;td.td_date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_switch_flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;fo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;last date : &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;debug_last_date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;last date : &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;debug_last_date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;last date : &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;debug_last_date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG TERMINATION&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+            &lt;span class=&quot;n&quot;&gt;page_buttons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;------------&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ten&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;page-----------&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;articles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_elements_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;td.td_article&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;date&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_elements_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;td.td_date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2018&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;file_switch_flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+
+                &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;article&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;articles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;title_text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a.article'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_switch_flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;fo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title_text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title_text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이전의 driver.py 에서 인식한 json 파일의 내용을 인자로 받아 크롤러가 실행된다. 중고나라 페이지에 들어가서 &lt;code class=&quot;highlighter-rouge&quot;&gt;wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, &quot;a.gm-tcol-c&quot;)))&lt;/code&gt; 를 통해 크롤링하고자 하는 내용의 element 가 로드될 때까지 대기한다.&lt;/p&gt;
+
+&lt;p&gt;또한 selenium webdriver 는 실제 웹페이지가 시각적으로 윈도우 내에 보여야만 데이터를 가져올 수 있다. 이를 임의로 조정해 주기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;driver.execute_script(&quot;arguments[0].scrollIntoView();&quot;, location_group)&lt;/code&gt; 를 통해 특정 element 로 스크롤을 이동시켜 주었다.&lt;/p&gt;
+
+&lt;p&gt;중고나라는 내용이 iframe 안에 담겨있기 때문에 iframe 으로 이동하는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;dirver.switch_to.frame(iframe_element)&lt;/code&gt; 로 구현하였다.&lt;/p&gt;
+
+&lt;p&gt;그 이후의 상세한 크롤링은 pagination 을 돌며 게시글의 제목을 가져와서 텍스트파일에 저장하는 것이다. 텍스트 파일이 두개로 나누어진 이유는, 2019년도(올해) 와 그 이전의 데이터를 따로 분리해서 저장하기 위함이다. 저장되는 filename 은 인자로 받은 이름으로 사용된다. 더 이상 pagination 이 존재하지 않으면 terminate 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;크롤링 후 저장된 파일의 모습&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60062634-0ab1dc00-9735-11e9-9145-e2fddbabbaed.jpg&quot; alt=&quot;stored_documents&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60062638-0eddf980-9735-11e9-8ea7-8405a9e8fda4.jpg&quot; alt=&quot;stored_documents2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;분석을 위해 &lt;strong&gt;서울 - 중구&lt;/strong&gt;, &lt;strong&gt;서울 - 종로구&lt;/strong&gt;,  &lt;strong&gt;서울 - 용산구&lt;/strong&gt;, &lt;strong&gt;서울 - 성동구&lt;/strong&gt; 데이터만을 사용하였다.&lt;/p&gt;
+
+&lt;p&gt;전체 수집된 서울 전 지역 약 18만건의 데이터 중, 분석으로 사용된 데이터는 총 &lt;strong&gt;27085건&lt;/strong&gt;이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60062803-a80d1000-9735-11e9-9125-d8c1671ca8a1.png&quot; alt=&quot;898AD8AB-CC07-46BB-A950-2F8E9CF3EF7D&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;data-preprocessing&quot;&gt;&lt;strong&gt;Data Preprocessing&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;크롤링된 실제 데이터에는 불필요한 정보들이 담겨있다. 프로젝트에서 필요한 정보는 주된 명사(단어) 이고, 이것을 제외한 다른 내용들을 전처리 해야만 했다.&lt;/p&gt;
+
+&lt;p&gt;한국어로 나타난 정보이기 때문에 Konlpy(twitter) 를 사용하여 처리하였다.&lt;/p&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('http://konlpy.org/en/latest/')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;KoNLPy: Korean NLP in Python — KoNLPy 0.5.2 documentation&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;KoNLPy (pronounced “ko en el PIE”) is a Python package for natural language processing (NLP) of the Korean language. For installation directions, see here.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;http://konlpy.org/en/latest/&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(http://konlpy.org/en/latest/_static/konlpy.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+
+&lt;p&gt;먼저 konlpy 의 original twitter 를 사용하여 데이터를 전처리 해 본 결과, 특정 고유명사(제품명, 영화제목, 줄임말) 등을 인식할 수 없는 단점이 존재했다. 따라서 많이 나타나는 고유명사를 파악하여 수동으로 twitter dictionary 를 추가하였다. 추가한 모습은 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;new_nouns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'preprocess/dictionary.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;new_nouns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;twitter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_nouns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Noun'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;미리 정의된 &lt;code class=&quot;highlighter-rouge&quot;&gt;preprocess/dictionary.txt&lt;/code&gt; 파일에 정의된 고유명사를 twitter 에 추가하였다. 추가한 단어의 모습이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60065732-d7287f00-973f-11e9-9c14-169ea345904b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;조사나 쓸모없는 단어들(예를들어 미개봉, 최고 같은 단어들)을 불용어(stopwords)로 처리하였는데, 그 과정은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;먼저 Stopwords의 처리와 n-gram인식 및 문자열 대체를 위해 Customize Konlpy(ckonlpy)를 사용하여 pos-tagging을 진행하였다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Stopwords(불용어) : 조사나 쓸모없는 단어들(예를들어 미개봉, 최고 같은 단어들)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;n-gram : 두개 이상의 단어가 합쳐진 형태&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;pos-tagging : 품사를 구별하여 명시하는 것&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ckonlpy.tag&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Postprocessor&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ckonlpy.tag&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Twitter&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ckonlpy.utils&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_wordset&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ckonlpy.utils&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_replace_wordpair&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ckonlpy.utils&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_ngram&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;passwords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_wordset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'postprocess/passwords.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;stopwords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_wordset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'postprocess/stopwords.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_replace_wordpair&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'postprocess/replace.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ngrams&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_ngram&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'postprocess/ngrams.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;twitter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Twitter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;new_nouns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'preprocess/dictionary.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;new_nouns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;twitter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_nouns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Noun'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;passtags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Noun'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;postprocessor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Postprocessor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;base_tagger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;twitter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;stopwords&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stopwords&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;passtags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passtags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ngrams&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ngrams&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Base_tagger는 앞서 생성된 단어가 추가된 twitter를 사용한다. Stopwords, passtags, replace, ngram처리는 미리 정의된 txt파일을 불러와 processor를 생성한다. 이 processor는 사전추가된 twitter를 base_tagger 로 토큰화 하여 불용어와 n-gram 을 처리하여 명사만을 추출한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;불용어 처리의 모습&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60066502-50c16c80-9742-11e9-8dbc-5e9d35bbe568.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tokenizing 파일의 경로로부터 ‘postprocess/stopwords.txt’ 에 불용어 리스트를 넣어둔다. 텍스트 파일의 단어는 줄단위로 추가된다. 분석에 용이하게 결과가 나타날 수 있도록 불용어를 처리하고 ngram(마찬가지로 ngram.txt 에 기입)을 추가하여 토큰화 하는 작업이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이렇게 만들어진 processor 로 크롤링 된 원본 데이터를 처리하면 다음과 같이 나타난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;서울 - 종로구(2019)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60066648-c0cff280-9742-11e9-9eae-8c44d54db662.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;추가된 고유명사를 인식하고 원본 텍스트에서 명사만 추출한 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;실제 vectorize.py 코드를 실행하면 원본 텍스트 옆에 preprocessed 가 붙어 전처리된 데이터가 생성된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;word-counting&quot;&gt;&lt;strong&gt;Word Counting&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;이제 처리된 데이터를 가지고 어떤 단어가 얼마나 높은 빈도수로 나타났는지를 측정한다. 간단하게 단어들의 수를 측정하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'성동구(~2019)'&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'outputs/서울/'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pre_nouns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;postprocessor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pre_nouns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;nouns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nouns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pprint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;codecs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'wordclouds/서울/'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;_wordCounting.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tagbox&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most_common&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;taglist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pytagcloud&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;make_tags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tagbox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pytagcloud&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create_tag_image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;taglist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'wordclouds/서울/'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.jpg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;900&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fontname&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'korean'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangular&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Filename 에 해당하는 파일을 읽고(크롤링된 원본 데이터), Word Counting 결과를 텍스트로 저장한다(wordclouds/지역/세부지역). 가장 상위 빈도 단어들(여기서는 상위 40개 단어)을 추출하고 pytagcloud를 사용하여 wordcloud로 시각화한다(wordclouds/지역/세부지역).&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;서울 - 강서구(2019) WordCloud 모습&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60066876-6d11d900-9743-11e9-9507-e5949dcb8656.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;co-occurrence-network&quot;&gt;&lt;strong&gt;Co-Occurrence Network&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;이제 연관된 단어가 어떻게 이어져 있는지 확인할 수 있는 동시출현 네트워크(co-occurrence network)를 만든다. 동시출현 네트워크를 만들기 위해서는 먼저 동시출현 매트릭스(co-occurrence matrix)가 생성되어야 한다. 과정은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;sklearn의 countVectorizer를 사용하여 co-occurrence matrix를 생성하기 위해 기존의 processor를 알맞은 format으로 변환한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;적절한 format으로 변환하기 위해 새로운 formatting class로 token을 생성한다.(MyTokenizer class)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;countVectorizer로 벡터화 한 후 vectorizer.fit_transform을 통해 matrix를 생성한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Xc = (X.T * X) 를 통해 co-occurrence matrix를 생성한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Xc.setdiag(0)을 통해 같은 단어의 동시출현을 0으로 설정한다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Co-occurrence network 생성 코드&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyTokenizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tagger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tagger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tagger&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tagger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'{}/{}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'서울/종로구(2019)'&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'outputs/'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ft&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readlines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;my_tokenizer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyTokenizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;postprocessor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vectorizer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CountVectorizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tokenizer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_tokenizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vectorizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Xc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Xc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setdiag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Xc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;todense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# pandas 를 사용하여 gephi 에서 보여줄 word-word co-occurrence matrix csv 파일을 생성
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vectorizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_feature_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 엔티티 이름들을 보여준다
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Xc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;toarray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'gephi/'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;','&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;마지막에는 생성된 matrix 를 pandas 를 사용하여 column 과 index 를 설정하고 csv 파일로 저장한다. 이는 gephi 에서 사용될 자료를 만드는 과정이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;생성된 csv 파일을 gephi 에서 불러와 시각화하면 다음과 같다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Layout : ForceAtlas 2 (default settings)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Modularity : Node &amp;amp; Egde Color Grouping&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;서울 - 종로구(2019) Co-occurrence Network&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60067254-e4943800-9744-11e9-8caa-375acc567f41.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;확대하면 다음과 같다&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60067281-042b6080-9745-11e9-859b-5a8182f46681.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이렇게 굉장히 많은 node 와 egde 가 나타난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;좀 더 시각화를 용이하게 하기 위해 gephi 에서 modularity 를 분석하고 그 modularity 대로 색을 입혔다. 같은 문맥(클러스터)에 존재하는 단어들은 같은 색으로 표현되도록 한 것이다.&lt;/p&gt;
+
+&lt;p&gt;또한 너무 많은 정보가 얽혀있어 degree 가 낮은, 상대적으로 덜 중요한 노드들을 제거하고 &lt;em&gt;(Degree Range : 13~259 (30% visible)degree range 는 noise 에 따라 다르게 설정한다)&lt;/em&gt; text size 를 PageRank 에 따라 부여하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이렇게 설정한 결과 다음과 같이 나타난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60067473-ac412980-9745-11e9-905d-1bd28cb0f15d.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;가전제품, 주방기구, 의류 등 각각의 품목끼리 클러스터를 지어(같은색으로) 존재하고, 또 그 제품군들에서 중심을 차지하거나 높은 관련성을 보이는 단어들이 크게 나타났다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;topic-modeling&quot;&gt;&lt;strong&gt;Topic Modeling&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;이제 각 데이터 문서별로 주제가 되는 단어를 뽑아내는 토픽 모델링을 구현한다. 이 과정에서 결과로 나온 가장 유력한 주제는 그 시간대, 그 지역의 가장 거래가 활발한 제품으로 판단할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;토픽모델링을 구현하기 위해서는 먼저 Term - Document Matrix 를 생성해야 한다. 생성하는 과정은 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;corpora&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;totalCorpus&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;## 출현단어 2개 이하는 무시하고 dictionary 생성
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;min_count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;word_counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;words&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;removal_word_idxs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token2id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word_counter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;min_count&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter_tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;removal_word_idxs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compactify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'dictionary size : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;## Term - Document Matrix 생성
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;corpus&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;doc2bow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalCorpus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;여기서는 token 의 출현이 3회 미만인 단어들을 제외하고 dictionary 를 생성하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이제 생성된 Term - Document Matrix 를 가지고 LDA를 적용한다. 이 때 LDA는  gensim.model의 ldaModel을 사용하는 것보다 mallet lda 를 적용하는 것이 더 좋았다(일관성 점수 기준). 구현은 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+lda_model = models.ldamodel.LdaModel(corpus=corpus,
+id2word=id2word,
+num_topics=20,
+random_state=100,
+update_every=1,
+chunksize=100,
+passes=10,
+alpha='auto',
+per_word_topics=True)
+&quot;&quot;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# mallet lda 적용
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mallet_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'source/mallet-2.0.8/bin/mallet'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;lda_model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wrappers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LdaMallet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mallet_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;corpus&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;corpus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_topics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pprint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lda_model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print_topics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Compute Coherence Score
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;coherence_model_lda&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CoherenceModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lda_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totalCorpus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id2word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;coherence&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'c_v'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;coherence_lda&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;coherence_model_lda&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_coherence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Coherence Score: '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;coherence_lda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;여기서 일관성 점수는 생성된 LDA 모델이 얼마나 잘 만들어졌는가를 판단하는 척도가 된다.&lt;/p&gt;
+
+&lt;p&gt;출력된 LDA 토픽은 상위 20개까지 나타나고 관련된 단어들이 출력되게 된다. 이것을 시각화하여 표현하기 위해 추가적으로 pyLDAvis 를 사용하였다. 그 결과 다음과 같이 나타난다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068218-c92b2c00-9748-11e9-9538-387161ae7321.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기에는 가장 주제가 될법한 단어들을 선정하고 해당 단어가 다른 어떤 단어들과의 연관성을 가지는지 보여준다. LDA 의 결과 생성된 주제 단어는 그 문서의 주제 단어가 된다는 가정 하에 결과를 분석하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;result-analysis&quot;&gt;&lt;strong&gt;Result Analysis&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068334-317a0d80-9749-11e9-8b37-0678b4527c4e.png&quot; alt=&quot;AFB2D91E-C341-4C1F-A5DF-DCD1FB7E3DC2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068340-3dfe6600-9749-11e9-8ea0-475b82c06a77.png&quot; alt=&quot;2BADCDD3-058F-4809-B82D-1D1EC9B1E4D4&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4개-지역-단어-빈도수-분석-결과&quot;&gt;&lt;strong&gt;4개 지역 단어 빈도수 분석 결과&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;전체적으로 휴대폰 및 차량의 거래가 활발하다&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;서울 중구 : 다른 지역과 달리 의류의 거래가 활발하게 나타난다&lt;/p&gt;
+
+&lt;p&gt;서울 종로구 : 중고 차량의 거래가 활발하게 나타난다&lt;/p&gt;
+
+&lt;p&gt;서울 용산구 : 전자기기와 가전제품의 거래가 활발하게 나타난다&lt;/p&gt;
+
+&lt;p&gt;서울 성동구 : 서적 및 쿠폰의 거래가 가장 활발하게 나타난다&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068385-7e5de400-9749-11e9-8d50-1430b56bbbff.png&quot; alt=&quot;24CA3A7B-C771-4808-BA97-0DE0F89FFBE8&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068411-95043b00-9749-11e9-83c6-f3fe35ae18bb.png&quot; alt=&quot;639C27ED-A4C2-443E-8DE2-701BFA636B2C&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068447-b49b6380-9749-11e9-8269-2637799df78f.png&quot; alt=&quot;147E1C57-96E7-4EBF-BF12-B12BD4B79105&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068453-bf55f880-9749-11e9-8e5d-895c7ec88f7c.png&quot; alt=&quot;247E851F-EDA0-40C9-BE27-67D6DCF53665&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068474-d694e600-9749-11e9-9849-bd3b197723a8.png&quot; alt=&quot;7A4A02D5-9C75-4C86-9CA1-A2C322E56B78&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068480-deed2100-9749-11e9-87dd-26971bc2a13f.png&quot; alt=&quot;7D0455B9-7E56-4B99-A53D-6B1112B0E039&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068489-ef9d9700-9749-11e9-9cb6-b8fbbc450f94.png&quot; alt=&quot;79A6037D-B86D-4FB9-8BCE-BB6A43EE9B33&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068497-f75d3b80-9749-11e9-9e00-4c5f0873af93.png&quot; alt=&quot;25ED0DB4-7AF6-4CB1-B5A3-A9C51314B133&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068507-093ede80-974a-11e9-80e0-852d454fe01f.png&quot; alt=&quot;151E7F5E-B3A3-42AF-9271-0A502679E3F7&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068515-11971980-974a-11e9-841a-f24623594b66.png&quot; alt=&quot;E31013AE-4494-49EC-8950-476DE33B968F&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/33674947/60068536-24a9e980-974a-11e9-9753-02645f41c4d8.png&quot; alt=&quot;64C2CBCB-4A1B-40CE-BA74-80773A95989D&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;executable-code&quot;&gt;&lt;strong&gt;Executable Code&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://github.com/jgtonys/joonggonara_textmining')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;jgtonys/joonggonara_textmining&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Selenium Cralwer + Konlpy(twitter) + Mallet LDA. Contribute to jgtonys/joonggonara_textmining development by creating an account on GitHub.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://github.com/jgtonys/joonggonara_textmining&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://avatars1.githubusercontent.com/u/33674947?s=400&amp;amp;v=4);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+</description>
+        <pubDate>Thu, 30 May 2019 00:00:00 -0500</pubDate>
+        <link>http://0.0.0.0:4000/bigdata/2019/05/30/textmining-analysis/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/bigdata/2019/05/30/textmining-analysis/</guid>
+        
+        <category>textmining</category>
+        
+        <category>python</category>
+        
+        <category>html</category>
+        
+        
+        <category>BigData</category>
+        
+      </item>
     
       <item>
         <title>Real-Time Structured Streaming Privacy Preserving</title>
@@ -206,7 +813,7 @@ attributes. In both cases, GENDER and CITY were used as abstraction attributes c
 
 &lt;p&gt;모니터링 웹페이지 코드 공개입니다&lt;/p&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://github.com/jgtonys/Spark-Structured-Streaming')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;jgtonys/Spark-Structured-Streaming&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;Contribute to jgtonys/Spark-Structured-Streaming development by creating an account on GitHub.&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://github.com/jgtonys/Spark-Structured-Streaming&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://avatars1.githubusercontent.com/u/33674947?s=400&amp;amp;v=4);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://github.com/jgtonys/Spark-Structured-Streaming')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;jgtonys/Spark-Structured-Streaming&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;연세대 컴퓨터과학과 소프트웨어종합설계 Real-time privacy preserved data publishing Monitoring Page - jgtonys/Spark-Structured-Streaming&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://github.com/jgtonys/Spark-Structured-Streaming&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://avatars1.githubusercontent.com/u/33674947?s=400&amp;amp;v=4);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
 &lt;p&gt;&lt;em&gt;Short Report For Project&lt;/em&gt;&lt;/p&gt;
 
@@ -2144,7 +2751,7 @@ Graphic : Intel HD Graphics 4000
 
 &lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://x86.co.kr/mymac/2954551')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;삼성 NT370RSE-A44S(i3, 윈10+10.13.4)&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt;삼성 NT370RSE-A44S에 윈10+10.13.4를 단일 하드에 듀얼부팅 방식으로 설치 성공하였습니다(Uefi 방식).와이파이(usb 사용, iptime)외에는 모든 기능 이상없이 사...&lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://x86.co.kr/mymac/2954551&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://x86.co.kr/files/seopro/site_image.png?20190306195243);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
-&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.tonymacx86.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Home&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; After years of development, this week Apple finally revealed their redesigned Mac Pro desktop computer and brand new 6K Pro Display XDR retina monitor. Touted as the most powerful, expandable, and configurable Mac ever, the system features up to 28-core Intel CPU, up to 1.5TB RAM via 12 DIMM slots, and expands via proprietary 'MPX' expandable modules with 8 PCIe slots. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.tonymacx86.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.tonymacx86.com/images/tonymacx86-logo.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
+&lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.tonymacx86.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;Home&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS 10.15 Catalina Public Beta is now available. Apple wants as many users as possible to test macOS Catalina to provide constructive feedback before the official release later this fall. To participate in the free Public Beta, you must enroll in the Apple Beta Software Program using your Apple ID. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.tonymacx86.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.tonymacx86.com/images/tonymacx86-logo.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
 &lt;table style=&quot;table-layout: fixed; height:110px !important; border:none;border-collapse: separate !important;&quot;&gt; &lt;tr style=&quot;vertical-align:top; padding:0; margin:0;border:none;&quot; onclick=&quot;window.open('https://www.insanelymac.com')&quot;&gt; &lt;td class=&quot;rad&quot; style=&quot;margin:0px;&quot; width=&quot;70%&quot; height=&quot;110px&quot;&gt; &lt;div style=&quot;font-size:12pt margin:0;color:black;&quot;&gt;InsanelyMac - InsanelyMac Forum&lt;/div&gt; &lt;div style=&quot;color:gray;font-size:11pt;height: 2.4em;line-height: 1.2em;display: flex;-webkit-line-clamp: 2;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; &quot;&gt; The macOS Mojave 10.14.5 update improves the stability and reliability of your Mac, and is recommended for all users. &lt;/div&gt; &lt;div style=&quot;font-size:10pt&quot;&gt;https://www.insanelymac.com&lt;/div&gt; &lt;/td&gt; &lt;td class=&quot;noborderRad&quot; style=&quot;border-collapse: separate !important;margin:0px;background-image:url(https://www.insanelymac.com/forum/uploads/monthly_2019_06/macos_catalina.thumb.png.c6f8b2497e33530f4511ef394227ef9c.png);background-repeat:no-repeat;background-size: 100% 100%;&quot; width=&quot;30%&quot; height=&quot;110px;&quot;&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;
 
@@ -6628,280 +7235,6 @@ https://share.cryptozombies.io/ko/lesson/1/share/Jungyu_Kim&lt;/p&gt;
         
         
         <category>DApp</category>
-        
-      </item>
-    
-      <item>
-        <title>Linux Mint란 무엇인가</title>
-        <description>&lt;p&gt;&lt;strong&gt;리눅스 민트&lt;/strong&gt; 란 초보자들에게 많이 알려져 있는 우분투 기반으로 만들어진 데스크톱 OS인데, 중요한 차이점은 우분투처럼 Unity 기반이 아니고 Gnome 기반이라는 것이다. 간단하게 말하자면 조금 더 사용자 친화적이고 &lt;strong&gt;UI 및 기타 개발 환경들을 조금 더 매니아&lt;/strong&gt; 틱하게 바꿀 수 있다는 뜻이 된다. 다만 기존에 윈도우나 맥북에서 제공하는 것처럼 모두 셋팅된 환경이 아니라서 인프라 구성에 학을 떼지 않는 사람이 시도해야 할 것 같다.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&quot;알게-된-계기&quot;&gt;&lt;strong&gt;알게 된 계기?&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;2017 맥프레의 구매가 좌절&lt;/strong&gt; 된 상황에서 집에 있는 i3 RAM 8g 512ssd 노트북을 어떻게 하면 개발 최적화 시킬 수 있을까 하다가 생각해낸 대안이다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;리눅스 기반의 PC로 서버 및 개발 툴들의 사용이 용이해야 함&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;리눅스 오픈소스 프로그램들의 사용이 최적화 되어야 함&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;맥북 처럼 이뻤으면 좋겠다&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;위 세가지의 관점에 부합하는 OS를 쇼핑하다가 리눅스 민트를 알게 되었는데, 이게 상당히 매력적인 녀석이라는 것을 글을 쓰면서 더욱 알게 되었다.&lt;/p&gt;
-
-&lt;h2 id=&quot;리눅스-민트의-종류&quot;&gt;&lt;strong&gt;리눅스 민트의 종류&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;&lt;em&gt;64bit 기준으로 정리된 사항입니다&lt;/em&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;종류&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;버전&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;사이즈&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Cinnamon&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Linux Mint 18.3 “Sylvia”&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1.8G&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Mate&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Linux Mint 18.3 “Sylvia”&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1.8G&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Xfce&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Linux Mint 18.3 “Sylvia”&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;1.7G&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;KDE&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;Linux Mint 18.3 “Sylvia”&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;2G&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;공통-권장-사항&quot;&gt;&lt;strong&gt;공통 권장 사항&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;RAM&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Video&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Disk&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;3G&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;256MB&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;20G&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;OS의 가벼움과 스피디한 작업을 기준으로 나열하였을 때 Xfce,Mate,Cinnamon,KDE 순서대로 가볍다. 현재 민트 커뮤니티에서 발표된 사항으로는 KDE판 리눅스 민트를 제거하기로 하였다고 한다. 공식적인 KDE배포판은 이제 나오지 않지만 이전의 KDE는 지원한다.(대신 보안 업데이트가 불가)&lt;/p&gt;
-
-&lt;p&gt;가장 인기가 좋은 Cinnamon은 나머지 배포판들에 비해 상대적으로 무겁지만 User sophisticated 하고 Gnome3 기반으로 만들어져 있다. 특히 비주얼적인 이펙트가 많아서 역동적이고 깔끔한 데스크탑 환경을 구성하는데 탁월하다. 안정성에 있어서 Mate보다는 뒤쳐지지만 모든 사소한 개발환경들을 정교하게(이쁘게) 구성할 수 있다는 점에서 많은 인기가 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/linux-mint-cinnamon.png&quot; alt=&quot;Cinnamon&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;[Linux Mint 18.3 “Sylvia” Cinnamon]&lt;/p&gt;
-
-&lt;p&gt;두번째로 소개할 배포판은 Cinnamon 보다 가볍고 안정성을 더 추구한 Mate 배포판이다. Cinnamon이 Gnome3 기반으로 구성된 것과 다르게 Gnome2기반으로 데스크톱 환경이 구성되어 있고, 사용자는 더욱 직관적으로 시스템 환경을 구성할 수 있다. 비록 비주얼적인 면에서 Cinnamon에 비해 구식같은 모습을 제공하지만 더 빠르고 급격한 업데이트 없이 버그 없이 안정적이라는 면에서 인기가 좋다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/linux-mint-mate.png&quot; alt=&quot;mate&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;[Linux Mint 18.3 “Sylvia” Mate]&lt;/p&gt;
-
-&lt;p&gt;세번째로 간략하게 소개할 Xfce는 현재 가장 저사양으로 환경이 구성되는 배포판이다. 소프트웨어 매니저나 필수 코덱들이 로우앤드 PC에서도 원할하게 돌아갈 수 있도록 제공하는 환경이다. 주로 특정한 목적을 위해 집에 굴러다니는 노트북을 쓸만한 개발환경으로 만들기 위해 사용하는 것 같다. 리눅스 커뮤니티에 떠도는 소문으로는 Xfce가 다음 배포판부터 삭제된다는 소문도 돌고 있다.&lt;/p&gt;
-
-&lt;h2 id=&quot;리눅스-민트의-소프트웨어&quot;&gt;&lt;strong&gt;리눅스 민트의 소프트웨어&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;리눅스 민트는 우분투 기반으로 만들어져 현재 독자적인 노선을 달리고 있지만, 우분투에서 돌아가는 익숙한 프로그램들은 모두 다 원할하게 지원이 된다! 여기에서는 리눅스 민트만의 소프트웨어 뿐만 아니라 우분투에서도 인기가 좋은 모든 소프트웨어를 소개한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;clementine&quot;&gt;&lt;strong&gt;Clementine&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;리눅스 음악전용 플레이어&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;클레멘타인은 음악전용 플레이어로 스트리밍 플레이, 라디오 기능들을 지원하는 감각적인 프로그램입니다.&lt;br /&gt;
-현재 1.3.1 버전이 마지막 배포입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;clementine
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/clementine.png&quot; alt=&quot;clementine&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;moc&quot;&gt;&lt;strong&gt;MOC&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;터미널 음악재생 플레이어&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;MOC는 매우 가볍고 실용성에 매우 충실한 음악 플레이어다. 리눅스 민트에서 개발하는 개발자들에게 무거운 음악플레이어는 부담스러운 선택일 수 있지만 이 MOC는 메모리를 1~3Mb 밖에 차지하지 않으면서도 최근의 여러가지 테마를 곁들이면 매우 감성적인 플레이어가 된다는 점에서 인기가 많다. 또한 리눅스 민트가 제공하는 코덱들과의 상성이 좋다고 알려져 있다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;moc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;실행은 터미널에서 mocp를 입력한다.&lt;br /&gt;
-아래는 리눅스 민트와 투명터미널 Tilda를 적용한 모습&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/moc.png&quot; alt=&quot;moc&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;개발자들 눈돌아가는 소리가 들린다. 내가 이미 이 MOC에 꽃혀있는 상태다.&lt;/p&gt;
-
-&lt;h3 id=&quot;gparted&quot;&gt;&lt;strong&gt;Gparted&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;리눅스 파티션 조정 프로그램&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Gnome Project 에서 관리하는 리눅스계의 파티션 제왕이다. 최근에는 버그도 많이 없고, 사용법도 간단하여 리눅스 기반 OS의 필수 소프트웨어로 자리잡았다.&lt;br /&gt;
-필요한 기능들은 모두 들어가 있고, 파일 시스템도 원할하게 지원한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/gparted.png&quot; alt=&quot;moc&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;atom&quot;&gt;&lt;strong&gt;Atom&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;텍스트 에디터&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;사실 이 프로그램은 리눅스 민트나 우분투에 한정된 것은 아니고 윈도우에서도 많이 사용한다. 다만 내가 Atom 을 좋아해서 개인적으로 추천한다.&lt;br /&gt;
-컴파일러들만 연동시켜 놓으면 감성적인 IDE가 되고 무엇보다 스스로 조작할 수 있는 패키지가 많다는 것, 또 마우스 없이 키보드로만 개발이 용이하다는 점에서 매우 추천한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/atom.png&quot; alt=&quot;atom&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;preload&quot;&gt;&lt;strong&gt;preload&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;시스템 관리 속도 향상 프로그램&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;메모리에 상주하여 프로세스 실행 속도를 효율적으로 조정해주는 프로그램이다. 최대 10프로까지의 OS 속도 향상에 기여한다는 어마어마한 녀석이므로 꼭 깔아두고 메모리를 감시하는 것이 좋다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;preload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;grub-customizer&quot;&gt;&lt;strong&gt;grub-customizer&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;grub 부팅 설정 변경 프로그램&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;리눅스 민트를 설치하고 나면 grub 부팅메뉴에서 멍하니 기다리는 시간이 생긴다. 이를 수정하고 추가적으로 UI를 커스터마이징 하는데 많이 쓰이는 프로그램이다.&lt;br /&gt;
-설치하기 전에 ppa install 을 선행하고 시스템 업데이트를 해주는 것이 좋다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;grub-customizer
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/grub-customizer.png&quot; alt=&quot;grub-customizer&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;compiz&quot;&gt;&lt;strong&gt;compiz&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;리눅스계의 이펙트 마스터&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;실용성과 화려함을 겸비한 창 관리자. 리눅스 양덕들의 말을 들어보면 이것 때문에 리눅스로 온 사람도 있다고 한다. 화려한 이펙트는 조금만 검색해도 영상으로 확인 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/compiz1.JPG&quot; alt=&quot;compiz&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/compiz2.png&quot; alt=&quot;compiz2&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;tilda&quot;&gt;&lt;strong&gt;tilda&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;차별화된 CMD창&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;명령창을 투명하게 만들어서 항상 디자인이 맘에 안들던 cmd를 개발하고 싶게 만들어주는 디자인 툴이다. 많은 사람들이 깔끔함에 반해 사용하고 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/tilda.png&quot; alt=&quot;tila&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;synapse&quot;&gt;&lt;strong&gt;Synapse&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;리눅스 검색 도구&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;모든 파일을 총 집합해서 빠르게 검색해주는 검색 툴이다. 이게 얼마나 편하냐 하면 음악 검색, 폴더 검색, 사진 검색, 앱 실행등의 모든 검색을 이 하나의 프로그램으로 찾고 실행할 수 있다. 즉 마우스로 바로가기나 폴더들을 뒤적뒤적 하지 않아도 된다는 뜻이다.&lt;br /&gt;
-단축키 제공으로 키보드만으로 검색 후 실행할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/synapse.jpg&quot; alt=&quot;synapse&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;focuswriter&quot;&gt;&lt;strong&gt;Focuswriter&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;리눅스 글쓰기 도구&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;간편한 글을 쓰거나 메모가 필요할 때 이 프로그램이 제격이다. 무엇보다도 가볍고 마크다운처럼 심플하다. 여러가지 테마도 제공하고 있어서 일정이나 떠오른 아이디어를 적어 놓기에 적합하다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/focuswriter.png&quot; alt=&quot;focuswriter&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;webstorm&quot;&gt;&lt;strong&gt;WebStorm&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;최강 Javascript IDE&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;자바스크립트 프론트 및 백앤드 개발의 최강 프로그램. 사실 Atom보다도 더 인기가 많은 녀석이다. 개발자에게 대세 IDE 프로그램은 꼭 써볼 가치가 있다고 생각한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/webstorm.jpg&quot; alt=&quot;webstorm&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;dbeaver&quot;&gt;&lt;strong&gt;DBeaver&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;무료 통합 SQL Editor&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;무료 DB관리 프로그램 중 심플하고 강력한 툴을 제공한다. 하나의 관리 툴로 거의 모든 데이터베이스를 관리하고 CRUD를 제공한다. 물론 phpMyAdmin 이라던가 등등의 유료 DB관리 프로그램들이 훨씬 좋은 기능들과 통신을 선보이겠지만, 일단 무료로 나쁘지 않은 선택이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;libreoffice&quot;&gt;&lt;strong&gt;LibreOffice&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;리눅스 오피스 프로그램&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;리눅스로 갈아타면서 나타나는 가장 큰 불편함 중 하나인 문서작업(파워포인트,엑셀,워드)의 고민을 해결해 줄 프로그램이다. 호환성이 좋아서 파일이 잘 깨지지도 않고(깨지긴 하지만) 무엇보다 무료로 사용할 수 있어서 메리트가 있다. 리눅스 민트를 사용하면 필수 프로그램이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/LibreOffice.png&quot; alt=&quot;LibreOffice&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;postman&quot;&gt;&lt;strong&gt;Postman&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;서버 테스팅 툴&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;서버를 구현할 때 http 디버깅은 항상 고달프다. 임의의 request 를 날리고 히스토리 및 해시모드를 지원하며 헤더값을 명료하게 보여줄 수 있는 툴이다. 윈도우에서 사용할 때는 크롬 확장프로그램으로 사용했는데, 리눅스에서는 우분투버전으로 다운받아서 설치 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/postman.jpg&quot; alt=&quot;postman&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;vnc-viewer&quot;&gt;&lt;strong&gt;VNC viewer&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;원격 데스크톱 연결&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;다른 PC에 원격을 접속해서 작업을 하고(예를 들어 라즈베리파이) 돌아오는 일이 매우 빈번한 나는 필수적으로 필요한 프로그램이다. 또한 AWS 나 Azure 사용에 있어서도 GUI로 확인하며 개발하기 위해서는 원격 데스크톱 연결이 필수적이다.&lt;br /&gt;
-별다를 것이 없는 일반적인 원격 연결 프로그램이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;vlc-player&quot;&gt;&lt;strong&gt;VLC player&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;리눅스 미디어 플레이어&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;개발용 노트북에서 영화나 드라마를 다운로드 받아서 볼 일은 거의 없지만(스트리밍으로 봄) 그래도 미디어 플레이어가 없으면 뭔가 부족한 PC같은 느낌이 든다. 가장 무난하고 코덱문제를 빈번히 일으키지 않는 VLC플레이어를 추천한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/public/img/VLC.png&quot; alt=&quot;VLC&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;이 밖에도 응용 소프트웨어가 아닌 개발환경 설치는 꽤나 많지만, JDK나 PIP등의 설치는 윈도우에서부터 해오던 것이기에 별다를 것이 없어서 따로 올리지 않았다.&lt;br /&gt;
-사실 그때 사용했던 명령어들이 리눅스 민트를 사용함으로 더욱 편리해지고 직관적으로 변했기 때문도 있다.&lt;/p&gt;
-
-&lt;h2 id=&quot;마치며&quot;&gt;&lt;strong&gt;마치며&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;사실 그냥 우분투의 Unity 환경이 너무 딱딱해보이고 정이 안가서 찾아보게 되었다가 리눅스 민트와 소프트웨어에 반해서 혹하게 된 글이다. 노트북을 리눅스 민트로 바꾸고 좀 사용해 본 다음에 꽤나 맘에들면 데스크톱도 윈10과 멀티부팅으로 바꿀 예정이다. 완벽하게 깔끔+개발 최적화 환경으로 커스텀하기에는 아직 세팅하고 배워야 할 것이 너무나도 많지만, 수많은 능력자들과 리눅스덕들의 충고를 해석하면서 도전해 보겠다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;환경세팅이라면 하기도 전에 피로해하는 형 왈 &lt;em&gt;“그냥 맥북을 사”&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;이미 리눅스로 마음이 넘어와서 돌이킬 수가 없다.&lt;/p&gt;
-</description>
-        <pubDate>Fri, 04 May 2018 00:00:00 -0500</pubDate>
-        <link>http://0.0.0.0:4000/os/2018/05/04/linux-mint-preview/</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/os/2018/05/04/linux-mint-preview/</guid>
-        
-        <category>linux</category>
-        
-        <category>mint</category>
-        
-        
-        <category>OS</category>
         
       </item>
     
