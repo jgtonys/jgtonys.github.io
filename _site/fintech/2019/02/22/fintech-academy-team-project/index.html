@@ -41,7 +41,7 @@ KISA 핀테크 아카데미 개발과정 팀 프로젝트
 월급 자동이체 및 직원관리 서비스 SIGBI 개발 및 최우수상 수상
 
 ">
-	<meta property="og:url" content="http://0.0.0.0:4000/fintech/2019/02/22/fintech-academy-team-project/">
+	<meta property="og:url" content="jgtonys.github.io/fintech/2019/02/22/fintech-academy-team-project/">
 	<meta property="og:site_name" content="Jungyu Kim">
 
 
@@ -392,20 +392,20 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">authResult</span> <span class="o">=</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span>
   <span class="kd">let</span> <span class="nx">option</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">method</span> <span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
-    <span class="na">url</span> <span class="p">:</span> <span class="s1">'https://testapi.open-platform.or.kr/oauth/2.0/token'</span><span class="p">,</span>
-    <span class="na">header</span> <span class="p">:</span> <span class="s1">'Content-type: application/x-www-form-urlencoded; charset=UTF-8'</span><span class="p">,</span>
+    <span class="na">method</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">url</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">https://testapi.open-platform.or.kr/oauth/2.0/token</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">header</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Content-type: application/x-www-form-urlencoded; charset=UTF-8</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">form</span> <span class="p">:</span> <span class="p">{</span>
       <span class="na">code</span> <span class="p">:</span> <span class="nx">code</span><span class="p">,</span>
-      <span class="na">client_id</span> <span class="p">:</span> <span class="s1">'client id'</span><span class="p">,</span>
-      <span class="na">client_secret</span> <span class="p">:</span> <span class="s1">'client secret key'</span><span class="p">,</span>
-      <span class="na">redirect_uri</span> <span class="p">:</span> <span class="s1">'redirection uri'</span><span class="p">,</span>
-      <span class="na">grant_type</span> <span class="p">:</span> <span class="s1">'authorization_code'</span>
+      <span class="na">client_id</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">client id</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">client_secret</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">client secret key</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">redirect_uri</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">redirection uri</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">grant_type</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">authorization_code</span><span class="dl">'</span>
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="nx">request</span><span class="p">(</span><span class="nx">option</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">response</span><span class="p">,</span><span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">db</span><span class="p">.</span><span class="nx">sequelize</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s2">"db inserting process"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){})</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"&lt;script&gt;self.close();&lt;/script&gt;"</span><span class="p">);</span>
+    <span class="nx">db</span><span class="p">.</span><span class="nx">sequelize</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="dl">"</span><span class="s2">db inserting process</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){})</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;script&gt;self.close();&lt;/script&gt;</span><span class="dl">"</span><span class="p">);</span>
   <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -418,12 +418,12 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
  **/</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">mydata</span> <span class="o">=</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">requestURL</span> <span class="o">=</span> <span class="s1">'https://testapi.open-platform.or.kr/user/me?user_seq_no=userNumber'</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">requestURL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://testapi.open-platform.or.kr/user/me?user_seq_no=userNumber</span><span class="dl">'</span><span class="p">;</span>
   <span class="nx">option</span><span class="o">=</span> <span class="p">{</span>
     <span class="na">url</span><span class="p">:</span> <span class="nx">requestURL</span><span class="p">,</span>
-    <span class="na">method</span><span class="p">:</span><span class="s1">'get'</span><span class="p">,</span>
+    <span class="na">method</span><span class="p">:</span><span class="dl">'</span><span class="s1">get</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'Bearer Token'</span><span class="p">,</span>
+      <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Bearer Token</span><span class="dl">'</span><span class="p">,</span>
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="nx">request</span><span class="p">(</span><span class="nx">option</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span><span class="nx">response</span><span class="p">,</span><span class="nx">body</span><span class="p">){</span>
@@ -441,12 +441,12 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
  **/</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">mylist</span> <span class="o">=</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">requestURL</span> <span class="o">=</span> <span class="s1">'https://testapi.open-platform.or.kr/v1.0/account/balance?fintech_use_num=fintechNum&amp;tran_dtime=tranDtime'</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">requestURL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://testapi.open-platform.or.kr/v1.0/account/balance?fintech_use_num=fintechNum&amp;tran_dtime=tranDtime</span><span class="dl">'</span><span class="p">;</span>
   <span class="nx">option</span><span class="o">=</span> <span class="p">{</span>
     <span class="na">url</span><span class="p">:</span> <span class="nx">requestURL</span><span class="p">,</span>
-    <span class="na">method</span><span class="p">:</span><span class="s1">'get'</span><span class="p">,</span>
+    <span class="na">method</span><span class="p">:</span><span class="dl">'</span><span class="s1">get</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'Bearer Token'</span><span class="p">,</span>
+      <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Bearer Token</span><span class="dl">'</span><span class="p">,</span>
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="nx">request</span><span class="p">(</span><span class="nx">option</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span><span class="nx">response</span><span class="p">,</span><span class="nx">body</span><span class="p">){</span>
@@ -471,6 +471,15 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
     
     <li>
       <h3>
+        <a href="/blog/2019/08/13/docker-image-upload/">
+          Docker 이미지 만들기 & 배포하기
+          <small>13 Aug 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
         <a href="/bigdata/2019/05/30/textmining-analysis/">
           텍스트 마이닝 프로젝트 : 중고거래 분석 (중고나라)
           <small>30 May 2019</small>
@@ -487,15 +496,6 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
       </h3>
     </li>
     
-    <li>
-      <h3>
-        <a href="/bigdata/2019/05/16/textmining-word-representation/">
-          텍스트마이닝: Word Representation
-          <small>16 May 2019</small>
-        </a>
-      </h3>
-    </li>
-    
   </ul>
 </div>
 
@@ -506,7 +506,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
   <script>
     /*
 var disqus_config = function () {
-  this.page.url = 'http://0.0.0.0:4000/fintech/2019/02/22/fintech-academy-team-project/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.url = 'jgtonys.github.io/fintech/2019/02/22/fintech-academy-team-project/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '/fintech/2019/02/22/fintech-academy-team-project'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };*/
     (function() {

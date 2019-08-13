@@ -37,7 +37,7 @@ Compiler에서 Scanner의 Token 생성방법과 알고리즘을 배운다
 Compiler에서 Scanner의 Token 생성방법과 알고리즘을 배운다
 
 ">
-	<meta property="og:url" content="http://0.0.0.0:4000/school/2018/10/14/compiler-design-lexical-analysis/">
+	<meta property="og:url" content="jgtonys.github.io/school/2018/10/14/compiler-design-lexical-analysis/">
 	<meta property="og:site_name" content="Jungyu Kim">
 
 
@@ -545,7 +545,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">&lt;-</span> <span class="n">next</span> <span class="n">character</span>
 <span class="n">state</span> <span class="o">&lt;-</span> <span class="n">s0</span>
 
-<span class="nf">while</span><span class="o">(</span><span class="kt">char</span><span class="o">!=</span><span class="n">EOF</span><span class="o">)</span> <span class="c1">//as long as we have input</span>
+<span class="nf">while</span><span class="o">(</span><span class="kt">char</span><span class="o">!=</span><span class="no">EOF</span><span class="o">)</span> <span class="c1">//as long as we have input</span>
     <span class="n">state</span> <span class="o">&lt;-</span> <span class="n">delta</span><span class="o">(</span><span class="n">state</span><span class="o">,</span><span class="kt">char</span><span class="o">)</span>
     <span class="kt">char</span> <span class="o">&lt;-</span> <span class="n">next</span> <span class="n">character</span>
 
@@ -856,6 +856,15 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
     
     <li>
       <h3>
+        <a href="/blog/2019/08/13/docker-image-upload/">
+          Docker 이미지 만들기 & 배포하기
+          <small>13 Aug 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
         <a href="/bigdata/2019/05/30/textmining-analysis/">
           텍스트 마이닝 프로젝트 : 중고거래 분석 (중고나라)
           <small>30 May 2019</small>
@@ -872,15 +881,6 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
       </h3>
     </li>
     
-    <li>
-      <h3>
-        <a href="/bigdata/2019/05/16/textmining-word-representation/">
-          텍스트마이닝: Word Representation
-          <small>16 May 2019</small>
-        </a>
-      </h3>
-    </li>
-    
   </ul>
 </div>
 
@@ -891,7 +891,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
   <script>
     /*
 var disqus_config = function () {
-  this.page.url = 'http://0.0.0.0:4000/school/2018/10/14/compiler-design-lexical-analysis/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.url = 'jgtonys.github.io/school/2018/10/14/compiler-design-lexical-analysis/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '/school/2018/10/14/compiler-design-lexical-analysis'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };*/
     (function() {
