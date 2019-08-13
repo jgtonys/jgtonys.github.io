@@ -33,7 +33,7 @@
 	<meta property="og:description" content="Vuejs 웹 프레임워크를 사용한 SPA(Single Page Application) boilerplate를 소개한다. 서버는 nodejs 로 간단하게 구현하였고 웹 어플리케이션 번들러는 parceljs 를 사용하였다.
 
 ">
-	<meta property="og:url" content="http://0.0.0.0:4000/web/2018/04/18/vuejs-parcel-spa/">
+	<meta property="og:url" content="jgtonys.github.io/web/2018/04/18/vuejs-parcel-spa/">
 	<meta property="og:site_name" content="Jungyu Kim">
 
 
@@ -354,22 +354,22 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 <p>아래는 config/db.js 파일의 모습이다.</p>
 
 <p><em>example)</em></p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'lodash'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./config'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">Sequelize</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'sequelize'</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">lodash</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">Sequelize</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">sequelize</span><span class="dl">'</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">sequelize</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sequelize</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">db</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">db</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">db</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span> <span class="p">{</span>
-	<span class="na">dialect</span><span class="p">:</span> <span class="s1">'sqlite'</span><span class="p">,</span>
-  <span class="na">storage</span><span class="p">:</span> <span class="s1">'./test.sqlite'</span><span class="p">,</span>
+	<span class="na">dialect</span><span class="p">:</span> <span class="dl">'</span><span class="s1">sqlite</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">storage</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./test.sqlite</span><span class="dl">'</span><span class="p">,</span>
 	<span class="c1">// timezone: 'Asia/Seoul',</span>
-	<span class="na">logging</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">==</span> <span class="s1">'production'</span> <span class="p">?</span> <span class="kc">false</span> <span class="p">:</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span>
+	<span class="na">logging</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span> <span class="p">?</span> <span class="kc">false</span> <span class="p">:</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span>
 <span class="p">});</span>
-<span class="kd">const</span> <span class="nx">modelPath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'../app/models/'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">modelPath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">../app/models/</span><span class="dl">'</span><span class="p">);</span>
 
 <span class="kd">let</span> <span class="nx">models</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">modelPath</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">file</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-	<span class="kd">let</span> <span class="nx">modelName</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+	<span class="kd">let</span> <span class="nx">modelName</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1">.</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 	<span class="nx">models</span><span class="p">[</span><span class="nx">modelName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">sequelize</span><span class="p">.</span><span class="k">import</span><span class="p">(</span><span class="nx">modelPath</span> <span class="o">+</span> <span class="nx">file</span><span class="p">);</span>
 <span class="p">});</span>
 
@@ -395,11 +395,11 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 <p>JWT에 대한 config 파일은 다음과 같다.</p>
 
 <p><em>example)</em></p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">jwt</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'jsonwebtoken'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./config'</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">jwt</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">jsonwebtoken</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">);</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">generate</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">secretKey</span><span class="p">,</span> <span class="p">{</span> <span class="na">expiresIn</span><span class="p">:</span> <span class="s1">'6h'</span> <span class="p">});</span>
+	<span class="k">return</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">secretKey</span><span class="p">,</span> <span class="p">{</span> <span class="na">expiresIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">6h</span><span class="dl">'</span> <span class="p">});</span>
 <span class="p">};</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">verify</span> <span class="o">=</span> <span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -453,6 +453,15 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
     
     <li>
       <h3>
+        <a href="/blog/2019/08/13/docker-image-upload/">
+          Docker 이미지 만들기 & 배포하기
+          <small>13 Aug 2019</small>
+        </a>
+      </h3>
+    </li>
+    
+    <li>
+      <h3>
         <a href="/bigdata/2019/05/30/textmining-analysis/">
           텍스트 마이닝 프로젝트 : 중고거래 분석 (중고나라)
           <small>30 May 2019</small>
@@ -469,15 +478,6 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
       </h3>
     </li>
     
-    <li>
-      <h3>
-        <a href="/bigdata/2019/05/16/textmining-word-representation/">
-          텍스트마이닝: Word Representation
-          <small>16 May 2019</small>
-        </a>
-      </h3>
-    </li>
-    
   </ul>
 </div>
 
@@ -488,7 +488,7 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
   <script>
     /*
 var disqus_config = function () {
-  this.page.url = 'http://0.0.0.0:4000/web/2018/04/18/vuejs-parcel-spa/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.url = 'jgtonys.github.io/web/2018/04/18/vuejs-parcel-spa/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '/web/2018/04/18/vuejs-parcel-spa'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };*/
     (function() {

@@ -37,7 +37,7 @@
 본 포스트는 Spark 와 Java Application 을 이용하여 RDD Application 을 구성한다. 그 전에 구성된 로컬 환경을 바탕으로 테스트 해 본다.
 
 ">
-	<meta property="og:url" content="http://0.0.0.0:4000/bigdata/2019/05/12/spark-rdd-application/">
+	<meta property="og:url" content="jgtonys.github.io/bigdata/2019/05/12/spark-rdd-application/">
 	<meta property="og:site_name" content="Jungyu Kim">
 
 
@@ -350,8 +350,8 @@ JavaSparkContext sc = new JavaSparkContext(conf);</p>
 
 <p><em>List data 를 RDD 로 만드는 과정(parallelize)</em></p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
-<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">distData</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">parallelize</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+<span class="nc">JavaRDD</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">distData</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">parallelize</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
 </code></pre></div></div>
 
 <ul>
@@ -366,7 +366,7 @@ JavaSparkContext sc = new JavaSparkContext(conf);</p>
 
 <p><em>Text file 을 RDD 로 만드는 과정</em></p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">distFile</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">JavaRDD</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">distFile</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
 </code></pre></div></div>
 
 <p><em>Local 에서 실행할 경우 파일은 local filesystem 내에서 접근이 가능해야 한다</em></p>
@@ -392,8 +392,8 @@ JavaSparkContext sc = new JavaSparkContext(conf);</p>
 
 <p>Action : Task 를 실제로 실행하게 되는 작업</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
-<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">lineLengths</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">JavaRDD</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
+<span class="nc">JavaRDD</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">lineLengths</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
 <span class="kt">int</span> <span class="n">totalLength</span> <span class="o">=</span> <span class="n">lineLengths</span><span class="o">.</span><span class="na">reduce</span><span class="o">((</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span>
 </code></pre></div></div>
 
@@ -405,16 +405,16 @@ JavaSparkContext sc = new JavaSparkContext(conf);</p>
 
 <p><em>Lambda function usage</em></p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GetLength</span> <span class="kd">implements</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="o">}</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GetLength</span> <span class="kd">implements</span> <span class="nc">Function</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nc">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="nc">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="o">}</span>
 <span class="o">}</span>
-<span class="kd">class</span> <span class="nc">Sum</span> <span class="kd">implements</span> <span class="n">Function2</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="n">Integer</span> <span class="n">a</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span> <span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Sum</span> <span class="kd">implements</span> <span class="nc">Function2</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nc">Integer</span> <span class="nf">call</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">a</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span> <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
-<span class="n">JavaRDD</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">lineLengths</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="k">new</span> <span class="n">GetLength</span><span class="o">());</span>
-<span class="kt">int</span> <span class="n">totalLength</span> <span class="o">=</span> <span class="n">lineLengths</span><span class="o">.</span><span class="na">reduce</span><span class="o">(</span><span class="k">new</span> <span class="n">Sum</span><span class="o">());</span>
+<span class="nc">JavaRDD</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">textFile</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
+<span class="nc">JavaRDD</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">lineLengths</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="k">new</span> <span class="nc">GetLength</span><span class="o">());</span>
+<span class="kt">int</span> <span class="n">totalLength</span> <span class="o">=</span> <span class="n">lineLengths</span><span class="o">.</span><span class="na">reduce</span><span class="o">(</span><span class="k">new</span> <span class="nc">Sum</span><span class="o">());</span>
 </code></pre></div></div>
 
   </article>
@@ -423,6 +423,15 @@ JavaSparkContext sc = new JavaSparkContext(conf);</p>
 <div class="related">
   <h2>Other Posts</h2>
   <ul class="related-posts">
+    
+    <li>
+      <h3>
+        <a href="/blog/2019/08/13/docker-image-upload/">
+          Docker 이미지 만들기 & 배포하기
+          <small>13 Aug 2019</small>
+        </a>
+      </h3>
+    </li>
     
     <li>
       <h3>
@@ -442,15 +451,6 @@ JavaSparkContext sc = new JavaSparkContext(conf);</p>
       </h3>
     </li>
     
-    <li>
-      <h3>
-        <a href="/bigdata/2019/05/16/textmining-word-representation/">
-          텍스트마이닝: Word Representation
-          <small>16 May 2019</small>
-        </a>
-      </h3>
-    </li>
-    
   </ul>
 </div>
 
@@ -461,7 +461,7 @@ JavaSparkContext sc = new JavaSparkContext(conf);</p>
   <script>
     /*
 var disqus_config = function () {
-  this.page.url = 'http://0.0.0.0:4000/bigdata/2019/05/12/spark-rdd-application/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.url = 'jgtonys.github.io/bigdata/2019/05/12/spark-rdd-application/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '/bigdata/2019/05/12/spark-rdd-application'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };*/
     (function() {
