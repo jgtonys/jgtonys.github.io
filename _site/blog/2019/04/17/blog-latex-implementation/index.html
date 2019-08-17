@@ -37,7 +37,7 @@
 깃헙의 마크다운은 네이트브로 수식 입력을 지원하지 않으므로, MathJax 를 연결하여 사용할 수 있도록 하자. Jekyll 로 만든 Github Blog 의 경우 따로 커스터마이징 하지 않았다면 대부분 _layouts 라는 폴더가 존재할 것이다. _layouts/post.html 이라는 파일은 blog post 를 작성할 때 이 구조를 따르게 되는데, &lt;article&gt; 태그 안에는 우리가 Markdown 으로 적은 내용(contents)이 들어가게 된다. 여기에 다음과 같은 script 코드를 넣어주자.
 
 ">
-	<meta property="og:url" content="jgtonys.github.io/blog/2019/04/17/blog-latex-implementation/">
+	<meta property="og:url" content="http://0.0.0.0:4000/blog/2019/04/17/blog-latex-implementation/">
 	<meta property="og:site_name" content="Jungyu Kim">
 
 
@@ -307,18 +307,18 @@ is defined as follows:</p>
     
     <li>
       <h3>
-        <a href="/bigdata/2019/05/30/textmining-analysis/">
-          텍스트 마이닝 프로젝트 : 중고거래 분석 (중고나라)
-          <small>30 May 2019</small>
+        <a href="/blog/2019/07/20/jekyll-code-block-liquid-escape/">
+          Jekyll Code Block 에서 liquid tag Escape
+          <small>20 Jul 2019</small>
         </a>
       </h3>
     </li>
     
     <li>
       <h3>
-        <a href="/bigdata/2019/05/24/real-time-streaming-privacy-preserving/">
-          Real-Time Structured Streaming Privacy Preserving
-          <small>24 May 2019</small>
+        <a href="/algorithm/2019/07/18/algorithm(6)/">
+          알고리즘 - 브루트 포스(중급)
+          <small>18 Jul 2019</small>
         </a>
       </h3>
     </li>
@@ -333,7 +333,7 @@ is defined as follows:</p>
   <script>
     /*
 var disqus_config = function () {
-  this.page.url = 'jgtonys.github.io/blog/2019/04/17/blog-latex-implementation/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.url = 'http://0.0.0.0:4000/blog/2019/04/17/blog-latex-implementation/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '/blog/2019/04/17/blog-latex-implementation'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };*/
     (function() {
