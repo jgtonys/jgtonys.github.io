@@ -2,6 +2,22 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
     <url>
+      <loc>http://0.0.0.0:4000/blog/2019/08/17/jekyll-blog-javascript-carousel/</loc>
+      
+        <lastmod>2019-08-17T00:00:00-05:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://0.0.0.0:4000/blog/2019/08/13/docker-image-upload/</loc>
       
         <lastmod>2019-08-13T00:00:00-05:00</lastmod>

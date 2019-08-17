@@ -241,12 +241,42 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
 
       <div class="container content">
         <link rel="stylesheet" href="/public/css/flexslider.css" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="/public/js/jquery1.6.2.js"></script>
 <script src="/public/js/jquery.flexslider.js"></script>
 
 <div class="hero">
   <div class="flexslider">
 		<ul class="slides">
+      
+      <li>
+      <div class="post">
+        <span class="post-date">17 Aug 2019</span>
+        <h1 class="post-title">
+          <a href="/blog/2019/08/17/jekyll-blog-javascript-carousel/">
+            Jekyll 블로그에 Javascript Carousel 적용하기
+          </a>
+        </h1>
+        
+        <div class="post-div">
+        
+        <a href="/blog/tags/#jekyll" class="post-tag">jekyll</a>
+        
+        </div>
+        
+
+        <article>
+          <p>지킬 블로그에 Javascript 를 적용하고 메인페이지를 carousel 로 만드려고 한다. 단순하게 javascript 를 페이지에서 불러오고 css 적용시키는 법을 설명한다.</p>
+
+
+        <article>
+        <div class="post-more">
+          
+          <a href="/blog/2019/08/17/jekyll-blog-javascript-carousel/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+          
+          <a href="/blog/2019/08/17/jekyll-blog-javascript-carousel/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+        </div>
+      </div>
+      </li>
       
       <li>
       <div class="post">
@@ -338,6 +368,36 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
       </div>
       </li>
       
+      <li>
+      <div class="post">
+        <span class="post-date">18 Jul 2019</span>
+        <h1 class="post-title">
+          <a href="/algorithm/2019/07/18/algorithm(5)/">
+            알고리즘 - 다이나믹 프로그래밍
+          </a>
+        </h1>
+        
+        <div class="post-div">
+        
+        <a href="/blog/tags/#c" class="post-tag">c++</a>
+        
+        </div>
+        
+
+        <article>
+          <p>알고리즘 문제에서 흔히들 <code class="highlighter-rouge">동적계획법</code> 으로 알려져 있는 다이나믹 프로그래밍에 대한 개념설명과 기초 문제 풀이이다. 매우 기초를 벗어난 모든 알고리즘 문제는 이 접근법을 필수적으로 사용하는 경우가 많기 때문에 반드시 숙지해야 하는 알고리즘이다.</p>
+
+
+        <article>
+        <div class="post-more">
+          
+          <a href="/algorithm/2019/07/18/algorithm(5)/#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+          
+          <a href="/algorithm/2019/07/18/algorithm(5)/"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+        </div>
+      </div>
+      </li>
+      
 		</ul>
 	</div>
   <p>Welcome to <a href="http://github.com/jgtonys">Jungyu Kim</a> blog</p>
@@ -359,8 +419,8 @@ MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], proces
     $('.flexslider').flexslider({
       animation: "fade",
       directionNav: true,
-      slideshowSpeed: 5000,
-      animationSpeed: 600,
+      slideshowSpeed: 3000,
+      animationSpeed: 400,
       touch: true
     });
   });

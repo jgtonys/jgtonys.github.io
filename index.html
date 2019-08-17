@@ -4,13 +4,13 @@ title: Home
 ---
 
 <link rel="stylesheet" href="/public/css/flexslider.css" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="/public/js/jquery1.6.2.js"></script>
 <script src="/public/js/jquery.flexslider.js"></script>
 
 <div class="hero">
   <div class="flexslider">
 		<ul class="slides">
-      {% for post in site.posts limit:3 %}
+      {% for post in site.posts limit:5 %}
       <li>
       <div class="post">
         <span class="post-date">{{ post.date | date_to_string }}</span>
@@ -60,8 +60,8 @@ title: Home
     $('.flexslider').flexslider({
       animation: "fade",
       directionNav: true,
-      slideshowSpeed: 5000,
-      animationSpeed: 600,
+      slideshowSpeed: 3000,
+      animationSpeed: 400,
       touch: true
     });
   });
