@@ -3,7 +3,66 @@ layout: default
 title: Home
 ---
 
+<link rel="stylesheet" href="/public/css/flexslider.css" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="/public/js/jquery.flexslider.js"></script>
+
 <div class="hero">
-  <script id="asciicast-qviSZWuAVQ8FECxAvNMlSVdje" src="https://asciinema.org/a/qviSZWuAVQ8FECxAvNMlSVdje.js" async data-autoplay="true" data-loop="true"></script>
+  <div class="flexslider">
+		<ul class="slides">
+      {% for post in site.posts limit:3 %}
+      <li>
+      <div class="post">
+        <span class="post-date">{{ post.date | date_to_string }}</span>
+        <h1 class="post-title">
+          <a href="{{ site.baseurl }}{{ post.url }}">
+            {{ post.title }}
+          </a>
+        </h1>
+        {% if post.tags %}
+        <div class="post-div">
+        {% for tag in post.tags %}
+        <a href="{{ site.baseurl }}{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a>
+        {% endfor %}
+        </div>
+        {% endif %}
+
+        <article>
+          {{ post.excerpt | markdownify }}
+        <article>
+        <div class="post-more">
+          {% if site.disqus_short_name %}
+          <a href="{{ site.baseurl }}{{ post.url }}#disqus_thread"> <i class="fa fa-comments" aria-hidden="true"></i>Comment</a>&nbsp;
+          {% endif %}
+          <a href="{{ site.baseurl }}{{ post.url }}"><i class="fa fa-plus-circle" aria-hidden="true"></i>Read more</a>
+        </div>
+      </div>
+      </li>
+      {% endfor %}
+		</ul>
+	</div>
   <p>{{ site.hero.caption }}</p>
 </div>
+
+<style>
+@font-face {
+ font-family: 'flexslider-icon';
+ src: url(/public/fonts/flexslider-icon.eot);
+ src: url(/public/fonts/flexslider-icon.woff) format('woff'),
+      url(/public/fonts/flexslider-icon.ttf) format('truetype');
+}
+
+</style>
+
+
+<script type="text/javascript" charset="utf-8">
+  $(window).load(function() {
+    $('.flexslider').flexslider({
+      animation: "fade",
+      directionNav: true,
+      slideshowSpeed: 5000,
+      animationSpeed: 600,
+      touch: true
+    });
+  });
+</script>
